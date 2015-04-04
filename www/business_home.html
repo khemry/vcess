@@ -22,6 +22,9 @@
                 <p>{{business['distance']}} from here</p>
               </ons-row>
               <ons-row>
+                Views: {{business['views']}}
+              </ons-row>
+              <ons-row>
                 <p>Favorite: {{business['favorite']}} | Owner: {{business['owner']}}</p>
               </ons-row>
               <ons-row>
@@ -47,22 +50,22 @@
         <ons-list style="border-top: none"><ons-list-item style="line-height: 1; padding: 0;">
           <ons-row class="action">
 
-            <ons-col class="action-col" ng-click="confirm('Login required. Would you like to login now?')">
+            <ons-col class="action-col" ng-click="Rate(business['business_id'])">
               <div class="action-icon"><ons-icon icon="ion-ios-star-half"></ons-icon></div>
               <div class="action-label">Rate</div>
             </ons-col>
 
-            <ons-col class="action-col" ng-click="confirm('Login required. Would you like to login now?')">
+            <ons-col class="action-col" ng-click="Favorite(business['business_id'])">
               <div class="action-icon"><ons-icon icon="ion-heart"></ons-icon></div>
               <div class="action-label">Favorite</div>
             </ons-col>
 
-            <ons-col class="action-col" ng-click="confirm('Login required. Would you like to login now?')">
+            <ons-col class="action-col">
               <div class="action-icon"><ons-icon icon="ion-share"></ons-icon></div>
               <div class="action-label">Share</div>
             </ons-col>
 
-            <ons-col class="action-col" ng-click="confirm('Login required. Would you like to login now?')">
+            <ons-col class="action-col">
               <div class="action-icon"><ons-icon icon="ion-ios-location"></ons-icon></div>
               <div class="action-label">Check In</div>
             </ons-col>
@@ -100,6 +103,19 @@
               <a>{{business['website']}}</a>
             </div>
           </ons-list-item>
+
+          <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('item_sets.html', {biz_category: business['category']});">
+            <div>
+              <ons-icon icon="ion-briefcase" class="color-vcess"></ons-icon>
+              Products
+            </div>
+          </ons-list-item>
+          <!-- <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('features.html', {biz_id: business['business_id']});">
+            <div>
+              <ons-icon icon="fa-book" class="color-vcess"></ons-icon>
+              Features
+            </div>
+          </ons-list-item> -->
 
           <ons-list-item modifier="chevron" ng-click="alert('There is no available photo or menu.')">
             <div>
