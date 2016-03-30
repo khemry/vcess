@@ -1,0 +1,55 @@
+
+<ons-page ng-controller="ProfileCtrl">
+	<ons-toolbar>
+	    <div class="center"><span>Profile</spand></div>
+	</ons-toolbar>
+
+	<div ng-init="login_status=0" class="margin10 text-center">
+		<div ng-show="!login_status">
+			<img src="images/logos/Final_logo_green.png" class="logo-frame"/>
+			<h4>Welcome to Vcess App!</h3>
+			<ons-button modifier="large" ng-click="myNavigator.pushPage('login.html');">Log In</ons-button>
+		    <ons-button class="button--large--quiet" ng-click="myNavigator.pushPage('signup.html');">Sign Up</ons-button>
+		</div>
+	
+		<div ng-show="login_status">  
+			<ons-row>
+		        <ons-col width="60px">
+		          <img src="images/test/user.jpg" class="profile-image">
+		        </ons-col>
+		        <ons-col>
+		          Khourn Khemry
+		          <div class="opacity05 font-size-12">khourn.khemry@gmail.com</div>
+		        </ons-col>
+		    </ons-row>
+			
+			<ons-button ng-show="is_business" modifier="large" ng-click="myNavigator.resetToPage('normal_index.html', {is_business: 0});">Switch to User</ons-button>
+
+		    <ons-list modifier="inset" class="margin-10-0-10-0">
+
+		    	<ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('business_list.html');">
+		    	  <ons-icon icon="ion-android-globe" class="color-vcess"></ons-icon>
+		          Businesses
+		        </ons-list-item>
+		        <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('checkin_list.html');">
+		          <ons-icon icon="ion-android-map" class="color-vcess"></ons-icon>
+		          Check-ins
+		        </ons-list-item>
+		        <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('friend_list.html');">
+		          <ons-icon icon="ion-android-contacts" class="color-vcess"></ons-icon>	
+		          Friends
+		        </ons-list-item>
+		        <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('settings.html');">
+		          <ons-icon icon="ion-android-settings" class="color-vcess"></ons-icon>
+		          Settings
+		        </ons-list-item>
+		        <ons-list-item modifier="tappable">
+		          <ons-icon icon="fa-sign-out" class="color-vcess"></ons-icon>
+		          Log out
+		        </ons-list-item>
+
+		    </ons-list>
+		     
+		</div>
+	</div>
+</ons-page>

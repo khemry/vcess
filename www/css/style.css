@@ -1,0 +1,432 @@
+@font-face {
+    font-family: exo_medium;
+    src: url("../fonts/Exo-Medium.otf") format("opentype");
+}
+
+*, .tab-bar__label {
+	font-family:exo_medium;
+}
+
+.margin10 {
+	margin: 10px;
+}
+
+.margin-top-10 {
+	margin-top: 10px;
+}
+
+.margin-bottom-0 {
+	margin-bottom: 0;
+}
+
+.margin-0{
+	margin: 0;
+}
+
+.line-height-150 {
+	line-height: 150%;
+}
+
+.margin-right-20 {
+	margin-right: 20px;
+}
+
+
+/*top-right-bottom-left*/
+.margin-10-0-10-0 {
+	margin: 10px 0 10px 0;
+}
+
+
+.text-center {
+	text-align: center;
+}
+
+.text-left {
+	text-align: left;
+}
+
+.opacity05 {
+	opacity: 0.5;
+}
+
+.opacity-1{
+	opacity: 1;
+}
+
+.font-size-12 {
+	font-size: 12px;
+}
+
+.font-size-14 {
+	font-size: 14px;
+}
+
+.color-vcess {
+	color: #00aa60;
+}
+
+.bg-color-facebook {
+	background-color: #436399;
+}
+
+.bg-color-twitter {
+	background-color: #67aeeb;
+}
+
+.bg-color-line {
+	background-color: #00db24;
+}
+
+.biz-image {
+  width: 70px;
+  height: 70px;
+}
+
+.ons-icon {
+	padding-right: 7px;
+}
+
+.alert-dialog-title, .alert-dialog-button, .confirm-dialog-title{
+	font-family:exo_medium;
+}
+
+
+/*SHOP*/
+
+
+
+/*Map*/
+#map_canvas {
+    position: absolute;
+    width:98%; 
+    height: 100px; 
+    margin: 0; 
+    padding: 0;   
+    z-index: -1
+}
+
+
+
+#map_biz {
+	position: absolute;
+    width: 95%; 
+    height: 100px; 
+    margin: 0;
+    padding: 0;   
+    z-index: -1
+}
+
+/*Title Page*/
+.title {
+	color: #00aa60;
+	font-size: 20px;
+}
+
+.search {
+	/*width: 94%;*/
+	font-size: 14px;
+	text-align: left; 
+	color: #5e5e5e; 
+	/*margin: 3%;*/
+}
+
+.new_meetup .list__item{
+	color: #000;
+	font-size: 14px;
+}
+
+.new_meetup .list__item .ons-icon{
+	color: #00aa60;
+	padding-right: 5px;
+	font-size: 20px;
+}
+
+.new_meetup .checkbox {
+	font-size: 14px;
+}
+
+input[type=email], input[type=password], input[type=text] {
+	font-family: exo_medium;
+	color: #000;
+	width: 100%;
+	margin: 0 auto;
+	padding-top: 25px;
+  	padding-bottom: 20px;
+}
+
+
+.coffee {
+	margin: -25px auto 0 auto;
+	width: 100%;
+	background-image: url(../images/test/background_coffee.jpg);
+	background-position: center center; 
+	height:23%;
+}
+
+.restaurant {
+	margin: -25px auto 0 auto;
+	width: 100%;
+	background-image: url(../images/test/background_restaurant.jpg);
+	background-position: center center; 
+	height:23%;
+}
+
+.supermarket {
+	margin: -25px auto 0 auto;
+	width: 100%;
+	background-image: url(../images/test/background_supermarket.png);
+	background-position: center center; 
+	height:23%;
+}
+
+.convenience_store {
+	margin: -25px auto 0 auto;
+	width: 100%;
+	background-image: url(../images/test/background_mart.jpg);
+	background-position: center center; 
+	height:23%;
+}
+
+.drug_store {
+	margin: -25px auto 0 auto;
+	width: 100%;
+	background-image: url(../images/test/background_drug_store.png);
+	background-position: center center; 
+	height:23%;
+}
+
+.department_store {
+	margin: -25px auto 0 auto;
+	width: 100%;
+	background-image: url(../images/test/background_department.png);
+	background-position: center center; 
+	height:23%;
+}
+
+.asian_ingredient_shop {
+	margin: -25px auto 0 auto;
+	width: 100%;
+	background-image: url(../images/test/background_asian_shop.png);
+	background-position: center center; 
+	height:23%;
+}
+
+.daiso{
+	margin: -25px auto 0 auto;
+	width: 100%;
+	background-image: url(../images/test/background_daiso.png);
+	background-position: center center; 
+	height:23%;
+}
+
+.discount_store {
+	margin: -25px auto 0 auto;
+	width: 100%;
+	background-image: url(../images/test/background_discount.png);
+	background-position: center center; 
+	height:23%;
+}
+
+.category-template {
+	margin: 0 auto 0 auto;
+	background-image: url(../images/test/background_sushi.jpg);
+	background-position: center center; 
+	width: 100%;
+	height:15%;
+}
+
+/*.category-template1 {
+	margin: -25px auto 0 auto;
+	width: 100%;
+	background-image: url(../images/test/background_coffee.jpg);
+	background-position: center center; 
+	height:23%;
+}
+.category-template2 {
+	margin: -25px auto 0 auto;
+	width: 100%;
+	background-image: url(../images/test/background_mart.jpg);
+	background-position: center center; 
+	height:23%;
+}
+.category-template3 {
+	margin: -25px auto 0 auto;
+	width: 100%;
+	background-image: url(../images/test/background_restaurant.jpg);
+	background-position: center center; 
+	height:23%;
+}
+.category-template4 {
+	margin: -25px auto 0 auto;
+	width: 100%;
+	background-image: url(../images/test/background_sport_center.jpg);
+	background-position: center center; 
+	height:23%;
+}*/
+
+.normal {
+	position: absolute;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.category-template .search-input {
+	position: fixed;
+	margin: 0 3% 0 3%;
+	width: 94%; 
+	font-family:exo_medium;	
+	border-color: #00aa60;
+	padding-top: 22px;
+  	padding-bottom: 15px;
+  	background-color: #fff;
+}
+
+.search-input {
+	margin: 0 3% 0 3%;
+	width: 94%; 
+	font-family:exo_medium;	
+	border: #00aa60;
+	padding-top: 22px;
+  	padding-bottom: 15px;
+  	background-color: #fff;
+}
+
+.search-input:focus {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.text-input {
+	padding: 0;
+	margin: 0 3% 0 3%;
+	width: 94%; 
+}
+
+.location {
+	padding: 0;
+	margin: 0 3% 0 3%;
+	width: 94%; 
+}
+
+img.logo-frame {
+	margin: 20px auto;
+	width: 120px;
+
+}
+
+img.logo-homepage {
+	margin: 10px;
+	width: 100px;
+	float: left;
+}
+
+.login-page {
+	text-align: center; 
+	width: 90%;
+	margin: 0 auto;
+	color: #5e5e5e;
+}
+
+.facebook-button {
+	/*width: 100%;	*/
+	background-color: #436399;
+	margin: 10px auto;
+}
+
+.twitter-button {
+	/*width: 100%;*/	
+	background-color: #67aeeb;
+	margin: 10px auto;
+}
+
+.line-button {
+	/*width: 100%;*/	
+	background-color: #00db24;
+	margin: 10px auto;
+}
+
+.forgot-password{
+	width: 100%;	
+	margin: 10px auto;	
+	border-color: #73fa79;
+	color: black;
+}
+
+.email-button {
+	width: 100%;	
+	margin: 10px auto;	
+}
+
+
+.login-button {
+  	background-color: #73fa79;
+  	margin: 10px auto;
+	color: black;
+
+}
+
+.switch-button {
+	background-color: #0096ff;
+	color: white;
+  	margin: 10px auto;
+  	width: 95%;
+}
+
+.signup-button {
+  	background-color: #ff7e79;
+  	margin: 10px auto;
+}
+
+.profile-wrapper {
+  padding: 16px 10px 0 10px;
+}
+
+.profile-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border: inset 1px rgba(0, 0, 0, 0.3);
+}
+
+.profile-name {
+  font-size: 18px;
+  padding: 4px 0 2px 0;
+}
+
+.profile-info {
+  font-size: 15px;
+  opacity: 0.4;
+}
+
+.switch--list-item {
+  margin-right: 0px;
+}
+
+.settings-header {
+  font-weight: 500;
+  font-size: 14px;
+  opacity: 0.4;
+  padding: 10px 0 0px 10px;
+  margin-bottom: -4px;
+}
+
+.always_on_top {
+  position: fixed;
+  font-size: 12px;
+  bottom: 10%;
+  right: 10px;
+  text-align: center;
+  background-color: #00aa60;
+}
+
+.list-item-action {
+  position: absolute;
+  right: 10px;
+  top: 0px;
+  font-size: 20px;
+  opacity: 0.3;
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+  id="angular-local-storage"
+  version="0.0.1">
+
+    <name>Local Storage</name>
+    <description>Local Storage Plugin Description</description>
+    <author>Asial Corporation</author>
+    <license>Apache 2.0 License</license>
+
+
+</plugin>

@@ -1,0 +1,59 @@
+<!-- <ons-navigator animation="slide" var="myNavigator"> -->
+<ons-page ng-controller="HomeCtrl">
+
+	<div ng-show="search_home" style="width: 100%; height: 100%">
+		<ons-button modifier="cta" class="always_on_top" style="margin: 0 auto;" ng-click="myNavigator.pushPage('all_categories.html');">
+          All Categories
+        </ons-button>
+
+		<div style="text-align: center" class="category-template">
+			<br />
+		    <input type="search" class="search-input" placeholder="What are you looking for?" ng-click="myNavigator.pushPage('search.html');">
+		    <h4 style="color: white; padding-top:30px"></h4>
+		</div>
+
+		<div ng-repeat="category in top_categories" style="text-align: center" class="{{category['key']}}" ng-click="myNavigator.pushPage('category_list.html', {selected_category: category['name'], selected_category_key: category['key']})";>
+			<h4 style="color: white; padding-top:50px">{{category['name']}}</h4>
+		</div>
+
+		<!-- <ons-list modifier="inset" class="margin-10-0-10-0">
+            <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('business_list.html');" ng-repeat="category in top_categories">
+                {{category['name']}}
+            </ons-list-item>
+        </ons-list> -->
+
+		<!-- <div style="text-align: center" class="category-template1" ng-click="myNavigator.pushPage('category_list.html', {selected_category: 'Coffee Shops'})";>
+			<h4 style="color: white; padding-top:50px">Coffee Shops</h4>
+		</div>
+		<div style="text-align: center" class="category-template2" ng-click="myNavigator.pushPage('category_list.html', {selected_category: 'Marts'})";>
+		    <h4 style="color: white; padding-top:50px">Marts</h4>
+		</div>
+		<div style="text-align: center" class="category-template3" ng-click="myNavigator.pushPage('category_list.html', {selected_category: 'Restaurants'})";>
+		    <h4 style="color: white; padding-top:50px">Restaurants</h4>
+		</div>
+		<div style="text-align: center" class="category-template4" ng-click="myNavigator.pushPage('category_list.html', {selected_category: 'Sport Centers'})";>
+		    <h4 style="color: white; padding-top:50px">Sport Centers</h4>
+		</div>
+		<div style="text-align: center" class="category-template1" ng-click="myNavigator.pushPage('category_list.html', {selected_category: 'Coffee Shops'})";>
+			<h4 style="color: white; padding-top:50px">Coffee Shops</h4>
+		</div>
+		<div style="text-align: center" class="category-template2" ng-click="myNavigator.pushPage('category_list.html', {selected_category: 'Marts'})";>
+		    <h4 style="color: white; padding-top:50px">Marts</h4>
+		</div>
+		<div style="text-align: center" class="category-template3" ng-click="myNavigator.pushPage('category_list.html', {selected_category: 'Restaurants'})";>
+		    <h4 style="color: white; padding-top:50px">Restaurants</h4>
+		</div>
+		<div style="text-align: center" class="category-template4" ng-click="myNavigator.pushPage('category_list.html', {selected_category: 'Sport Centers'})";>
+		    <h4 style="color: white; padding-top:50px">Sport Centers</h4>
+		</div> -->
+	</div>
+
+	<div ng-show="shop_list_home">
+		<h1>Shop List Home</h1>
+	</div>
+
+	<div ng-show="shop_home">
+		<h1>Shop Home</h1>
+	</div>
+</ons-page>
+<!-- </ons-navigator> -->

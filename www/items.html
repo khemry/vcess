@@ -1,0 +1,21 @@
+
+<ons-page ng-controller="ItemsCtrl">
+	<ons-toolbar>
+	    <div class="center"><span style="color:#0096ff">Add Items</spand></div>
+	</ons-toolbar>
+
+	<div style="text-align: center">
+		<div class="email-signup-form">
+			<br />
+			<input type="text" class="text-input--underbar" ng-model="ColumnName" placeholder="Column Name*">
+			<br />
+			<input type="text" class="text-input--underbar" ng-model="SheetName" placeholder="Sheet Name*">
+		</div>
+		<br />
+		<input type="file" name="xlfile" id="xlf" onchange="angular.element(this).scope().fileNameChanged(this)"/>
+		<br />
+		<h3>Uploaded Items</h3>
+		<pre id="out"></pre>
+
+	</div>
+</ons-page>

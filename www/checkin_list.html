@@ -1,0 +1,47 @@
+
+<ons-toolbar>
+    <div class="left"><ons-back-button></ons-back-button></div>
+    <div class="center"><span>Check-in List</span></div>
+</ons-toolbar>
+
+<div style="text-align: center" ng-init="checked=1">
+
+  <div class="tab-bar tab-bar--top tab-bar--top-border">
+    <label class="tab-bar__item tab-bar--top-border__item" ng-click="checked=1">
+      <input type="radio" name="top-tab-bar-b" checked="checked">
+      <button class="tab-bar__button tab-bar--top-border__button">
+        <span>List</span>
+      </button>
+      
+    </label>
+
+    <label class="tab-bar__item tab-bar--top-border__item" ng-click="checked=0">
+      <input type="radio" name="top-tab-bar-b">
+      <button class="tab-bar__button tab-bar--top-border__button"">
+        <span ng-click="showList = !showList">Map</span>
+      </button>
+    </label>
+  </div>
+
+
+  <ons-list modifier="inset" class="settings-list" ng-show="checked">
+            
+        <ons-list-item style="color: black">
+          <b>Location 1</b><br/>
+          Tuesday, Nov 3rd, 2015
+        </ons-list-item>
+        <ons-list-item style="color: black">
+          <b>Location 2</b><br/>
+          Sunday, Nov 1st, 2015
+        </ons-list-item>
+        <ons-list-item style="color: black">
+          <b>Location 3</b><br/>
+          Tuesday, Oct 27th, 2015
+        </ons-list-item>
+
+    </ons-list>
+
+    <p ng-hide="checked" style="color: black">[Show all locations in one map]</p>
+
+</div>
+

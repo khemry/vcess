@@ -1,0 +1,88 @@
+<ons-page ng-controller="NewBusinessCtrl">
+	
+	<ons-toolbar>
+	    <div class="left"><ons-back-button></ons-back-button></div>
+	    <div class="center"><span>New Business</span></div>
+	    <div class="right">
+	      <ons-toolbar-button ng-click="myNavigator.pushPage('sub-1.html', {addr: shop.address});">
+	        Next
+	      </ons-toolbar-button>
+	    </div>
+	</ons-toolbar>
+
+	<div style="text-align: center">
+
+		
+		
+		<ons-list modifier="inset" class="new_meetup" style="margin-top:10px">
+			<ons-list-item>
+	    		<label class="checkbox">
+			  		<input type="checkbox" checked="checked" ng-click="checked=!checked">
+			  		<ons-icon icon="fa-check-square-o" ng-show="!checked" style="opacity: 0.8"></ons-icon>
+			  		<ons-icon icon="fa-square-o" ng-show="checked" style="opacity: 0.8"></ons-icon>
+			  		<span>This is my own business</span>
+				</label>      	
+	        </ons-list-item>
+			<ons-list-item>
+	          	<input type="text" class="text-input text-input--transparent" placeholder="Business Name*" style="width: 100%">
+	        </ons-list-item>
+
+	        <ons-list-item modifier="tappable" ng-click="show_country_list=!show_country_list">
+		      	<ons-icon icon="fa-chevron-down" style="opacity: 0.8"></ons-icon>
+		      	{{current_country}}
+		    </ons-list-item>
+		    <ons-list-item modifier="tappable" ng-show="show_country_list" ng-click="SelectCountry(country)">
+		      	<span style="padding-left: 27px">{{country}}</span>
+		    </ons-list-item>
+		    <ons-list-item>
+	          	<textarea ng-model="shop.address" class="textarea textarea--transparent" placeholder="Address*" style="width: 100%; height: 100px;font-family: exo_medium; color:#000"></textarea>
+	        </ons-list-item>
+	    </ons-list>
+	</div>	
+
+	<ons-template id="sub-1.html">
+		<ons-toolbar>
+		    <div class="left"><ons-back-button></ons-back-button></div>
+		    <div class="center"><span>New Business</span></div>
+		    <div class="right">
+		      <ons-toolbar-button ng-click="myNavigator.pushPage('page2.html');">
+		        Next
+		      </ons-toolbar-button>
+		    </div>
+		</ons-toolbar>
+		<div style="text-align: center" ng-controller="NewBusinessCtrlSub1">
+			<ons-list modifier="inset" class="new_meetup" style="margin-top:10px">
+				<ons-list-item style="padding-top: 10px; padding-bottom: 10px">
+					{{Address}}
+				</ons-list-item>
+				<ons-list-item style="padding-top: 10px; padding-bottom: 10px" ng-hide="showCurrent">
+					<ng-map zoom="15" center="[40.74, -74.18]" map-type-id="MapTypeId.ROADMAP">
+					    <marker position="{{Address}}" animation="Animation.BOUNCE" centered="true"></marker>
+					</ng-map>
+
+		        </ons-list-item>
+		        <ons-list-item style="padding-top: 10px; padding-bottom: 10px" ng-show="showCurrent">
+					<ng-map zoom="15" center="[40.74, -74.18]" map-type-id="MapTypeId.ROADMAP">
+					    <marker position="current" animation="Animation.BOUNCE" centered="true"></marker>
+					</ng-map>
+
+		        </ons-list-item>
+			</ons-list>
+
+			<div style="margin: 10px 10px 10px 10px;">
+				<ons-button modifier="large" ng-click="showCurrent=!showCurrent">Get Current Location</ons-button>
+			</div>
+		</div>
+	</ons-template>
+	
+</ons-page>
+
+	
+
+		
+
+
+	
+
+
+ 

@@ -1,0 +1,68 @@
+<ons-page ng-controller="CategoryListCtrl">
+
+    <ons-toolbar>
+        <div class="left"><ons-back-button></ons-back-button></div>
+        <div class="center"><span>{{selected_category}}</span></div>
+    </ons-toolbar>
+
+
+    <div class="margin10" ng-init="checked=1">
+
+        <ons-list modifier="inset" class="margin-10-0-10-0 font-size-14" ng-init="show_current_location=0">
+            <ons-list-item ng-click="show_current_location=!show_current_location">
+                <input type="search" class="location-input-no-border" ng-model="location_text" placeholder="What are you looking for?">
+            </ons-list-item>
+
+            <ons-list-item modifier="tappable" ng-show="show_current_location" ng-click="getCurrentLocation();show_current_location=!show_current_location">
+                <ons-icon icon="fa-location-arrow" style="opacity: 0.8"></ons-icon>
+                Current Location
+            </ons-list-item>
+            <ons-list-item modifier="tappable" ng-show="show_current_location" ng-click="getAllLocation();show_current_location=!show_current_location">
+                <!-- <ons-icon icon="fa-location-arrow" style="opacity: 0.8"></ons-icon> -->
+                All locations
+            </ons-list-item>
+        </ons-list>
+        <ons-button modifier="large" ng-click="GetData(selected_category, selected_category_key, location_text)"><span>Search</span></ons-button>
+        <p ng-show="data_not_found" class="text-center">Sorry! No result is found. Please try again.</p>
+    
+        <ons-list modifier="inset" class="margin-10-0-10-0" ng-show="!data_not_found">
+              
+            <ons-list-item ng-repeat="business in businesses" modifier="chevron" ng-click="myNavigator.pushPage('business_home.html', {selected_biz: business});">
+                <ons-row class="margin-10-0-10-0">
+                    <ons-col width="80px">
+                        <img src="images/default.png" class="biz-image margin-top-10">
+                    </ons-col>
+                    <ons-col style="padding-right:10px">
+                        <ons-row>
+                            <p class="margin-0 line-height-150">{{business['name_en']}}</p>
+                        </ons-row>
+                        <ons-row>
+                            <p class="margin-0 line-height-150 font-size-12 margin-right-20">{{business['category']}}</p>
+                        </ons-row>
+                        <ons-row>
+                            <p class="margin-0 line-height-150 font-size-12">{{business['city_en']}}</p>
+                        </ons-row>
+                        <ons-row>
+                            <div class="rating margin-0 line-height-150 font-size-12">
+                                <div class="rating-num">
+                                    <ons-icon icon="fa-star" fixed-width="false" ng-repeat="n in getRate(business['rate']) track by $index"></ons-icon>
+                                    <ons-icon icon="fa-star-half" fixed-width="false" ng-show={{show_half_star}}></ons-icon>
+                                    {{business['rate']}}
+                                </div>
+                            </div>
+                        </ons-row>
+                        
+                    </ons-col>
+                    <ons-col width="40px">
+                        <p class="margin-0 line-height-150 font-size-12">{{business['distance']}}</p>
+                    </ons-col>
+                </ons-row>
+            </ons-list-item>
+        </ons-list>
+
+          
+
+  </div>
+  
+
+</ons-page>

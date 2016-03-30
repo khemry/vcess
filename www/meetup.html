@@ -1,0 +1,38 @@
+<ons-page ng-init="login_status=0">
+    <ons-toolbar>
+        <div class="center"><span>Meetups</span></div>
+        <div class="right">
+            <ons-toolbar-button ng-click="">
+                <ons-icon icon="fa-plus" fixed-width="false" style="vertical-align: -4px;"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+    </ons-toolbar>
+
+    <div ng-show="login_status">
+        <div class="tab-bar tab-bar--top tab-bar--top-border">
+            <label class="tab-bar__item tab-bar--top-border__item">
+                <input type="radio" name="top-tab-bar-b" checked="checked">
+                <button class="tab-bar__button tab-bar--top-border__button">
+                    <span>Upcoming</span>
+                </button>
+            </label>
+
+            <label class="tab-bar__item tab-bar--top-border__item">
+                <input type="radio" name="top-tab-bar-b">
+                <button class="tab-bar__button tab-bar--top-border__button">
+                    <span>Past</span>
+                </button>
+            </label>
+        </div>
+    </div>
+
+    <div ng-show="!login_status" class="margin10 text-center">
+        <img src="images/logos/Final_logo_green.png" class="logo-frame"/>
+        <h4>Welcome to Vcess App!</h3>
+        <p>You are required to login in order to view this page.</p>
+        <ons-button modifier="large" ng-click="myNavigator.pushPage('login.html');">Log In</ons-button>
+        <ons-button class="button--large--quiet" ng-click="myNavigator.pushPage('signup.html');">Sign Up</ons-button>
+    </div>
+
+</ons-page>
+
