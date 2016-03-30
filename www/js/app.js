@@ -46,7 +46,7 @@ var app = ons.bootstrap('myApp', ['onsen']);
 // }]);
 
 app.service('GlobalParameters', function(){
-	
+    
 	this.search_home = 1;
 	this.shop_list_home = 0;
 	this.shop_home = 0;
