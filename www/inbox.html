@@ -1,12 +1,17 @@
 <ons-page ng-controller="InboxCtrl">
     <ons-toolbar>
         <div class="center"><span>Inbox</spand></div>
-        <div class="right">
+        <!-- <div class="right">
             <ons-toolbar-button>
                 <ons-icon icon="fa-pencil-square-o" fixed-width="false" style="vertical-align: -4px;"></ons-icon>
             </ons-toolbar-button>
-        </div>
+        </div> -->
     </ons-toolbar>
+
+    <div class="margin10 text-center" ng-show="login_status">
+      <br/>
+      Currently, you don't have any messages in <span class="color-vcess">Vcess</span> yet.
+    </div>
 
     <div ng-show="!login_status" class="margin10 text-center">
         <img src="images/logos/Final_logo_green.png" class="logo-frame"/>
@@ -15,6 +20,7 @@
         <ons-button modifier="large" ng-click="myNavigator.pushPage('login.html');">Log In</ons-button>
         <ons-button class="button--large--quiet" ng-click="myNavigator.pushPage('signup.html');">Sign Up</ons-button>
     </div>
+
 
     <!-- <div ng-show="login_status">
         <ons-list modifier="inset" style="margin-top: 10px">

@@ -15,6 +15,18 @@
         </label>
     </div>
 
+    <div class="margin10 text-center" ng-show="login_status">
+        <div ng-show="checked">
+            <br/>
+            <p>Currently, you don't have any newsfeed in <span class="color-vcess">Vcess</span> yet.</p>
+        </div>
+
+        <div ng-hide="checked">
+            <br/>
+            <p>Currently, you don't have any notifications in <span class="color-vcess">Vcess</span> yet.</p>
+        </div>
+    </div>
+
     <div ng-show="!login_status" class="margin10 text-center">
         <img src="images/logos/Final_logo_green.png" class="logo-frame"/>
         <h4>Welcome to Vcess App!</h3>

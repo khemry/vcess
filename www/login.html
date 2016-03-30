@@ -7,17 +7,17 @@
     <div ng-init="showEmail= 0;" class="login-page">
     	<img src="images/logos/Final_logo_green.png" class="logo-frame"/>
 
-        <div id="fb-root"></div>
-        <div ng-show="!showEmail">
+        <!-- <div id="fb-root"></div> 
+         <div ng-show="!showEmail">
             <p style="text-align: left">Log in with:</p>
-            <!-- <fb:login-button show-faces="true" max-rows="1" size="large"></fb:login-button> -->
+            <!-- <fb:login-button show-faces="true" max-rows="1" size="large"></fb:login-button> 
             <ons-button modifier="large" class="bg-color-facebook" ng-click="login_facebook();">Facebook</ons-button>
             <ons-button modifier="large" class="bg-color-twitter margin-top-10" ng-click="alert('Coming soon!');">Twitter</ons-button>
             <ons-button modifier="large" class="bg-color-line margin-top-10" ng-click="alert('Coming soon!');">Line</ons-button>
             <ons-button modifier="outline" class="email-button" ng-click="showEmail=!showEmail">Email</ons-button>
-        </div>
+        </div> 
 
-        <div ng-show="showEmail" class="email-login-form">
+        <div ng-show="showEmail" class="email-login-form"> -->
             <div ng-show="!forgot_pass">
                 <input type="email" class="text-input--underbar" placeholder="Email*" value="" ng-model="txt_email">
                 <input type="password" class="text-input--underbar" placeholder="Password*" value="" ng-model="txt_password">
@@ -30,7 +30,7 @@
                 <input type="email" class="text-input--underbar" placeholder="Email*" value="" ng-model="recover_email">
                 <ons-button modifier="large" class="margin-10-0-10-0" ng-click="SendEmail(recover_email);">Recover Password</ons-button>
             </div>
-        </div>
+       <!--  </div> -->
 
         
     </div>

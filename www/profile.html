@@ -23,7 +23,7 @@
 		        </ons-col>
 		    </ons-row>
 			
-			<ons-button ng-show="is_business" modifier="large" ng-click="myNavigator.resetToPage('normal_index.html', {is_business: 0});">Switch to User</ons-button>
+			<!-- <ons-button ng-show="is_business" modifier="large" ng-click="myNavigator.resetToPage('normal_index.html', {is_business: 0});">Switch to User</ons-button> -->
 
 		    <ons-list modifier="inset" class="margin-10-0-10-0">
 
@@ -39,11 +39,11 @@
 		          <ons-icon icon="ion-android-contacts" class="color-vcess"></ons-icon>	
 		          Friends
 		        </ons-list-item>
-		        <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('settings.html');">
+<!-- 		        <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('settings.html');">
 		          <ons-icon icon="ion-android-settings" class="color-vcess"></ons-icon>
 		          Settings
-		        </ons-list-item>
-		        <ons-list-item modifier="tappable">
+		        </ons-list-item> -->
+		        <ons-list-item modifier="tappable" ng-click="Logout()">
 		          <ons-icon icon="fa-sign-out" class="color-vcess"></ons-icon>
 		          Log out
 		        </ons-list-item>

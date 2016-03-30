@@ -129,7 +129,7 @@ app.service('LocationService', function($http, $timeout){
     }
 });
 
-app.controller('SignupCtrl', function($scope, GlobalParameters, ezfb, $http){
+app.controller('SignupCtrl', function($scope, GlobalParameters, $http){
 	console.log('Signup Ctrl');
 
 	$scope.signup = function(fullname, email, password){
@@ -168,22 +168,22 @@ app.controller('SignupCtrl', function($scope, GlobalParameters, ezfb, $http){
     	ons.notification.alert({message: msg, title: 'Vcess'});
 	}
 	
-	login = function () {
-    /**
-     * Calling FB.login with required permissions specified
-     * https://developers.facebook.com/docs/reference/javascript/FB.login/v2.0
-     */
-    ezfb.login(function (res) {
-      /**
-       * no manual $scope.$apply, I got that handled
-       */
-      if (res.authResponse) {
-        updateLoginStatus(updateApiMe);
-      }
-    }, {scope: 'email'});
-  };
+	// login = function () {
+ //    /**
+ //     * Calling FB.login with required permissions specified
+ //     * https://developers.facebook.com/docs/reference/javascript/FB.login/v2.0
+ //     */
+ //    ezfb.login(function (res) {
+ //      /**
+ //       * no manual $scope.$apply, I got that handled
+ //       */
+ //      if (res.authResponse) {
+ //        updateLoginStatus(updateApiMe);
+ //      }
+ //    }, {scope: 'email'});
+ //  };
 
-	$scope.login = login();
+//scope.login = login();
 });
 
 
@@ -935,16 +935,34 @@ app.controller('ProfileCtrl', function($scope, GlobalParameters){
 	var page = myNavigator.getCurrentPage();
 	$scope.login_user = page.options.login_user;	
 
-
-
-
-	$scope.is_business = GlobalParameters.is_business;
-	console.log($scope.is_business);
+	// $scope.is_business = GlobalParameters.is_business;
+	// console.log($scope.is_business
+	$scope.Logout = function(){
+		GlobalParameters.login_status = 0;
+		$scope.myNavigator.pushPage('normal_index.html');
+	}
 });
 
 app.controller('PropertiesCtrl', function($scope, GlobalParameters){
 	GlobalParameters.SetIsOwner(1);
 });
+
+
+
+app.controller('BusinessListCtrl', function($scope, GlobalParameters){
+	//GlobalParameters.SetIsOwner(0);
+	$scope.alert = function(msg) {
+    	ons.notification.alert({message: msg, title: 'Vcess'});
+	}
+});
+
+app.controller('FriendListCtrl', function($scope, GlobalParameters){
+	//GlobalParameters.SetIsOwner(0);
+	$scope.alert = function(msg) {
+    	ons.notification.alert({message: msg, title: 'Vcess'});
+	}
+});
+
 app.controller('IndexCtrl', function($scope, GlobalParameters){
 	GlobalParameters.SetIsOwner(0);
 });

@@ -1,11 +1,11 @@
 <ons-page ng-controller="MeetUpCtrl">
     <ons-toolbar>
         <div class="center"><span>Meetups</span></div>
-        <div class="right">
+        <!-- <div class="right">
             <ons-toolbar-button ng-click="">
                 <ons-icon icon="fa-plus" fixed-width="false" style="vertical-align: -4px;"></ons-icon>
             </ons-toolbar-button>
-        </div>
+        </div> -->
     </ons-toolbar>
 
     <div ng-show="login_status">
@@ -24,6 +24,12 @@
                 </button>
             </label>
         </div>
+    </div>
+
+    <div class="margin10 text-center" ng-show="login_status">
+              <br/>
+              <p>Currently, you don't have any meetups in <span class="color-vcess">Vcess</span> yet.</p>
+              <!-- Start creating one now and grow your business. -->
     </div>
 
     <div ng-show="!login_status" class="margin10 text-center">

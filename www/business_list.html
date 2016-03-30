@@ -1,68 +1,72 @@
 
+<ons-page ng-controller="BusinessListCtrl">
+  <ons-toolbar>
+      <div class="left"><ons-back-button></ons-back-button></div>
+      <div class="center"><span>Business List</span></div>
+      <!-- <div class="right">
+        <ons-toolbar-button ng-click="alert('Coming soon in our next update!')">
+          <ons-icon icon="fa-plus" fixed-width="false" style="vertical-align: -4px;"></ons-icon>
+        </ons-toolbar-button>
+      </div> -->
+  </ons-toolbar>
 
-<ons-toolbar>
-    <div class="left"><ons-back-button></ons-back-button></div>
-    <div class="center"><span>Business List</span></div>
-    <div class="right">
-      <ons-toolbar-button ng-click="myNavigator.pushPage('new_business.html');">
-        <ons-icon icon="fa-plus" fixed-width="false" style="vertical-align: -4px;"></ons-icon>
-      </ons-toolbar-button>
+
+  <div style="text-align: center" ng-init="checked=1">
+    <div class="tab-bar tab-bar--top tab-bar--top-border">
+      <label class="tab-bar__item tab-bar--top-border__item" ng-click="checked=1">
+        <input type="radio" name="top-tab-bar-b" checked="checked">
+        <button class="tab-bar__button tab-bar--top-border__button">
+          <span>My Business</span>
+        </button>
+        
+      </label>
+
+      <label class="tab-bar__item tab-bar--top-border__item" ng-click="checked=0">
+        <input type="radio" name="top-tab-bar-b">
+        <button class="tab-bar__button tab-bar--top-border__button">
+          <span>Others' Business</span>
+        </button>
+      </label>
     </div>
-</ons-toolbar>
 
+    <div class="margin10 text-center">
+      <br/>
+      <p>Currently, you don't own any business in <span class="color-vcess">Vcess</span>.</p>
+      <!-- Start creating one now and grow your business. -->
+    </div>
+      <!-- <ons-list modifier="inset" class="settings-list" ng-show="checked">
+              
+          <ons-list-item modifier="chevron" ng-click="myNavigator.resetToPage('business_index.html', {is_business: 1, selected_biz: 'Business A'});">
+            Business A
+          </ons-list-item>
+          <ons-list-item modifier="chevron" ng-click="myNavigator.resetToPage('business_index.html', {is_business: 1, selected_biz: 'Business B'});">
+            Business B
+          </ons-list-item>
+          <ons-list-item modifier="chevron" ng-click="myNavigator.resetToPage('business_index.html', {is_business: 1, selected_biz: 'Business C'});">
+            Business C
+          </ons-list-item>
+          <ons-list-item modifier="chevron" ng-click="myNavigator.resetToPage('business_index.html', {is_business: 1, selected_biz: 'Business D'});">
+            Business D
+          </ons-list-item>
 
-<div style="text-align: center" ng-init="checked=1">
-  <div class="tab-bar tab-bar--top tab-bar--top-border">
-    <label class="tab-bar__item tab-bar--top-border__item" ng-click="checked=1">
-      <input type="radio" name="top-tab-bar-b" checked="checked">
-      <button class="tab-bar__button tab-bar--top-border__button">
-        <span>My Business</span>
-      </button>
-      
-    </label>
+      </ons-list>
 
-    <label class="tab-bar__item tab-bar--top-border__item" ng-click="checked=0">
-      <input type="radio" name="top-tab-bar-b">
-      <button class="tab-bar__button tab-bar--top-border__button">
-        <span>Others' Business</span>
-      </button>
-    </label>
+          <ons-list modifier="inset" class="settings-list" ng-hide="checked">
+              
+          <ons-list-item modifier="chevron" ng-click="myNavigator.resetToPage('business_index.html', {is_business: 1, selected_biz: 'Business 1'});">
+            Business 1
+          </ons-list-item>
+          <ons-list-item modifier="chevron" ng-click="myNavigator.resetToPage('business_index.html', {is_business: 1, selected_biz: 'Business 2'});">
+            Business 2
+          </ons-list-item>
+          <ons-list-item modifier="chevron" ng-click="myNavigator.resetToPage('business_index.html', {is_business: 1, selected_biz: 'Business 3'});">
+            Business 3
+          </ons-list-item>
+          <ons-list-item modifier="chevron" ng-click="myNavigator.resetToPage('business_index.html', {is_business: 1, selected_biz: 'Business 4'});">
+            Business 4
+          </ons-list-item>
+
+      </ons-list> -->
+
   </div>
-
-
-    <ons-list modifier="inset" class="settings-list" ng-show="checked">
-            
-        <ons-list-item modifier="chevron" ng-click="myNavigator.resetToPage('business_index.html', {is_business: 1, selected_biz: 'Business A'});">
-          Business A
-        </ons-list-item>
-        <ons-list-item modifier="chevron" ng-click="myNavigator.resetToPage('business_index.html', {is_business: 1, selected_biz: 'Business B'});">
-          Business B
-        </ons-list-item>
-        <ons-list-item modifier="chevron" ng-click="myNavigator.resetToPage('business_index.html', {is_business: 1, selected_biz: 'Business C'});">
-          Business C
-        </ons-list-item>
-        <ons-list-item modifier="chevron" ng-click="myNavigator.resetToPage('business_index.html', {is_business: 1, selected_biz: 'Business D'});">
-          Business D
-        </ons-list-item>
-
-    </ons-list>
-
-        <ons-list modifier="inset" class="settings-list" ng-hide="checked">
-            
-        <ons-list-item modifier="chevron" ng-click="myNavigator.resetToPage('business_index.html', {is_business: 1, selected_biz: 'Business 1'});">
-          Business 1
-        </ons-list-item>
-        <ons-list-item modifier="chevron" ng-click="myNavigator.resetToPage('business_index.html', {is_business: 1, selected_biz: 'Business 2'});">
-          Business 2
-        </ons-list-item>
-        <ons-list-item modifier="chevron" ng-click="myNavigator.resetToPage('business_index.html', {is_business: 1, selected_biz: 'Business 3'});">
-          Business 3
-        </ons-list-item>
-        <ons-list-item modifier="chevron" ng-click="myNavigator.resetToPage('business_index.html', {is_business: 1, selected_biz: 'Business 4'});">
-          Business 4
-        </ons-list-item>
-
-    </ons-list>
-
-</div>
-
+</ons-page>

@@ -17,14 +17,18 @@
 
     <label class="tab-bar__item tab-bar--top-border__item" ng-click="checked=0">
       <input type="radio" name="top-tab-bar-b">
-      <button class="tab-bar__button tab-bar--top-border__button"">
+      <button class="tab-bar__button tab-bar--top-border__button">
         <span ng-click="showList = !showList">Map</span>
       </button>
     </label>
   </div>
 
+  <div class="margin10 text-center">
+      <br/>
+      Currently, you don't have any check-in in <span class="color-vcess">Vcess</span> yet.
+  </div>
 
-  <ons-list modifier="inset" class="settings-list" ng-show="checked">
+  <!-- <ons-list modifier="inset" class="settings-list" ng-show="checked">
             
         <ons-list-item style="color: black">
           <b>Location 1</b><br/>
@@ -41,7 +45,7 @@
 
     </ons-list>
 
-    <p ng-hide="checked" style="color: black">[Show all locations in one map]</p>
+    <p ng-hide="checked" style="color: black">[Show all locations in one map]</p> -->
 
 </div>
 
