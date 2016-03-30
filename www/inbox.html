@@ -1,4 +1,4 @@
-<ons-page ng-init="login_status=0" ng-controller="InboxCtrl">
+<ons-page ng-controller="InboxCtrl">
     <ons-toolbar>
         <div class="center"><span>Inbox</spand></div>
         <div class="right">
@@ -16,7 +16,7 @@
         <ons-button class="button--large--quiet" ng-click="myNavigator.pushPage('signup.html');">Sign Up</ons-button>
     </div>
 
-    <div ng-show="login_status">
+    <!-- <div ng-show="login_status">
         <ons-list modifier="inset" style="margin-top: 10px">
 
         <ons-list-item ng-repeat="n in getRate(5) track by $index">
@@ -44,7 +44,7 @@
         </ons-list-item>
     </ons-list>
 
-    </div>
+    </div> -->
 </ons-page>
 
 

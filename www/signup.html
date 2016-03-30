@@ -19,10 +19,10 @@
         </div>
             
         <div ng-show="showEmail && !login" class="email-signup-form">
-            <input type="text" class="text-input--underbar" placeholder="Name*" value="">
-            <input type="email" class="text-input--underbar" placeholder="Email*" value="">
-            <input type="password" class="text-input--underbar" placeholder="Password*" value="">
-            <ons-button modifier="large" ng-click="alert('Coming soon!');">Sign Up</ons-button>
+            <input type="text" class="text-input--underbar" placeholder="Full Name*" value="" ng-model="txt_name">
+            <input type="email" class="text-input--underbar" placeholder="Email*" value="" ng-model="txt_email">
+            <input type="password" class="text-input--underbar" placeholder="Password*" value="" ng-model="txt_pass">
+            <ons-button modifier="large" ng-click="signup(txt_name, txt_email, txt_pass);">Sign Up</ons-button>
         </div>
     </div>
 </ons-page>

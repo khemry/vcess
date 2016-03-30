@@ -1,20 +1,49 @@
 //var app = angular.module('myApp',['onsen','ngMaterial']);
 
-var app = ons.bootstrap('myApp', ['onsen', 'LocalStorageModule', 'ezfb']);
+var app = ons.bootstrap('myApp', ['onsen']);
 
-app.config(function (ezfbProvider) {
-  var myInitFunction = function ($window, $rootScope, ezfbInitParams) {
-    $window.FB.init({
-      appId: '1462712874057702'
-    });
-    // or
-    // $window.FB.init(ezfbInitParams);
+// app.run(['$rootScope', '$window', 
+//   function($rootScope, $window) {
 
-    $rootScope.$broadcast('FB.init');
-  };
+//   $rootScope.user = {};
 
-  ezfbProvider.setInitFunction(myInitFunction);
-});
+//   $window.fbAsyncInit = function() {
+//     FB.init({ 
+//       appId      : '1745243692387113',
+//       xfbml      : true,
+//       version    : 'v2.5'
+
+//       // appId: '1124462220940009', 
+//       // status: true, 
+//       // cookie: true, 
+//       // xfbml: true 
+//     });
+
+//     //sAuth.watchAuthenticationStatusChange();
+
+//   };
+
+  
+
+//   (function(d){
+//     var js, 
+//     id = 'facebook-jssdk', 
+//     ref = d.getElementsByTagName('script')[0];
+
+//     if (d.getElementById(id)) {
+//       return;
+//     }
+
+//     js = d.createElement('script'); 
+//     js.id = id; 
+//     js.async = true;
+//     js.src = "http://connect.facebook.net/en_US/all.js";
+
+//     ref.parentNode.insertBefore(js, ref);
+
+//   }(document));
+
+// }]);
 
 app.service('GlobalParameters', function(){
 	
@@ -24,6 +53,7 @@ app.service('GlobalParameters', function(){
 	this.is_owner = 0;
 	this.is_business = 0;
 	this.selected_biz="";
+	this.login_status = 0;
 
 	this.SetHomePage = function(a, b, c){
 		this.search_home = a;
@@ -43,6 +73,10 @@ app.service('GlobalParameters', function(){
 	this.setSelectedBiz = function(value){
 		this.selected_biz = value;
 	}
+
+	this.setLoginStatus = function(value){
+		this.login_status = value;
+	}
 });
 
 app.service('MsgService', ['$window', function(win) {
@@ -53,8 +87,6 @@ app.service('MsgService', ['$window', function(win) {
 }]);
 
 app.service('LocationService', function($http, $timeout){
-	
-	
 	this.getCurrentLocation = function(){
 		// console.log('Service');
 		// var position = [{
@@ -95,6 +127,110 @@ app.service('LocationService', function($http, $timeout){
 		//console.log(test)
 		return latlng;
     }
+});
+
+app.controller('SignupCtrl', function($scope, GlobalParameters, ezfb, $http){
+	console.log('Signup Ctrl');
+
+	$scope.signup = function(fullname, email, password){
+		var req = {
+		 	method: 'POST',
+		 	url: 'http://www.vcess.com/ajax/authenticate.php',
+		 	headers: {
+		   		'Content-Type': 'application/json'
+		 	},
+		 	data: { signup: 1, fullname: fullname, email: email, password: password }
+		}
+
+		console.log(req);
+			$http(req).then(function(data){
+				console.log(data);
+				if (data['data'] == 0){
+					alert('The current email is already existed. Please use different email.');
+				} else {
+					var login_user = data['data'];
+					GlobalParameters.login_status = 1;
+					$scope.myNavigator.pushPage('profile_index.html', {login_user: login_user});
+				}
+			}, function(error){
+				alert('Failed: ' + error);
+			});
+	}
+
+	alert = function(msg) {
+	    ons.notification.alert({
+	      message: msg
+	    });
+	}
+	//console.log(FB);
+	
+	$scope.alert = function(msg) {
+    	ons.notification.alert({message: msg, title: 'Vcess'});
+	}
+	
+	login = function () {
+    /**
+     * Calling FB.login with required permissions specified
+     * https://developers.facebook.com/docs/reference/javascript/FB.login/v2.0
+     */
+    ezfb.login(function (res) {
+      /**
+       * no manual $scope.$apply, I got that handled
+       */
+      if (res.authResponse) {
+        updateLoginStatus(updateApiMe);
+      }
+    }, {scope: 'email'});
+  };
+
+	$scope.login = login();
+});
+
+
+app.controller("LoginCtrl", function($scope, $http, GlobalParameters){
+	console.log('LoginCtrl');
+
+	$scope.SendEmail = function(email){
+		alert("A password recovery email has been sent.");
+		$scope.myNavigator.pushPage('profile_index.html');
+	}
+
+	$scope.login = function(email, password){
+		console.log('Login');
+		var req = {
+		 	method: 'POST',
+		 	url: 'http://www.vcess.com/ajax/authenticate.php',
+		 	headers: {
+		   		'Content-Type': 'application/json'
+		 	},
+		 	data: { login: 1, email: email, password: password }
+		}
+
+		console.log(req);
+			$http(req).then(function(data){
+				console.log(data);
+				if (data['data'].length == 0){
+					//$scope.data_not_found = 1;
+					alert('Incorrect email or password. Please try again.');
+				} else {
+					var login_user = data['data'];
+					GlobalParameters.login_status = 1;
+					$scope.myNavigator.pushPage('profile_index.html', {login_user: login_user});
+				}
+			}, function(error){
+				alert('Failed: ' + error);
+			});
+	}
+
+	alert = function(msg) {
+	    ons.notification.alert({
+	      message: msg
+	    });
+	}
+
+	$scope.login_facebook = function(){
+		console.log('login facebook');
+	}
 });
 
 
@@ -459,40 +595,16 @@ app.controller('HomeCtrl', function($scope, $http, GlobalParameters){
 	$scope.shop_list_home = GlobalParameters.shop_list_home;
 });
 
-app.controller('SignupCtrl', function($scope, localStorageService, ezfb){
-	console.log('Signup Ctrl');
-	//console.log(FB);
-	
-	$scope.alert = function(msg) {
-    	ons.notification.alert({message: msg, title: 'Vcess'});
-	}
-	
-	login = function () {
-    /**
-     * Calling FB.login with required permissions specified
-     * https://developers.facebook.com/docs/reference/javascript/FB.login/v2.0
-     */
-    ezfb.login(function (res) {
-      /**
-       * no manual $scope.$apply, I got that handled
-       */
-      if (res.authResponse) {
-        updateLoginStatus(updateApiMe);
-      }
-    }, {scope: 'email'});
-  };
 
-	$scope.login = login();
-});
 
-app.controller('LoginCtrl', function($scope, localStorageService){
-	console.log('Login Ctrl');
+// app.controller('LoginCtrl', function($scope, localStorageService){
+// 	console.log('Login Ctrl');
 
 	
-	$scope.alert = function(msg) {
-    	ons.notification.alert({message: msg, title: 'Vcess'});
-	}
-});
+// 	$scope.alert = function(msg) {
+//     	ons.notification.alert({message: msg, title: 'Vcess'});
+// 	}
+// });
 
 
 
@@ -530,6 +642,8 @@ app.controller('BusinessIndexCtrl', function($scope, GlobalParameters){
 
 app.controller('InboxCtrl', function($scope, GlobalParameters){
 	console.log('InboxCtrl');
+
+	$scope.login_status = GlobalParameters.login_status;
 
 	$scope.getRate = function(num) {
 		return new Array(num);   
@@ -804,19 +918,28 @@ app.controller('ItemsCtrl', function($scope){
 
 });
 
+app.controller('NewsFeedCtrl', function($scope, GlobalParameters){
+	console.log('NewsFeedCtrl');
+	$scope.login_status = GlobalParameters.login_status;
+});
 
+app.controller('MeetUpCtrl', function($scope, GlobalParameters){
+	console.log('MeetUpCtrl');
+	$scope.login_status = GlobalParameters.login_status;
+});
 
-
-app.controller('ProfileCtrl', function($scope, GlobalParameters, localStorageService){
-	console.log(GlobalParameters.is_business);
+app.controller('ProfileCtrl', function($scope, GlobalParameters){
 	console.log('Profile Ctrl');
+
+	$scope.login_status = GlobalParameters.login_status;
+	var page = myNavigator.getCurrentPage();
+	$scope.login_user = page.options.login_user;	
+
+
+
+
 	$scope.is_business = GlobalParameters.is_business;
 	console.log($scope.is_business);
-
-	function getItem(key) {
-	   return localStorageService.get(key);
-	}
-	
 });
 
 app.controller('PropertiesCtrl', function($scope, GlobalParameters){

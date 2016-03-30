@@ -4,7 +4,7 @@
 	    <div class="center"><span>Profile</spand></div>
 	</ons-toolbar>
 
-	<div ng-init="login_status=0" class="margin10 text-center">
+	<div class="margin10 text-center">
 		<div ng-show="!login_status">
 			<img src="images/logos/Final_logo_green.png" class="logo-frame"/>
 			<h4>Welcome to Vcess App!</h3>
@@ -15,11 +15,11 @@
 		<div ng-show="login_status">  
 			<ons-row>
 		        <ons-col width="60px">
-		          <img src="images/test/user.jpg" class="profile-image">
+		          <img src="images/default_user.png" class="profile-image">
 		        </ons-col>
 		        <ons-col>
-		          Khourn Khemry
-		          <div class="opacity05 font-size-12">khourn.khemry@gmail.com</div>
+		          {{login_user['full_name']}}
+		          <div class="opacity05 font-size-12">{{login_user['email']}}</div>
 		        </ons-col>
 		    </ons-row>
 			
