@@ -2,49 +2,6 @@
 
 var app = ons.bootstrap('myApp', ['onsen']);
 
-// app.run(['$rootScope', '$window', 
-//   function($rootScope, $window) {
-
-//   $rootScope.user = {};
-
-//   $window.fbAsyncInit = function() {
-//     FB.init({ 
-//       appId      : '1745243692387113',
-//       xfbml      : true,
-//       version    : 'v2.5'
-
-//       // appId: '1124462220940009', 
-//       // status: true, 
-//       // cookie: true, 
-//       // xfbml: true 
-//     });
-
-//     //sAuth.watchAuthenticationStatusChange();
-
-//   };
-
-  
-
-//   (function(d){
-//     var js, 
-//     id = 'facebook-jssdk', 
-//     ref = d.getElementsByTagName('script')[0];
-
-//     if (d.getElementById(id)) {
-//       return;
-//     }
-
-//     js = d.createElement('script'); 
-//     js.id = id; 
-//     js.async = true;
-//     js.src = "http://connect.facebook.net/en_US/all.js";
-
-//     ref.parentNode.insertBefore(js, ref);
-
-//   }(document));
-
-// }]);
-
 app.service('GlobalParameters', function(){
     
 	this.search_home = 1;
@@ -236,6 +193,7 @@ app.controller("LoginCtrl", function($scope, $http, GlobalParameters){
 
 app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 	console.log('SearchCtrl');
+	
 	var search_city_en;
 	//$scope.location_text = "Input search location...";
 	$scope.data_not_found = 0;
@@ -253,35 +211,86 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 	}
 	var current_latlng;
 
-    $scope.getCurrentLocation = function(){
-    	$timeout(function(){
-			var latlng;
+	getCurrentLocation = function(){
+		var deferred = $q.defer();
+		var current_location = [{
+			addr: '', 
+			coordinate: {}
+		}];
+
+		$timeout(function(){
 	    	navigator.geolocation.getCurrentPosition(function(position) {
-	    		//$scope.location_text =position.coords.latitude;
 	    		var latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
-	    		current_latlng = latlng;
-	    		console.log(latlng);
 	    		var geocoder = new google.maps.Geocoder();
 	    		geocoder.geocode({'location': latlng}, function(results, status) {
 			          if (status === google.maps.GeocoderStatus.OK) {
 			            if (results[1]) {
-			            	$scope.$apply($scope.location_text =results[1].formatted_address);
-			            	//search_city_en = results[1].formatted_address.split(',')[1].replace(/-ku|-shi/gi,'').replace(' ','');
-			            	search_city_en = results[1].formatted_address;
-			            	console.log(search_city_en);
+			            	current_location['coordinate'] = latlng;
+			            	current_location['addr'] = results[1].formatted_address;
+			            	deferred.resolve(current_location);
 			            } else {
-			              window.alert('No results found');
+			              	console.log('No results found');
+			              	deferred.reject('No results found');
 			            }
 			          } else {
-			            window.alert('Geocoder failed due to: ' + status);
+			            deferred.reject('Geocoder failed due to: ' + status);
 			          }
 			        });
 		      		        
 				}, function(error){
-					console.log('code: '    + error.code + ' ' + 'message: ' + error.message + '\n');
 					alert(error.message + " Please enable the location service.");
+					deferred.reject('code: '    + error.code + ' ' + 'message: ' + error.message + '\n');
 				});
-    		},10);
+    		},100);
+		return deferred.promise;
+	}
+
+	OnLoad = function(){
+		getCurrentLocation().then(function(result) {
+    		$scope.location_text = result['addr'];
+    		$scope.load_complete = 1;
+    	}, function(error){
+    		console.log(error);
+    		$scope.load_complete = 1;
+    	});
+	}
+
+	OnLoad();
+
+    $scope.CurrentLocation = function(){
+    	getCurrentLocation().then(function(result) {
+    		$scope.location_text = result['addr'];
+    	}, function(error){
+    		console.log(error);
+    	});
+   //  	$timeout(function(){
+			// var latlng;
+	  //   	navigator.geolocation.getCurrentPosition(function(position) {
+	  //   		//$scope.location_text =position.coords.latitude;
+	  //   		var latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
+	  //   		current_latlng = latlng;
+	  //   		console.log(latlng);
+	  //   		var geocoder = new google.maps.Geocoder();
+	  //   		geocoder.geocode({'location': latlng}, function(results, status) {
+			//           if (status === google.maps.GeocoderStatus.OK) {
+			//             if (results[1]) {
+			//             	$scope.$apply($scope.location_text =results[1].formatted_address);
+			//             	//search_city_en = results[1].formatted_address.split(',')[1].replace(/-ku|-shi/gi,'').replace(' ','');
+			//             	search_city_en = results[1].formatted_address;
+			//             	console.log(search_city_en);
+			//             } else {
+			//               window.alert('No results found');
+			//             }
+			//           } else {
+			//             window.alert('Geocoder failed due to: ' + status);
+			//           }
+			//         });
+		      		        
+			// 	}, function(error){
+			// 		console.log('code: '    + error.code + ' ' + 'message: ' + error.message + '\n');
+			// 		alert(error.message + " Please enable the location service.");
+			// 	});
+   //  		},10);
     }
 
  
