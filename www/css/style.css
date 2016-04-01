@@ -3,6 +3,10 @@
     src: url("../fonts/Exo-Medium.otf") format("opentype");
 }
 
+* {
+	-webkit-user-select: all;
+}
+
 *, .tab-bar__label {
 	font-family:exo_medium;
 }
@@ -62,6 +66,14 @@
 
 .font-size-12 {
 	font-size: 12px;
+}
+
+.tag {
+	font-size: 14px;
+	line-height: 14px;
+	padding: 5px;
+	margin-bottom: 5px;
+	margin-right: 5px;
 }
 
 .font-size-14 {
@@ -320,6 +332,8 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 .search-input {
+	/*position: relative;*/
+    z-index: 99;
 	margin: 0 3% 0 3%;
 	width: 94%; 
 	font-family:exo_medium;	

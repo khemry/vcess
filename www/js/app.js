@@ -251,32 +251,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 		return deferred.promise;
 	}
 
-	OnLoad = function(){
-		$scope.businesses = {};
-		getCurrentLocation().then(function(result) {
-    		$scope.location_text = result['addr'];
-    		$scope.load_complete = 1;
-    	}, function(error){
-    		console.log(error);
-    		$scope.load_complete = 1;
-    	});
-	}
-
-	OnLoad();
-
-    $scope.CurrentLocation = function(){
-    	$scope.Clear();
-
-    	getCurrentLocation().then(function(result) {
-    		$scope.location_text = result['addr'];
-    	}, function(error){
-    		console.log(error);
-    	});
-    }
-
-    var no_distance = 0;
-
-    $scope.search = function(search_text, location, search_item_flag){
+	$scope.search = function(search_text, location, search_item_flag){
     	console.log(search_text);
     	if (search_text == undefined) {
     		alert('Please input your search keyword.');
@@ -304,11 +279,48 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 		    			$scope.disabled = 0;
 		    			no_distance = 0;
 		    		}
+		    		if (selected_keyword != undefined){
+						$scope.load_complete = 1;
+					}
 		    	});
     	}
     	
     	
     }
+
+	OnLoad = function(){
+		
+		$scope.businesses = {};
+		getCurrentLocation().then(function(result) {
+    		$scope.location_text = result['addr'];
+    		if (selected_keyword != undefined){
+				//console.log(selected_keyword);
+				$scope.search_text = selected_keyword;
+				$scope.search($scope.search_text, $scope.location_text, 1);
+			} else {
+				$scope.load_complete = 1;	
+			}
+    	}, function(error){
+    		console.log(error);
+    		$scope.load_complete = 1;
+    	});
+	}
+	var selected_keyword = myNavigator.getCurrentPage().options.keyword;	
+	OnLoad();
+
+    $scope.CurrentLocation = function(){
+    	$scope.Clear();
+
+    	getCurrentLocation().then(function(result) {
+    		$scope.location_text = result['addr'];
+    	}, function(error){
+    		console.log(error);
+    	});
+    }
+
+    var no_distance = 0;
+
+    
 
     $scope.SortBy =function(sort_item){
     	if (no_distance){
@@ -361,6 +373,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 				} else {
 					var all_data = data['data'];
 					for (i = 0; i < all_data.length; i++) { 
+							all_data[i]['tel-phone'] = "tel:" + all_data[i]['phone'];
 							if (current_location['addr'] != ""){
 								var tmp = GetDistance(current_location['coordinate'], all_data[i]['coordinate'], all_data[i])
 								.then(function(result) {
@@ -596,6 +609,7 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
 				} else {
 					var all_data = data['data'];
 					for (i = 0; i < all_data.length; i++) { 
+							all_data[i]['tel-phone'] = "tel:" + all_data[i]['phone'];
 							if (current_location['addr'] != ""){
 								var tmp = GetDistance(current_location['coordinate'], all_data[i]['coordinate'], all_data[i])
 								.then(function(result) {
@@ -787,6 +801,7 @@ app.controller('AllCategoriesCtrl', function($scope, $http){
 
 app.controller('HomeCtrl', function($scope, $http, GlobalParameters){
 	console.log('Home Ctrl');
+	$scope.top_keywords = ['Wifi', 'Electric Outlet', 'Stationary', 'Coffee', 'Beer', 'Wine', 'Juice', 'Umbrella', 'Shoes', 'Bag'];
 
 	$scope.top_categories = [
 		{name: 'Restaurant', key: 'restaurant'},
