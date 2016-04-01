@@ -1,16 +1,19 @@
 <!-- <ons-navigator animation="slide" var="myNavigator"> -->
 <ons-page ng-controller="HomeCtrl">
-
-	<div ng-show="search_home" style="width: 100%; height: 100%">
+    <ons-toolbar style="background-image: url('images/test/background_sushi.jpg');height: 100px;" ng-click="myNavigator.pushPage('search.html');">
+    </ons-toolbar>
+    
+	<div ng-show="search_home" style="width: 100%; height: 100%;">
+    
 		<!-- <ons-button modifier="cta" class="always_on_top" style="margin: 0 auto;" ng-click="myNavigator.pushPage('all_categories.html');">
           All Categories
         </ons-button> -->
-
-		<div style="text-align: center" class="category-template">
+        
+		<!-- <div style="text-align: center" class="category-template">
 			<br />
 		    <input type="search" class="search-input" placeholder="What are you looking for?" ng-click="myNavigator.pushPage('search.html');">
 		    <h4 style="color: white; padding-top:30px"></h4>
-		</div>
+		</div> -->
 
 		<div ng-repeat="category in top_categories" style="text-align: center" class="{{category['key']}}" ng-click="myNavigator.pushPage('category_list.html', {selected_category: category['name'], selected_category_key: category['key']})";>
 			<h4 style="color: white; padding-top:50px">{{category['name']}}</h4>

@@ -7,6 +7,12 @@
 	font-family:exo_medium;
 }
 
+.always-on-top {
+    position: fixed;
+    /*overflow: hidden;
+    z-index: 0;*/
+}
+
 .margin10 {
 	margin: 10px;
 }
