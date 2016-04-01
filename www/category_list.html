@@ -1,4 +1,4 @@
-<ons-page ng-controller="CategoryListCtrl">
+<ons-page ng-controller="CategoryListCtrl" ng-init="load_complete=0; search_result = 0; disabled=1">
 
     <ons-toolbar>
         <div class="left"><ons-back-button></ons-back-button></div>
@@ -6,7 +6,7 @@
     </ons-toolbar>
 
 
-    <div class="margin10" ng-init="checked=1">
+    <div class="margin10" ng-init="checked=1" ng-show="load_complete">
 
         <ons-list modifier="inset" class="margin-10-0-10-0 font-size-14" ng-init="show_current_location=0">
             <ons-list-item ng-click="show_current_location=!show_current_location">
@@ -22,12 +22,23 @@
                 All locations
             </ons-list-item>
         </ons-list>
-        <ons-button modifier="large" ng-click="GetData(selected_category, selected_category_key, location_text)"><span>Search</span></ons-button>
+        <div ng-show="sort_by_rate">
+            <ons-button class="width-55 float-left" ng-click="search(selected_category, selected_category_key, location_text)"><span>Search</span></ons-button>
+            <ons-button modifier="outline" ng-click="sort_by_rate=!sort_by_rate; SortBy('distance')" class="float-right" ng-disabled="disabled"><span>Sort by Distance</span></ons-button>
+        </div>
+        <div ng-show="!sort_by_rate">
+            <ons-button class="width-65 float-left" ng-click="search(selected_category, selected_category_key, location_text)"><span>Search</span></ons-button>
+            <ons-button modifier="outline" ng-click="sort_by_rate=!sort_by_rate; SortBy('-rate')" class="float-right" ng-disabled="disabled"><span>Sort by Rate</span></ons-button>
+        </div>
+
+        <br/><br/>
+    </div>
+    <div ng-show="search_result">
         <p ng-show="data_not_found" class="text-center">Sorry! No result is found. Please try again.</p>
     
         <ons-list modifier="inset" class="margin-10-0-10-0" ng-show="!data_not_found">
               
-            <ons-list-item ng-repeat="business in businesses" modifier="chevron" ng-click="myNavigator.pushPage('business_home.html', {selected_biz: business});">
+            <ons-list-item ng-repeat="business in businesses| orderBy:predicate track by $index" modifier="chevron" ng-click="myNavigator.pushPage('business_home.html', {selected_biz: business});">
                 <ons-row class="margin-10-0-10-0">
                     <ons-col width="80px">
                         <img src="images/default.png" class="biz-image margin-top-10">
@@ -59,10 +70,7 @@
                 </ons-row>
             </ons-list-item>
         </ons-list>
-
-          
-
-  </div>
+    </div>
   
 
 </ons-page>

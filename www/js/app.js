@@ -193,9 +193,12 @@ app.controller("LoginCtrl", function($scope, $http, GlobalParameters){
 
 app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 	console.log('SearchCtrl');
-	
-	var search_city_en;
-	//$scope.location_text = "Input search location...";
+
+	var current_location = [{
+		addr: '', 
+		coordinate: {}
+	}];
+
 	$scope.data_not_found = 0;
 	var orderBy = $filter('orderBy');
 
@@ -206,18 +209,15 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 	
 	alert = function(msg) {
 	    ons.notification.alert({
-	      message: msg
+	      message: msg,
+	      title: 'Vcess'
 	    });
 	}
-	var current_latlng;
+	
 
 	getCurrentLocation = function(){
 		var deferred = $q.defer();
-		var current_location = [{
-			addr: '', 
-			coordinate: {}
-		}];
-
+		
 		$timeout(function(){
 	    	navigator.geolocation.getCurrentPosition(function(position) {
 	    		var latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
@@ -246,6 +246,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 	}
 
 	OnLoad = function(){
+		$scope.businesses = {};
 		getCurrentLocation().then(function(result) {
     		$scope.location_text = result['addr'];
     		$scope.load_complete = 1;
@@ -258,83 +259,84 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 	OnLoad();
 
     $scope.CurrentLocation = function(){
+    	$scope.businesses = {};
+    	$scope.search_result = 0;
+
     	getCurrentLocation().then(function(result) {
     		$scope.location_text = result['addr'];
     	}, function(error){
     		console.log(error);
     	});
-   //  	$timeout(function(){
-			// var latlng;
-	  //   	navigator.geolocation.getCurrentPosition(function(position) {
-	  //   		//$scope.location_text =position.coords.latitude;
-	  //   		var latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
-	  //   		current_latlng = latlng;
-	  //   		console.log(latlng);
-	  //   		var geocoder = new google.maps.Geocoder();
-	  //   		geocoder.geocode({'location': latlng}, function(results, status) {
-			//           if (status === google.maps.GeocoderStatus.OK) {
-			//             if (results[1]) {
-			//             	$scope.$apply($scope.location_text =results[1].formatted_address);
-			//             	//search_city_en = results[1].formatted_address.split(',')[1].replace(/-ku|-shi/gi,'').replace(' ','');
-			//             	search_city_en = results[1].formatted_address;
-			//             	console.log(search_city_en);
-			//             } else {
-			//               window.alert('No results found');
-			//             }
-			//           } else {
-			//             window.alert('Geocoder failed due to: ' + status);
-			//           }
-			//         });
-		      		        
-			// 	}, function(error){
-			// 		console.log('code: '    + error.code + ' ' + 'message: ' + error.message + '\n');
-			// 		alert(error.message + " Please enable the location service.");
-			// 	});
-   //  		},10);
     }
 
- 
+    var no_distance = 0;
 
-    $scope.search = function(search_text, location){
-    	console.log('GetData');
-    	if (location === "All locations") {
-    		location = "";
+    $scope.search = function(search_text, location, search_item_flag){
+    	console.log(search_text);
+    	if (search_text == undefined) {
+    		alert('Please input your search keyword.');
+    	} else {
+    		if (location === "All locations") {
+	    		location = "";
+	    	}
+		    	GetData(search_text, location, search_item_flag).then(function(result) {
+		    		// console.log(result);
+		    		// $scope.businesses = result;
+		    		// $scope.predicate = 'distance';
+		    		// $scope.search_result = 1;
+
+		    		console.log(result);
+		    		$scope.businesses = result;
+		    		$scope.data_not_found = 0;
+		    		//$scope.predicate = 'distance';
+		    		$scope.search_result = 1;
+		    		if (result[0]['distance'] == ""){
+		    			$scope.predicate = '-rate';
+		    			no_distance = 1;
+		    			$scope.disabled = 1;
+		    		} else {
+		    			$scope.predicate = 'distance';
+		    			$scope.disabled = 0;
+		    			no_distance = 0;
+		    		}
+		    	});
     	}
-
-    	TEST(search_text, location).then(function(result) {
-    		console.log(result);
-    		
-
-    		//var tmp = orderBy(result, 'distance');
-    		$scope.businesses = result;
-    	});
-
+    	
     	
     }
 
+    $scope.SortBy =function(sort_item){
+    	if (no_distance){
+			alert('Specific source location required.');
+		} else {
+			$scope.predicate = sort_item;	
+		}
+    }
+
+    function GetSearchCity(addr){
+    	var search_city;
+    	if (addr.indexOf(',') > -1){
+    		addr = addr.replace(/,/gi,'').split(" ");
+			for (i = 0; i < addr.length; i++) { 
+		    	if (addr[i].indexOf('-ku') > -1 || addr[i].indexOf('-shi') > -1){
+		    		search_city = addr[i].replace(/-ku|-shi/gi,'');	
+		    	}
+			}
+    	} else {
+    		if (addr.indexOf('-ku') > -1 || addr.indexOf('-shi') > -1){
+		    	search_city = addr.replace(/-ku|-shi/gi,'');	
+		    } else {
+		    	search_city = addr;
+		    }
+    	}
+    	return search_city;
+    }
    
-	function TEST(search_text, location){
-		console.log('test');  
+	function GetData(search_text, location, search_item_flag){
 		console.log(location);  
 		var deferred = $q.defer();
-		var tmp = "";
-	
-		if (search_city_en == undefined){
-			tmp = location;
-			if (tmp.indexOf('-ku') > -1 || tmp.indexOf('-shi') > -1){
-			    tmp = tmp.replace(/-ku|-shi/gi,'');	
-			} 
-		} else {
-			console.log('location');
-			console.log(search_city_en);
-			search_city_en = search_city_en.replace(/,/gi,'').split(" ");
-			for (i = 0; i < search_city_en.length; i++) { 
-			    if (search_city_en[i].indexOf('-ku') > -1 || search_city_en[i].indexOf('-shi') > -1){
-			    	tmp = search_city_en[i].replace(/-ku|-shi/gi,'');	
-			    }
-			}
-		}
-		console.log(tmp);  
+		var search_city = GetSearchCity(location);
+		console.log(search_city);  
 
 		var req = {
 		 	method: 'POST',
@@ -342,7 +344,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 		 	headers: {
 		   		'Content-Type': 'application/json'
 		 	},
-		 	data: { keyword: search_text, city_en: tmp }
+		 	data: { keyword: search_text, city_en: search_city, search_item_flag: search_item_flag }
 		}
 
 		console.log(req);
@@ -354,16 +356,20 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 				} else {
 					var all_data = data['data'];
 					for (i = 0; i < all_data.length; i++) { 
-							if (current_latlng != undefined){
-								var tmp = GetDistance(current_latlng, all_data[i]['coordinate'], all_data[i])
+							if (current_location['addr'] != ""){
+								var tmp = GetDistance(current_location['coordinate'], all_data[i]['coordinate'], all_data[i])
 								.then(function(result) {
+
 									all_data[i] = result;
 								  	console.log(all_data[i]);
 								  	return result;
 								}, function(reason) {
 								  	alert('Failed: ' + reason);
 								});
-							} 
+							} else {
+								all_data[i]['distance'] = "";
+							}
+
 					}
 		  			deferred.resolve(all_data);
 				}
@@ -374,7 +380,17 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 	}
 
 	$scope.getAllLocation = function(){
+		$scope.search_result = 0;
+		$scope.businesses = {};
 		$scope.location_text = "All locations";
+		current_location['coordinate'] = {};
+		current_location['addr'] = '';
+
+	}
+
+	$scope.Clear = function(){
+		$scope.search_result = 0;
+		$scope.businesses = {};
 	}
 
 	function GetDistance(origin, destination, tmp){
@@ -394,11 +410,14 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 					if (status !== google.maps.DistanceMatrixStatus.OK) {
 		            	alert('Error was: ' + status);
 		            	deferred.reject('Error was: ' + status);
-		            	//return deferred.promise;
 
 		          	} else {
 		          		distance = response.rows[0].elements[0].distance.text;
+		          		console.log(tmp['distance']);
 		          		tmp['distance'] = distance;
+		          		// tmp['distance'] = distance.replace(' km','');
+		          		// tmp['distance'] = parseFloat(tmp['distance']);
+		          		console.log(tmp['distance']);
 		          		deferred.resolve(tmp);
 		          	}
 				});
@@ -415,98 +434,143 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
 	$scope.selected_category_key = page.options.selected_category_key;
 	$scope.data_not_found = 0;
 	//var search_city_en = "";
-	var search_city_en;
-	var current_latlng;
-	var orderBy = $filter('orderBy');
-	$scope.businesses = [];
+	//var search_city_en;
+	//var current_latlng;
+	//var orderBy = $filter('orderBy');
+	//$scope.businesses = [];
+
+	var current_location = [{
+		addr: '', 
+		coordinate: {}
+	}];
+
+	alert = function(msg) {
+	    ons.notification.alert({
+	      message: msg,
+	      title: 'Vcess'
+	    });
+	}
+
+	getCurrentLocation = function(){
+		var deferred = $q.defer();
+		
+		$timeout(function(){
+	    	navigator.geolocation.getCurrentPosition(function(position) {
+	    		var latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
+	    		var geocoder = new google.maps.Geocoder();
+	    		geocoder.geocode({'location': latlng}, function(results, status) {
+			          if (status === google.maps.GeocoderStatus.OK) {
+			            if (results[1]) {
+			            	current_location['coordinate'] = latlng;
+			            	current_location['addr'] = results[1].formatted_address;
+			            	deferred.resolve(current_location);
+			            } else {
+			              	console.log('No results found');
+			              	deferred.reject('No results found');
+			            }
+			          } else {
+			            deferred.reject('Geocoder failed due to: ' + status);
+			          }
+			        });
+		      		        
+				}, function(error){
+					alert(error.message + " Please enable the location service.");
+					deferred.reject('code: '    + error.code + ' ' + 'message: ' + error.message + '\n');
+				});
+    		},100);
+		return deferred.promise;
+	}
+
+	OnLoad = function(){
+		$scope.businesses = {};
+		getCurrentLocation().then(function(result) {
+    		$scope.location_text = result['addr'];
+    		$scope.load_complete = 1;
+    	}, function(error){
+    		console.log(error);
+    		$scope.load_complete = 1;
+    	});
+	}
+
+	OnLoad();
 
 	$scope.getAllLocation = function(){
 		$scope.location_text = "All locations";
 	}
+	var no_distance = 0;
 
-	$scope.getCurrentLocation = function(){
-    	$timeout(function(){
-		var latlng;
-    	navigator.geolocation.getCurrentPosition(function(position) {
-    		var latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
-    		console.log(latlng);
-    		current_latlng = latlng;
-    		var geocoder = new google.maps.Geocoder();
-    		geocoder.geocode({'location': latlng}, function(results, status) {
-		          if (status === google.maps.GeocoderStatus.OK) {
-		            if (results[1]) {
-		            	$scope.$apply($scope.location_text =results[1].formatted_address);
-		            	//search_city_en = results[1].formatted_address.split(',')[1].replace(/-ku|-shi/gi,'').replace(' ','');
-		            	search_city_en = results[1].formatted_address;
-		            	console.log(search_city_en);
-		            } else {
-		              window.alert('No results found');
-		            }
-		          } else {
-		            window.alert('Geocoder failed due to: ' + status);
-		          }
-		        });
-	      		        
-			}, function(error){
-				console.log('code: '    + error.code + ' ' + 'message: ' + error.message + '\n');
-				alert(error.message + " Please enable the location service.");
-			});
-    	},10);
-    }
+	$scope.search = function(selected_category, selected_category_key, location){
+		
 
-    
-    $scope.GetData = function(selected_category, selected_category_key, location){
-    	if(selected_category_key === undefined){
+		if(selected_category_key === undefined){
     		selected_category_key = selected_category;
-
     	}
+
     	if (location === "All locations") {
     		location = "";
     	}
-    	TEST(selected_category_key, location).then(function(result) {
-    		console.log(result);
-    		
+	    	GetData(selected_category, selected_category_key, location).then(function(result) {
+	    		console.log(result);
+	    		$scope.businesses = result;
+	    		$scope.data_not_found = 0;
+	    		//$scope.predicate = 'distance';
+	    		$scope.search_result = 1;
+	    		if (result[0]['distance'] == ""){
+	    			$scope.predicate = '-rate';
+	    			no_distance = 1;
+	    			$scope.disabled = 1;
+	    		} else {
+	    			$scope.predicate = 'distance';
+	    			$scope.disabled = 0;
+	    			no_distance = 0;
+	    		}
+	    	});
+    }
 
-    		//var tmp = orderBy(result, 'distance');
-    		$scope.businesses = result;
-    	});
-
+    $scope.SortBy =function(sort_item){
+    	if (no_distance){
+			alert('Specific source location required.');
+		} else {
+			$scope.predicate = sort_item;	
+		}
     	
     }
 
-   
-	function TEST(selected_category_key, location){
-		var deferred = $q.defer();
-		var tmp = "";
-	
-		if (search_city_en == undefined){
-			tmp = location;
-			if (tmp.indexOf('-ku') > -1 || tmp.indexOf('-shi') > -1){
-			    tmp = tmp.replace(/-ku|-shi/gi,'');	
-			} 
-		} else {
-			console.log('location');
-			console.log(search_city_en);
-			search_city_en = search_city_en.replace(/,/gi,'').split(" ");
-			for (i = 0; i < search_city_en.length; i++) { 
-			    if (search_city_en[i].indexOf('-ku') > -1 || search_city_en[i].indexOf('-shi') > -1){
-			    	tmp = search_city_en[i].replace(/-ku|-shi/gi,'');	
-			    }
+    function GetSearchCity(addr){
+    	var search_city;
+    	if (addr.indexOf(',') > -1){
+    		addr = addr.replace(/,/gi,'').split(" ");
+			for (i = 0; i < addr.length; i++) { 
+		    	if (addr[i].indexOf('-ku') > -1 || addr[i].indexOf('-shi') > -1){
+		    		search_city = addr[i].replace(/-ku|-shi/gi,'');	
+		    	}
 			}
-		}
-		console.log(tmp);   
-		
+    	} else {
+    		if (addr.indexOf('-ku') > -1 || addr.indexOf('-shi') > -1){
+		    	search_city = addr.replace(/-ku|-shi/gi,'');	
+		    } else {
+		    	search_city = addr;
+		    }
+    	}
+    	return search_city;
+    }
+   
+	function GetData(selected_category, selected_category_key, location){
+		console.log(location);  
+		var deferred = $q.defer();
+		var search_city = GetSearchCity(location);
+		console.log(search_city);  
+
 		var req = {
 		 	method: 'POST',
 		 	url: 'http://www.vcess.com/ajax/search.php',
 		 	headers: {
 		   		'Content-Type': 'application/json'
 		 	},
-		 	data: { category: selected_category_key, city_en: tmp }
+		 	data: { category: selected_category_key, city_en: search_city }
 		}
 
 		console.log(req);
-			
 			$http(req).then(function(data){
 				console.log('req');
 				console.log(data);
@@ -515,16 +579,19 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
 				} else {
 					var all_data = data['data'];
 					for (i = 0; i < all_data.length; i++) { 
-							if (current_latlng != undefined){
-								var tmp = GetDistance(current_latlng, all_data[i]['coordinate'], all_data[i])
+							if (current_location['addr'] != ""){
+								var tmp = GetDistance(current_location['coordinate'], all_data[i]['coordinate'], all_data[i])
 								.then(function(result) {
+
 									all_data[i] = result;
 								  	console.log(all_data[i]);
 								  	return result;
 								}, function(reason) {
 								  	alert('Failed: ' + reason);
 								});
-							} 
+							} else {
+								all_data[i]['distance'] = "";
+							}
 					}
 		  			deferred.resolve(all_data);
 				}
@@ -533,6 +600,130 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
 			});
 		return deferred.promise;
 	}
+
+	$scope.getAllLocation = function(){
+		$scope.search_result = 0;
+		$scope.businesses = {};
+		$scope.location_text = "All locations";
+		current_location['coordinate'] = {};
+		current_location['addr'] = '';
+
+	}
+
+	$scope.Clear = function(){
+		$scope.search_result = 0;
+		$scope.businesses = {};
+	}
+
+	// $scope.getCurrentLocation = function(){
+ //    	$timeout(function(){
+	// 	var latlng;
+ //    	navigator.geolocation.getCurrentPosition(function(position) {
+ //    		var latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
+ //    		console.log(latlng);
+ //    		current_latlng = latlng;
+ //    		var geocoder = new google.maps.Geocoder();
+ //    		geocoder.geocode({'location': latlng}, function(results, status) {
+	// 	          if (status === google.maps.GeocoderStatus.OK) {
+	// 	            if (results[1]) {
+	// 	            	$scope.$apply($scope.location_text =results[1].formatted_address);
+	// 	            	//search_city_en = results[1].formatted_address.split(',')[1].replace(/-ku|-shi/gi,'').replace(' ','');
+	// 	            	search_city_en = results[1].formatted_address;
+	// 	            	console.log(search_city_en);
+	// 	            } else {
+	// 	              window.alert('No results found');
+	// 	            }
+	// 	          } else {
+	// 	            window.alert('Geocoder failed due to: ' + status);
+	// 	          }
+	// 	        });
+	      		        
+	// 		}, function(error){
+	// 			console.log('code: '    + error.code + ' ' + 'message: ' + error.message + '\n');
+	// 			alert(error.message + " Please enable the location service.");
+	// 		});
+ //    	},10);
+ //    }
+
+    
+ //    $scope.GetData = function(selected_category, selected_category_key, location){
+ //    	if(selected_category_key === undefined){
+ //    		selected_category_key = selected_category;
+
+ //    	}
+ //    	if (location === "All locations") {
+ //    		location = "";
+ //    	}
+ //    	TEST(selected_category_key, location).then(function(result) {
+ //    		console.log(result);
+    		
+
+ //    		//var tmp = orderBy(result, 'distance');
+ //    		$scope.businesses = result;
+ //    	});
+
+    	
+ //    }
+
+   
+	// function TEST(selected_category_key, location){
+	// 	var deferred = $q.defer();
+	// 	var tmp = "";
+	
+	// 	if (search_city_en == undefined){
+	// 		tmp = location;
+	// 		if (tmp.indexOf('-ku') > -1 || tmp.indexOf('-shi') > -1){
+	// 		    tmp = tmp.replace(/-ku|-shi/gi,'');	
+	// 		} 
+	// 	} else {
+	// 		console.log('location');
+	// 		console.log(search_city_en);
+	// 		search_city_en = search_city_en.replace(/,/gi,'').split(" ");
+	// 		for (i = 0; i < search_city_en.length; i++) { 
+	// 		    if (search_city_en[i].indexOf('-ku') > -1 || search_city_en[i].indexOf('-shi') > -1){
+	// 		    	tmp = search_city_en[i].replace(/-ku|-shi/gi,'');	
+	// 		    }
+	// 		}
+	// 	}
+	// 	console.log(tmp);   
+		
+	// 	var req = {
+	// 	 	method: 'POST',
+	// 	 	url: 'http://www.vcess.com/ajax/search.php',
+	// 	 	headers: {
+	// 	   		'Content-Type': 'application/json'
+	// 	 	},
+	// 	 	data: { category: selected_category_key, city_en: tmp }
+	// 	}
+
+	// 	console.log(req);
+			
+	// 		$http(req).then(function(data){
+	// 			console.log('req');
+	// 			console.log(data);
+	// 			if (data['data'].length == 0){
+	// 				$scope.data_not_found = 1;
+	// 			} else {
+	// 				var all_data = data['data'];
+	// 				for (i = 0; i < all_data.length; i++) { 
+	// 						if (current_latlng != undefined){
+	// 							var tmp = GetDistance(current_latlng, all_data[i]['coordinate'], all_data[i])
+	// 							.then(function(result) {
+	// 								all_data[i] = result;
+	// 							  	console.log(all_data[i]);
+	// 							  	return result;
+	// 							}, function(reason) {
+	// 							  	alert('Failed: ' + reason);
+	// 							});
+	// 						} 
+	// 				}
+	// 	  			deferred.resolve(all_data);
+	// 			}
+	// 		}, function(error){
+	// 			deferred.reject('Error was: ' + error);
+	// 		});
+	// 	return deferred.promise;
+	// }
 
 	function GetDistance(origin, destination, tmp){
 		var deferred = $q.defer();
