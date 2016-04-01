@@ -107,6 +107,18 @@
 	width: 65%;
 }
 
+.width-40 {
+	width: 40%;
+}
+
+.width-30 {
+	width: 30%;
+}
+
+.width-100 {
+	width: 100%;
+}
+
 .alert-dialog-title {
 	color: #00aa60;
 }
