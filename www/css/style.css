@@ -95,6 +95,21 @@
 	float: right;
 }
 
+.float-left {
+	float: left;
+}
+
+.width-55 {
+	width: 55%;
+}
+
+.width-65 {
+	width: 65%;
+}
+
+.alert-dialog-title {
+	color: #00aa60;
+}
 
 /*SHOP*/
 
@@ -269,7 +284,7 @@ input[type=email], input[type=password], input[type=text] {
 	height:23%;
 }*/
 
-.normal {
+.rmal {
 	position: absolute;
 	margin-top: 10px;
 	margin-bottom: 10px;
