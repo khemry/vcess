@@ -25,9 +25,9 @@
         <!-- <div ng-show="things"> -->
             <ons-list modifier="inset" class="margin-10-0-10-0 font-size-14" ng-init="show_current_location=0">
                 <ons-list-item>
-                    <input ng-show="things" type="search" class="search-input-no-border" placeholder="Ex: wifi, stationary, coffee, ..." ng-model="search_text_item">
+                    <input ng-show="things" type="search" class="search-input-no-border" placeholder="Ex: wifi, stationary, coffee, ..." ng-model="search_text">
 
-                    <input ng-show="!things" type="search" class="search-input-no-border" placeholder="Ex: Royal Host, Starbucks, ..." ng-model="search_text_item">
+                    <input ng-show="!things" type="search" class="search-input-no-border" placeholder="Ex: Royal Host, Starbucks, ..." ng-model="search_text">
                 </ons-list-item>
                 <ons-list-item ng-click="show_current_location=!show_current_location">
                     <input type="search" class="location-input-no-border" ng-model="location_text" placeholder="Input search location">
@@ -46,7 +46,7 @@
             <div ng-show="sort_by_rate">
                 <ons-row class="margin-10-0-10-0">
                     <ons-col>
-                        <ons-button modifier="large" ng-click="search(search_text_item, location_text, things)"><span>Search</span></ons-button>
+                        <ons-button modifier="large" ng-click="search(search_text, location_text, things)"><span>Search</span></ons-button>
                     </ons-col>
                     <ons-col width="10px">
                     </ons-col>
@@ -58,7 +58,7 @@
             <div ng-show="!sort_by_rate">
                 <ons-row class="margin-10-0-10-0">
                     <ons-col>
-                        <ons-button modifier="large" ng-click="search(search_text_item, location_text, things)"><span>Search</span></ons-button>
+                        <ons-button modifier="large" ng-click="search(search_text, location_text, things)"><span>Search</span></ons-button>
                     </ons-col>
                     <ons-col width="10px">
                     </ons-col>

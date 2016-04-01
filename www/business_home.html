@@ -90,14 +90,14 @@
           <ons-list-item modifier="chevron">
             <div>
               <ons-icon icon="fa-mobile" class="color-vcess"></ons-icon>
-              {{business['phone']}}
+              <a ng-href="{{business['tel-phone']}}">{{business['phone']}}</a>
             </div>
           </ons-list-item>
 
           <ons-list-item modifier="chevron">
             <div>
               <ons-icon icon="fa-globe" class="color-vcess"></ons-icon>
-              {{business['website']}}
+              <a href="{{business['website']}}">{{business['website']}}</a>
             </div>
           </ons-list-item>
 
