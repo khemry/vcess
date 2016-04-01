@@ -1,16 +1,5 @@
 <!-- <ons-navigator animation="slide" var="myNavigator"> -->
 <ons-page ng-controller="HomeCtrl">
-<<<<<<< HEAD
-    <ons-toolbar style="background-image: url('images/test/background_sushi.jpg');height: 100px;" ng-click="myNavigator.pushPage('search.html');">
-    </ons-toolbar>
-    
-	<div ng-show="search_home" style="width: 100%; height: 100%;">
-    
-		<!-- <ons-button modifier="cta" class="always_on_top" style="margin: 0 auto;" ng-click="myNavigator.pushPage('all_categories.html');">
-          All Categories
-        </ons-button> -->
-        
-=======
 	<ons-toolbar>
         <div class="left" ng-click="myNavigator.pushPage('search.html');">
         	<img src="images/search.png" class="biz-image margin10">
@@ -26,69 +15,12 @@
 	<div ng-show="search_home" style="width: 100%; height: 100%">
 		<div class="margin10 text-center font-size-14">
 			<p>Most popular keywords</p>
-			<!-- <div ng-repeat="keyword in top_keywords"> -->
-				<ons-button ng-repeat="keyword in top_keywords" class="tag" ng-click="myNavigator.pushPage('search.html', {keyword: keyword})";><span>{{keyword}}</span></ons-button>
-			<!-- </div> -->
-			<!-- <ons-button class="tag" ng-click="myNavigator.pushPage('search.html', {keyword: 'Coffee Shops'})";><span>Wifi</span></ons-button>
-			<ons-button class="tag"><span>Electric Outlet</span></ons-button>
-			<ons-button class="tag"><span>Stationary</span></ons-button>
-			<ons-button class="tag"><span>Coffee</span></ons-button>
-			<ons-button class="tag"><span>Beer</span></ons-button>
-			<ons-button class="tag"><span>Wine</span></ons-button>
-			<ons-button class="tag"><span>Juice</span></ons-button>
-			<ons-button class="tag"><span>Umbrella</span></ons-button>
-			<ons-button class="tag"><span>Shoes</span></ons-button>
-			<ons-button class="tag"><span>Bag</span></ons-button> -->
-			
-                    
+		
+				<ons-button ng-repeat="keyword in top_keywords" class="tag" ng-click="myNavigator.pushPage('search.html', {keyword: keyword})";><span>{{keyword}}</span></ons-button>      
 		</div>
-		<!-- <ons-button modifier="cta" class="always_on_top" style="margin: 0 auto;" ng-click="myNavigator.pushPage('all_categories.html');">
-          All Categories
-        </ons-button> -->
-
->>>>>>> 6608c4cce63befc37f3e113f08115240ebba1600
-		<!-- <div style="text-align: center" class="category-template">
-			<br />
-
-			<!-- <input type="search" placeholder="What are you looking for?" ng-click="myNavigator.pushPage('search.html');"> 
-		    <input type="search" class="search-input" placeholder="What are you looking for?" ng-click="myNavigator.pushPage('search.html');">
-		    <h4 style="color: white; padding-top:30px"></h4>
-		</div> -->
-
 		<div ng-repeat="category in top_categories" style="text-align: center" class="{{category['key']}}" ng-click="myNavigator.pushPage('category_list.html', {selected_category: category['name'], selected_category_key: category['key']})";>
 			<h4 style="color: white; padding-top:50px">{{category['name']}}</h4>
 		</div>
-
-		<!-- <ons-list modifier="inset" class="margin-10-0-10-0">
-            <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('business_list.html');" ng-repeat="category in top_categories">
-                {{category['name']}}
-            </ons-list-item>
-        </ons-list> -->
-
-		<!-- <div style="text-align: center" class="category-template1" ng-click="myNavigator.pushPage('category_list.html', {selected_category: 'Coffee Shops'})";>
-			<h4 style="color: white; padding-top:50px">Coffee Shops</h4>
-		</div>
-		<div style="text-align: center" class="category-template2" ng-click="myNavigator.pushPage('category_list.html', {selected_category: 'Marts'})";>
-		    <h4 style="color: white; padding-top:50px">Marts</h4>
-		</div>
-		<div style="text-align: center" class="category-template3" ng-click="myNavigator.pushPage('category_list.html', {selected_category: 'Restaurants'})";>
-		    <h4 style="color: white; padding-top:50px">Restaurants</h4>
-		</div>
-		<div style="text-align: center" class="category-template4" ng-click="myNavigator.pushPage('category_list.html', {selected_category: 'Sport Centers'})";>
-		    <h4 style="color: white; padding-top:50px">Sport Centers</h4>
-		</div>
-		<div style="text-align: center" class="category-template1" ng-click="myNavigator.pushPage('category_list.html', {selected_category: 'Coffee Shops'})";>
-			<h4 style="color: white; padding-top:50px">Coffee Shops</h4>
-		</div>
-		<div style="text-align: center" class="category-template2" ng-click="myNavigator.pushPage('category_list.html', {selected_category: 'Marts'})";>
-		    <h4 style="color: white; padding-top:50px">Marts</h4>
-		</div>
-		<div style="text-align: center" class="category-template3" ng-click="myNavigator.pushPage('category_list.html', {selected_category: 'Restaurants'})";>
-		    <h4 style="color: white; padding-top:50px">Restaurants</h4>
-		</div>
-		<div style="text-align: center" class="category-template4" ng-click="myNavigator.pushPage('category_list.html', {selected_category: 'Sport Centers'})";>
-		    <h4 style="color: white; padding-top:50px">Sport Centers</h4>
-		</div> -->
 	</div>
 
 	<div ng-show="shop_list_home">

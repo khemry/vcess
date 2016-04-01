@@ -374,6 +374,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 					var all_data = data['data'];
 					for (i = 0; i < all_data.length; i++) { 
 							all_data[i]['tel-phone'] = "tel:" + all_data[i]['phone'];
+                            
 							if (current_location['addr'] != ""){
 								var tmp = GetDistance(current_location['coordinate'], all_data[i]['coordinate'], all_data[i])
 								.then(function(result) {
@@ -877,7 +878,9 @@ app.controller('InboxCtrl', function($scope, GlobalParameters){
 
 app.controller('BusinessHomeCtrl', function($scope, $timeout, $window){
 	console.log('BusinessHomeCtrl');
-	
+	$scope.OpenLink = function(url){
+        $window.open(url, '_blank');
+	}
 	var page = myNavigator.getCurrentPage();
 	selected_business = page.options.selected_biz;
 	LoadData();
@@ -908,6 +911,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window){
 	}
 
 	function LoadData(){
+        
 		if (selected_business['rate'] % 1 == 0)
         	$scope.show_half_star = 0;
         else

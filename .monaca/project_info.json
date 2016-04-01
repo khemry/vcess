@@ -16,6 +16,7 @@
         "cordova-plugin-vibration@1.2.0",
         "cordova-plugin-contacts@1.1.0",
         "cordova-plugin-splashscreen@2.1.0",
-        "cordova-plugin-device@1.0.1"
+        "cordova-plugin-device@1.0.1",
+        "cordova-plugin-inappbrowser@1.0.1"
     ]
 }
