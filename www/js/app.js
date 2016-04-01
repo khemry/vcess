@@ -194,6 +194,12 @@ app.controller("LoginCtrl", function($scope, $http, GlobalParameters){
 app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 	console.log('SearchCtrl');
 
+	$scope.Clear = function(){
+		$scope.search_result = 0;
+		$scope.businesses = {};
+		$scope.disabled = 1;
+	}
+
 	var current_location = [{
 		addr: '', 
 		coordinate: {}
@@ -259,8 +265,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 	OnLoad();
 
     $scope.CurrentLocation = function(){
-    	$scope.businesses = {};
-    	$scope.search_result = 0;
+    	$scope.Clear();
 
     	getCurrentLocation().then(function(result) {
     		$scope.location_text = result['addr'];
@@ -380,18 +385,14 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 	}
 
 	$scope.getAllLocation = function(){
-		$scope.search_result = 0;
-		$scope.businesses = {};
+		$scope.Clear();
 		$scope.location_text = "All locations";
 		current_location['coordinate'] = {};
 		current_location['addr'] = '';
 
 	}
 
-	$scope.Clear = function(){
-		$scope.search_result = 0;
-		$scope.businesses = {};
-	}
+	
 
 	function GetDistance(origin, destination, tmp){
 		var deferred = $q.defer();
@@ -439,6 +440,12 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
 	//var orderBy = $filter('orderBy');
 	//$scope.businesses = [];
 
+	$scope.Clear = function(){
+		$scope.search_result = 0;
+		$scope.businesses = {};
+		$scope.disabled = 0;
+	}
+
 	var current_location = [{
 		addr: '', 
 		coordinate: {}
@@ -450,6 +457,16 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
 	      title: 'Vcess'
 	    });
 	}
+
+	$scope.CurrentLocation = function(){
+    	$scope.Clear();
+
+    	getCurrentLocation().then(function(result) {
+    		$scope.location_text = result['addr'];
+    	}, function(error){
+    		console.log(error);
+    	});
+    }
 
 	getCurrentLocation = function(){
 		var deferred = $q.defer();
@@ -602,19 +619,12 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
 	}
 
 	$scope.getAllLocation = function(){
-		$scope.search_result = 0;
-		$scope.businesses = {};
+		$scope.Clear();
 		$scope.location_text = "All locations";
 		current_location['coordinate'] = {};
 		current_location['addr'] = '';
 
 	}
-
-	$scope.Clear = function(){
-		$scope.search_result = 0;
-		$scope.businesses = {};
-	}
-
 	// $scope.getCurrentLocation = function(){
  //    	$timeout(function(){
 	// 	var latlng;
