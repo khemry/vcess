@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="components/loader.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/external.css">
-    <script src="js/external/shim.js"></script>
-    <script src="js/external/jszip.js"></script>
-    <script src="js/external/xlsx.js"></script>
+
+    <script src="js/external/cdv-plugin-fb-connect.js"></script>
+    <script src="js/external/facebook-js-sdk.js"></script>
     
     <script src="js/app.js"></script>
 
@@ -41,11 +41,15 @@
     -->
 
     <script type="text/javascript">
-    </script>
+        document.addEventListener('deviceready', function onDeviceReady() {
+            alert('ready');
+            angular.bootstrap(document, ['myApp']);
+        }, false);    </script>
     
 </head>
 
 <body>
+    <div id="fb-root"></div>
     <ons-navigator var="myNavigator" page="normal_index.html">
     </ons-navigator>
 </body>
