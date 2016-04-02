@@ -6,6 +6,10 @@
   <feature name="org.apache.cordova.facebook.Connect">
     <param name="ios-package" value="FacebookConnectPlugin" />
   </feature>
+  <plugin name="com.phonegap.plugins.facebookconnect" spec="0.4.0"> source="pgb">
+    <param name="APP_ID" value="1745243692387113" />
+    <param name="APP_NAME" value="Vcess" />
+  </gap:plugin>
   <content src="index.html"/>
   <allow-navigation href="*"/>
   <allow-intent href="itms:*"/>
@@ -39,11 +43,7 @@
   <preference name="AutoHideSplashScreen" value="true"/>
   <preference name="FadeSplashScreen" value="true"/>
   <preference name="ShowSplashScreenSpinner" value="false"/>
-  <access origin="*"/>
+  <access origin="*" />
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="EnableViewportScale" value="false"/>
-  <plugin name="com.phonegap.plugins.facebookconnect" spec="0.4.0"> source="pgb">
-    <param name="APP_ID" value="1745243692387113" />
-    <param name="APP_NAME" value="Vcess" />
-</gap:plugin>
 </widget>

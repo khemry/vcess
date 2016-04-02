@@ -133,8 +133,31 @@ app.controller('SignupCtrl', function($scope, GlobalParameters, $http){
 	console.log(FB);
 
 	$scope.SignUpWithFacebook = function(){
-		FB.login();
+		//FB.login();
+        FB.login(
+         function(response) {
+         if (response.session) {
+         alert('logged in');
+         } else {
+         alert('not logged in');
+         }
+         },
+         { scope: "email" }
+         );
 	}
+    
+    function login() {
+                FB.login(
+                         function(response) {
+                         if (response.session) {
+                         alert('logged in');
+                         } else {
+                         alert('not logged in');
+                         }
+                         },
+                         { scope: "email" }
+                         );
+            }
 
 	$scope.signup = function(fullname, email, password){
 		var req = {
