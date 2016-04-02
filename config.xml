@@ -2,14 +2,7 @@
 <widget xmlns="http://www.w3.org/ns/widgets" id="com.vcess.app" version="1.0.0">
   <name>VcessApp</name>
   <description/>
-  <author/>
-  <feature name="org.apache.cordova.facebook.Connect">
-    <param name="ios-package" value="FacebookConnectPlugin" />
-  </feature>
-  <plugin name="com.phonegap.plugins.facebookconnect" spec="0.4.0"> source="pgb">
-    <param name="APP_ID" value="1745243692387113" />
-    <param name="APP_NAME" value="Vcess" />
-  </gap:plugin>
+  <author/> 
   <content src="index.html"/>
   <allow-navigation href="*"/>
   <allow-intent href="itms:*"/>

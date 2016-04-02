@@ -2,60 +2,6 @@
 
 var app = ons.bootstrap('myApp', ['onsen']);
 
-// document.addEventListener('deviceready', function() {
-//     angular.bootstrap(document, ['myApp']);
-//     alert('ready');
-// }, false);
-
-app.run(['$rootScope', '$window', function($rootScope, $window) {
-
-  $rootScope.user = {};
-
-  $window.fbAsyncInit = function() {
-    // Executed when the SDK is loaded
-
-    FB.init({ 
-      appId: '1745243692387113', 
-      channelUrl: 'channel.html', 
-      status: true, 
-      cookie: true, 
-      xfbml: true 
-    });
-
-    FB.Event.subscribe('auth.login', function(response) {
-                               alert('auth.login event');
-           });
-
-    //sAuth.watchAuthenticationStatusChange();
-
-  };
-
-  
-
-  // Are you familiar to IIFE ( http://bit.ly/iifewdb ) ?
-
-  (function(d){
-    // load the Facebook javascript SDK
-
-    var js, 
-    id = 'facebook-jssdk', 
-    ref = d.getElementsByTagName('script')[0];
-
-    if (d.getElementById(id)) {
-      return;
-    }
-
-    js = d.createElement('script'); 
-    js.id = id; 
-    js.async = true;
-    js.src = "https://connect.facebook.net/en_US/all.js";
-
-    ref.parentNode.insertBefore(js, ref);
-
-  }(document));
-
-}]);
-
 app.service('GlobalParameters', function(){
     
 	this.search_home = 1;
@@ -145,25 +91,28 @@ app.controller('SignupCtrl', function($scope, GlobalParameters, $http){
 	console.log(FB);
 
 	$scope.SignUpWithFacebook = function(){
-		 if ((typeof cordova == 'undefined') && (typeof Cordova == 'undefined')) alert('Cordova variable does not exist. Check that you have included cordova.js correctly');
-            if (typeof CDV == 'undefined') alert('CDV variable does not exist. Check that you have included cdv-plugin-fb-connect.js correctly');
-            if (typeof FB == 'undefined') alert('FB variable does not exist. Check that you have included the Facebook JS SDK file.');
-		//FB.login();
-        FB.login(function(){}, {scope: 'publish_actions'});
+        FB.getLoginStatus(function(response) {
+          if (response.status === 'connected') {
+            console.log('Logged in.');
+          }
+          else {
+            FB.login();
+          }
+    });
 	}
     
-    function login() {
-                FB.login(
-                         function(response) {
-                         if (response.session) {
-                         alert('logged in');
-                         } else {
-                         alert('not logged in');
-                         }
-                         },
-                         { scope: "email" }
-                         );
-            }
+    // function login() {
+    //             FB.login(
+    //                      function(response) {
+    //                      if (response.session) {
+    //                      alert('logged in');
+    //                      } else {
+    //                      alert('not logged in');
+    //                      }
+    //                      },
+    //                      { scope: "email" }
+    //                      );
+    //         }
 
 	$scope.signup = function(fullname, email, password){
 		var req = {
