@@ -3,6 +3,9 @@
   <name>VcessApp</name>
   <description/>
   <author/>
+  <feature name="org.apache.cordova.facebook.Connect">
+    <param name="ios-package" value="FacebookConnectPlugin" />
+  </feature>
   <content src="index.html"/>
   <allow-navigation href="*"/>
   <allow-intent href="itms:*"/>
@@ -39,4 +42,8 @@
   <access origin="*"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="EnableViewportScale" value="false"/>
+  <plugin name="com.phonegap.plugins.facebookconnect" spec="0.4.0"> source="pgb">
+    <param name="APP_ID" value="1745243692387113" />
+    <param name="APP_NAME" value="Vcess" />
+</gap:plugin>
 </widget>

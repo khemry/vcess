@@ -2,6 +2,48 @@
 
 var app = ons.bootstrap('myApp', ['onsen']);
 
+app.run(['$rootScope', '$window', function($rootScope, $window) {
+
+  $rootScope.user = {};
+
+  $window.fbAsyncInit = function() {
+    // Executed when the SDK is loaded
+
+    FB.init({ 
+      appId: '1745243692387113', 
+      status: true, 
+      cookie: true, 
+      xfbml: true 
+    });
+
+    //sAuth.watchAuthenticationStatusChange();
+
+  };
+
+  // Are you familiar to IIFE ( http://bit.ly/iifewdb ) ?
+
+  (function(d){
+    // load the Facebook javascript SDK
+
+    var js, 
+    id = 'facebook-jssdk', 
+    ref = d.getElementsByTagName('script')[0];
+
+    if (d.getElementById(id)) {
+      return;
+    }
+
+    js = d.createElement('script'); 
+    js.id = id; 
+    js.async = true;
+    js.src = "https://connect.facebook.net/en_US/all.js";
+
+    ref.parentNode.insertBefore(js, ref);
+
+  }(document));
+
+}]);
+
 app.service('GlobalParameters', function(){
     
 	this.search_home = 1;
@@ -88,6 +130,11 @@ app.service('LocationService', function($http, $timeout){
 
 app.controller('SignupCtrl', function($scope, GlobalParameters, $http){
 	console.log('Signup Ctrl');
+	console.log(FB);
+
+	$scope.SignUpWithFacebook = function(){
+		FB.login();
+	}
 
 	$scope.signup = function(fullname, email, password){
 		var req = {
@@ -146,6 +193,8 @@ app.controller('SignupCtrl', function($scope, GlobalParameters, $http){
 
 app.controller("LoginCtrl", function($scope, $http, GlobalParameters){
 	console.log('LoginCtrl');
+
+	console.log(FB);
 
 	$scope.SendEmail = function(email){
 		alert("A password recovery email has been sent.");
