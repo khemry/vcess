@@ -33,13 +33,27 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.11.2/angular-material.min.js"></script>
     -->
 
-    <script type="text/javascript">
-    </script>
-    
+
 </head>
 
-<body>
+<body>  
+        <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '1687245944857278',
+          xfbml      : true,
+          version    : 'v2.5'
+        });
+      };
 
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "https://connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+</script>
     <ons-navigator var="myNavigator" page="normal_index.html">
     </ons-navigator>
 </body>
