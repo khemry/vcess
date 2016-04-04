@@ -11,6 +11,12 @@
 	font-family:exo_medium;
 }
 
+.text-middle {
+    text-align: center;
+    vertical-align: middle;
+    line-height: 130px; 
+}
+
 .always-on-top {
     position: fixed;
     /*overflow: hidden;
@@ -68,6 +74,13 @@
 	font-size: 12px;
 }
 
+.top-keyword {
+    font-size: 18px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    padding: 0;
+}
+
 .tag {
 	font-size: 14px;
 	line-height: 14px;
@@ -78,6 +91,10 @@
 
 .font-size-14 {
 	font-size: 14px;
+}
+
+.font-size-18 {
+    font-size: 18px;
 }
 
 .color-vcess {
@@ -210,7 +227,7 @@ input[type=email], input[type=password], input[type=text] {
 	width: 100%;
 	background-image: url(../images/test/background_coffee.jpg);
 	background-position: center center; 
-	height:23%;
+	height:130px;
 }
 
 .restaurant {
@@ -218,7 +235,7 @@ input[type=email], input[type=password], input[type=text] {
 	width: 100%;
 	background-image: url(../images/test/background_restaurant.jpg);
 	background-position: center center; 
-	height:23%;
+	height:130px;
 }
 
 .supermarket {
@@ -226,7 +243,7 @@ input[type=email], input[type=password], input[type=text] {
 	width: 100%;
 	background-image: url(../images/test/background_supermarket.png);
 	background-position: center center; 
-	height:23%;
+	height:130px;
 }
 
 .convenience_store {
@@ -234,7 +251,7 @@ input[type=email], input[type=password], input[type=text] {
 	width: 100%;
 	background-image: url(../images/test/background_mart.jpg);
 	background-position: center center; 
-	height:23%;
+	height:130px;
 }
 
 .drug_store {
@@ -242,7 +259,7 @@ input[type=email], input[type=password], input[type=text] {
 	width: 100%;
 	background-image: url(../images/test/background_drug_store.png);
 	background-position: center center; 
-	height:23%;
+	height:130px;
 }
 
 .department_store {
@@ -250,7 +267,7 @@ input[type=email], input[type=password], input[type=text] {
 	width: 100%;
 	background-image: url(../images/test/background_department.png);
 	background-position: center center; 
-	height:23%;
+	height:130px;
 }
 
 .asian_ingredient_shop {
@@ -258,7 +275,7 @@ input[type=email], input[type=password], input[type=text] {
 	width: 100%;
 	background-image: url(../images/test/background_asian_shop.png);
 	background-position: center center; 
-	height:23%;
+	height:130px;
 }
 
 .daiso{
@@ -266,7 +283,7 @@ input[type=email], input[type=password], input[type=text] {
 	width: 100%;
 	background-image: url(../images/test/background_daiso.png);
 	background-position: center center; 
-	height:23%;
+	height:130px;
 }
 
 .discount_store {
@@ -274,7 +291,7 @@ input[type=email], input[type=password], input[type=text] {
 	width: 100%;
 	background-image: url(../images/test/background_discount.png);
 	background-position: center center; 
-	height:23%;
+	height:130px;
 }
 
 .category-template {
@@ -291,7 +308,7 @@ input[type=email], input[type=password], input[type=text] {
 	background-image: url(../images/test/background_keyword.jpg);
 	background-position: center center; 
 	width: 100%;
-	height:25%;
+	height:130px;
 }
 
 
