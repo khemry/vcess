@@ -1037,6 +1037,11 @@ app.controller('FeaturesCtrl', function($scope, $q, $http){
 
 app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http, GlobalParameters){
 	console.log('BusinessHomeCtrl');
+    
+    $scope.Call = function(url){
+        $window.location.href = url;
+    }
+    
 	$scope.OpenLink = function(url){
 		if (url != ""){
 			$window.open(url, '_blank');

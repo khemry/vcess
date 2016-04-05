@@ -22,10 +22,10 @@
                 <p>{{business['distance']}} from here</p>
               </ons-row>
               <ons-row>
-                Views: {{business['views']}}
+                Views: {{business['views']}} | Favorite: {{business['favorite']}}
               </ons-row>
               <ons-row>
-                <p>Favorite: {{business['favorite']}} | Owner: {{business['owner']}}</p>
+                <p>Owner: {{business['owner']}}</p>
               </ons-row>
               <ons-row>
                 <div class="rating">
@@ -90,10 +90,11 @@
             </div>
           </ons-list-item>
 
-          <ons-list-item modifier="chevron">
+          <ons-list-item modifier="chevron" ng-click="Call(business['tel-phone'])">
             <div>
               <ons-icon icon="fa-mobile" class="color-vcess"></ons-icon>
-              <a ng-href="{{business['tel-phone']}}">{{business['phone']}}</a>
+              <a ng-href="{{business['tel-phone']}}"></a>
+              {{business['phone']}}
             </div>
           </ons-list-item>
 
