@@ -1,11 +1,12 @@
 <!-- <ons-navigator animation="slide" var="myNavigator"> -->
 <ons-page ng-controller="HomeCtrl">
 	<ons-toolbar>
-        <div class="left" ng-click="myNavigator.pushPage('search.html');">
+        <div class="left" ng-click="myNavigator.pushPage('pages/en/search.html');">
         	<img src="images/search.png" class="biz-image margin10">
         </div>
         <div class="center">
         	<span>Welcome to Vcess!</span>
+        	
         </div>
     </ons-toolbar>
 
@@ -14,9 +15,9 @@
 			<br/>
 			<p class="top-keyword">Most popular keywords</p>
 		
-				<ons-button ng-repeat="keyword in top_keywords" class="tag" ng-click="myNavigator.pushPage('search.html', {keyword: keyword})";><span>{{keyword}}</span></ons-button>      
+				<ons-button ng-repeat="keyword in top_keywords" class="tag" ng-click="myNavigator.pushPage('pages/en/search.html', {keyword: keyword})";><span>{{keyword}}</span></ons-button>      
 		</div>
-		<div ng-repeat="category in top_categories" style="text-align: center" class="{{category['key']}}" ng-click="myNavigator.pushPage('category_list.html', {selected_category: category['name'], selected_category_key: category['key']})";>
+		<div ng-repeat="category in top_categories" style="text-align: center" class="{{category['key']}}" ng-click="myNavigator.pushPage('pages/en/category_list.html', {selected_category: category['name'], selected_category_key: category['key']})";>
 			<h4 style="color: white" class="text-middle">{{category['name']}}</h4>
 		</div>
 	</div>

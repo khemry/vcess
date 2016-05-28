@@ -1,0 +1,44 @@
+<ons-page ng-controller="MeetUpCtrl">
+    <ons-toolbar>
+        <div class="center"><span>ការណាត់ជួប</span></div>
+        <!-- <div class="right">
+            <ons-toolbar-button ng-click="">
+                <ons-icon icon="fa-plus" fixed-width="false" style="vertical-align: -4px;"></ons-icon>
+            </ons-toolbar-button>
+        </div> -->
+    </ons-toolbar>
+
+    <div ng-show="login_status">
+        <div class="tab-bar tab-bar--top tab-bar--top-border">
+            <label class="tab-bar__item tab-bar--top-border__item">
+                <input type="radio" name="top-tab-bar-b" checked="checked">
+                <button class="tab-bar__button tab-bar--top-border__button">
+                    <span>អនាគត</span>
+                </button>
+            </label>
+
+            <label class="tab-bar__item tab-bar--top-border__item">
+                <input type="radio" name="top-tab-bar-b">
+                <button class="tab-bar__button tab-bar--top-border__button">
+                    <span>អតីត</span>
+                </button>
+            </label>
+        </div>
+    </div>
+
+    <div class="margin10 text-center" ng-show="login_status">
+              <br/>
+              <p>បច្ចុប្បន្ន អ្នកមិនមានការណាត់ជួបណាមួយនៅក្នុង <span class="color-vcess">Vcess</span> នៅឡើយទេ។</p>
+              <!-- Start creating one now and grow your business. -->
+    </div>
+
+    <div ng-show="!login_status" class="margin10 text-center">
+        <img src="images/logos/Final_logo_green.png" class="logo-frame"/>
+        <h4>សូមស្វាគមន៏មកកាន់ Vcess!</h3>
+        <p>សូមចូលគណនីដើម្បីមើលទំព័រនេះ។</p>
+        <ons-button modifier="large" ng-click="myNavigator.pushPage('pages/kh/login.html');">ចូលគណនី</ons-button>
+        <ons-button class="button--large--quiet" ng-click="myNavigator.pushPage('pages/kh/signup.html');">ចុះឈ្មោះ</ons-button>
+    </div>
+
+</ons-page>
+

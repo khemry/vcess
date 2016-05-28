@@ -1,0 +1,39 @@
+<ons-page ng-controller="LanguagesCtrl">
+    <ons-toolbar>
+        <div class="left"><ons-back-button></ons-back-button></div>
+        <div class="center"><span>Languages Setting</spand></div>
+        <div class="right">
+            <ons-toolbar-button ng-click="Save()">Save</ons-toolbar-button>
+        </div>
+    </ons-toolbar>
+    
+  <div class="margin10 text-center">
+    <!-- <ons-button modifier="large" ng-click="myNavigator.resetToPage('pages/en/normal_index.html');">Switch to English</ons-button>
+    <ons-button modifier="large" ng-click="myNavigator.resetToPage('pages/kh/normal_index.html');">Switch to Khmer</ons-button>
+
+    <br/> -->
+
+    <ons-list modifier="inset" class="margin-10-0-10-0">        
+        <ons-list-item modifier="tappable" ng-click="ChangeLang('en')">
+            <label class="radio-button radio-button--list-item">
+              <input type="radio" name="lang" id="english">
+              <div class="radio-button__checkmark radio-button--list-item__checkmark"></div>
+              <span>English</span>
+            </label>
+        </ons-list-item>
+
+        <ons-list-item modifier="tappable" ng-click="ChangeLang('kh')">
+            <label class="radio-button radio-button--list-item">
+              <input type="radio" name="lang" id="khmer">
+              <div class="radio-button__checkmark radio-button--list-item__checkmark"></div>
+              <span>Khmer</span>
+            </label>
+        </ons-list-item>
+
+    </ons-list>
+  </ons-list>
+
+    </div>  
+</ons-page>
+
+

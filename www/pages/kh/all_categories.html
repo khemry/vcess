@@ -1,0 +1,16 @@
+<ons-page ng-controller="AllCategoriesCtrl">
+    <ons-toolbar>
+        <div class="left"><ons-back-button>Back</ons-back-button></div>
+        <div class="center"><span>All Categories</span></div>
+    </ons-toolbar>
+
+
+    <div class="margin10 text-center">
+        <ons-list modifier="inset" class="margin-10-0-10-0">
+            <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('category_list.html', {selected_category: category['name_en']})" ng-repeat="category in categories">
+                {{category['name_en']}}
+            </ons-list-item>
+        </ons-list>
+    </div>
+
+</ons-page>

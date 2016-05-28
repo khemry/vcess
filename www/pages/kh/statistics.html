@@ -1,0 +1,57 @@
+
+<div style="text-align: center" ng-init="checked=1">
+  <div class="tab-bar tab-bar--top tab-bar--top-border">
+    <label class="tab-bar__item tab-bar--top-border__item" ng-click="checked=1">
+      <input type="radio" name="top-tab-bar-b" checked="checked">
+      <button class="tab-bar__button tab-bar--top-border__button">
+        <span>Statistics</span>
+      </button>
+      
+    </label>
+
+    <label class="tab-bar__item tab-bar--top-border__item" ng-click="checked=0">
+      <input type="radio" name="top-tab-bar-b">
+      <button class="tab-bar__button tab-bar--top-border__button">
+        <span>Notifications</span>
+      </button>
+    </label>
+  </div>
+
+
+    <ons-list modifier="inset" class="settings-list" ng-show="checked">
+            
+        <ons-list-item modifier="chevron">
+          Page View
+        </ons-list-item>
+        <ons-list-item modifier="chevron">
+          Followers
+        </ons-list-item>
+        <ons-list-item modifier="chevron">
+          Total Search
+        </ons-list-item>
+        <ons-list-item modifier="chevron">
+          Post Reach
+        </ons-list-item>
+        
+
+    </ons-list>
+
+    <ons-list modifier="inset" ng-hide="checked">
+            
+        <ons-list-item modifier="chevron">
+          Like Post
+        </ons-list-item>
+        <ons-list-item modifier="chevron">
+          Check-in
+        </ons-list-item>
+        <ons-list-item modifier="chevron">
+          Total Search
+        </ons-list-item>
+        <ons-list-item modifier="chevron">
+          Post Reach
+        </ons-list-item>
+
+    </ons-list>
+
+</div>
+

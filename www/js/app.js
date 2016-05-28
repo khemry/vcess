@@ -15,8 +15,9 @@ app.service('GlobalParameters', function(){
 	this.is_owner = 0;
 	this.is_business = 0;
 	this.selected_biz="";
-	this.login_status = 0;
+	this.login_status = 1;
 	this.current_user = {};
+	this.lang = "en";
 
 	this.SetHomePage = function(a, b, c){
 		this.search_home = a;
@@ -43,6 +44,9 @@ app.service('GlobalParameters', function(){
 
 	this.setCurrentUser = function(value){
 		this.current_user = value;
+	}
+	this.setLang = function(value){
+		this.lang = value;
 	}
 });
 
@@ -1415,6 +1419,30 @@ app.controller('FriendListCtrl', function($scope, GlobalParameters){
 
 app.controller('IndexCtrl', function($scope, GlobalParameters){
 	GlobalParameters.SetIsOwner(0);
+});
+
+app.controller('LanguagesCtrl', function($scope, GlobalParameters){
+	console.log("LanguagesCtrl");
+
+	var cur_lang = GlobalParameters.lang;
+	if (cur_lang == "en"){
+		document.getElementById("english").checked = true;
+	} else if (cur_lang == "kh") {
+		document.getElementById("khmer").checked = true;
+	}
+	
+	$scope.ChangeLang = function (lang){
+		GlobalParameters.setLang(lang);
+		cur_lang = lang;
+	}
+
+	$scope.Save = function(){
+		if (cur_lang == "en"){
+			$scope.myNavigator.resetToPage('pages/en/normal_index.html');
+		} else if (cur_lang == "kh") {
+			$scope.myNavigator.resetToPage('pages/kh/normal_index.html');
+		}
+	}
 });
 
 app.controller('SettingsCtrl', function($scope, GlobalParameters){

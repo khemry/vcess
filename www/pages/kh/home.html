@@ -1,0 +1,32 @@
+<!-- <ons-navigator animation="slide" var="myNavigator"> -->
+<ons-page ng-controller="HomeCtrl">
+	<ons-toolbar>
+        <div class="left" ng-click="myNavigator.pushPage('pages/kh/search.html');">
+        	<img src="images/search.png" class="biz-image margin10">
+        </div>
+        <div class="center">
+        	<span>សូមស្វាគមន៏មកកាន់ Vcess!</span>
+        </div>
+    </ons-toolbar>
+
+	<div ng-show="search_home" style="width: 100%; height: 100%">
+		<div class="text-center font-size-14 keyword">
+			<br/>
+			<p class="top-keyword">ពាក្យស្វែងរកដែលពេញនិយម</p>
+		
+				<ons-button ng-repeat="keyword in top_keywords" class="tag" ng-click="myNavigator.pushPage('pages/kh/search.html', {keyword: keyword})";><span>{{keyword}}</span></ons-button>      
+		</div>
+		<div ng-repeat="category in top_categories" style="text-align: center" class="{{category['key']}}" ng-click="myNavigator.pushPage('pages/kh/category_list.html', {selected_category: category['name'], selected_category_key: category['key']})";>
+			<h4 style="color: white" class="text-middle">{{category['name']}}</h4>
+		</div>
+	</div>
+
+	<div ng-show="shop_list_home">
+		<h1>Shop List Home</h1>
+	</div>
+
+	<div ng-show="shop_home">
+		<h1>Shop Home</h1>
+	</div>
+</ons-page>
+<!-- </ons-navigator> -->
