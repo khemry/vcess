@@ -8,6 +8,7 @@
 		<div ng-show="!login_status">
 			<img src="images/logos/Final_logo_green.png" class="logo-frame"/>
 			<h4>Welcome to Vcess App!</h3>
+        	<p>You are required to login in order to view this page.</p>
 			<ons-button modifier="large" ng-click="myNavigator.pushPage('pages/en/login.html');">Log In</ons-button>
 		    <ons-button class="button--large--quiet" ng-click="myNavigator.pushPage('pages/en/signup.html');">Sign Up</ons-button>
 		</div>
@@ -39,10 +40,10 @@
 		          <ons-icon icon="ion-android-contacts" class="color-vcess"></ons-icon>	
 		          Friends
 		        </ons-list-item>
-		        <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/settings.html');">
+		        <!-- <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/settings.html');">
 		          <ons-icon icon="ion-android-settings" class="color-vcess"></ons-icon>
 		          Settings
-		        </ons-list-item>
+		        </ons-list-item> -->
 		        <ons-list-item modifier="tappable" ng-click="Logout()">
 		          <ons-icon icon="fa-sign-out" class="color-vcess"></ons-icon>
 		          Log out

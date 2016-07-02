@@ -1,4 +1,4 @@
-<ons-page ng-controller="BusinessHomeCtrl">
+<ons-page ng-controller="BusinessHomeCtrl" ng-init="ShowRate=0;ShowReview=0;ShowFood=1;ShowMenu=0;ShowStore=0;">
 
 	<ons-toolbar>
 	    <div class="left"><ons-back-button></ons-back-button></div>
@@ -14,15 +14,15 @@
           <ons-row class="action">
 
             <ons-col width="130px">
-              <img src="images/default.png" class="logo-homepage">
+              <img src="{{business['profile']}}" class="logo-homepage">
             </ons-col>
 
             <ons-col class="font-size-12">
               <ons-row>
-                <p>{{business['distance']}} from here</p>
+                <p>{{business['distance']}} km from here</p>
               </ons-row>
               <ons-row>
-                Views: {{business['views']}} | Favorite: {{business['favorite']}}
+                Views: {{business['views']}} | Favorite: {{business['favorite']}} | Wish List: {{business['wish_list']}}
               </ons-row>
               <ons-row>
                 <p>Owner: {{business['owner']}}</p>
@@ -50,28 +50,64 @@
         <ons-list style="border-top: none"><ons-list-item style="line-height: 1; padding: 0;">
           <ons-row class="action">
 
-            <ons-col class="action-col" ng-click="Rate(business['business_id'])">
-              <div class="action-icon"><ons-icon icon="ion-ios-star-half"></ons-icon></div>
+            <ons-col class="action-col" ng-click="ShowRate=!ShowRate">
+              <div class="action-icon"><ons-icon icon="ion-ios-star-half" ng-style="rate_color"></ons-icon></div>
               <div class="action-label">Rate</div>
             </ons-col>
 
-            <ons-col class="action-col" ng-click="Favorite(business['business_id'])">
-              <div class="action-icon"><ons-icon icon="ion-heart"></ons-icon></div>
+            <ons-col class="action-col" ng-click="ShowReview=!ShowReview">
+              <div class="action-icon"><ons-icon icon="ion-compose" ng-style="review_color"></ons-icon></div>
+              <div class="action-label">Review</div>
+            </ons-col>
+
+            <ons-col class="action-col" ng-click="Favorite(business['id'], business['favorite'])">
+              <div class="action-icon"><ons-icon icon="ion-heart" ng-style="fav_color"></ons-icon></div>
               <div class="action-label">Favorite</div>
             </ons-col>
 
-            <ons-col class="action-col">
+            <!-- <ons-col class="action-col">
               <div class="action-icon"><ons-icon icon="ion-share"></ons-icon></div>
               <div class="action-label">Share</div>
-            </ons-col>
-
+            </ons-col> 
+            
             <ons-col class="action-col">
               <div class="action-icon"><ons-icon icon="ion-ios-location"></ons-icon></div>
               <div class="action-label">Check In</div>
+            </ons-col> -->
+
+            
+
+            <ons-col class="action-col" ng-click="WishList(business['id'], business['wish_list'])">
+              <div class="action-icon"><ons-icon icon="ion-bookmark" ng-style="wish_color"></ons-icon></div>
+              <div class="action-label">Wish List</div>
             </ons-col>
 
           </ons-row>
         </ons-list-item></ons-list>
+
+        <div style="padding-top: 10px; padding-bottom: 10px" ng-show="ShowRate" class="color-vcess">
+            <ons-icon icon="{{RateIcon['1']}}" fixed-width="false" ng-click="RateStar(1)"></ons-icon>
+            <ons-icon icon="{{RateIcon['2']}}" fixed-width="false" ng-click="RateStar(2)"></ons-icon>
+            <ons-icon icon="{{RateIcon['3']}}" fixed-width="false" ng-click="RateStar(3)"></ons-icon>
+            <ons-icon icon="{{RateIcon['4']}}" fixed-width="false" ng-click="RateStar(4)"></ons-icon>
+            <ons-icon icon="{{RateIcon['5']}}" fixed-width="false" ng-click="RateStar(5)"></ons-icon>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <ons-button ng-click="Rate(business['id'], current_star)" class="font-size-14"><span>Rate</span></ons-button>
+        </div>
+
+        <div style="padding-top: 10px; padding-bottom: 10px" ng-show="ShowReview" class="color-vcess font-size-14">
+            <ons-row>
+              <ons-col width="70%">
+                <textarea class="textarea" style="width: 100%" rows="3" placeholder="Textarea" ng-model="review_text"></textarea>
+              </ons-col>
+              <ons-col style="float: right">
+                <br>
+                <ons-button ng-click="Review(business['id'], review_text)"><span>Submit</span></ons-button>
+              </ons-col>
+            </ons-row>
+            
+            
+        </div>
 
        	<div id="map_biz"></div>
 	    
@@ -86,7 +122,7 @@
           <ons-list-item>
             <div class="line-height-150 margin-top-10">
               <ons-icon icon="fa-home" class="color-vcess"></ons-icon>
-              {{business['st_addr_en'] + " " + business['city_en'] +  " " + business['state_en'] +  " " + business['zip_code']}}
+              {{business['addr_en']}}
             </div>
           </ons-list-item>
 
@@ -105,12 +141,12 @@
             </div>
           </ons-list-item>
 
-          <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/item_sets.html', {biz_category: business['category']});">
+          <!-- <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/item_sets.html', {biz_category: business['category']});">
             <div>
               <ons-icon icon="ion-briefcase" class="color-vcess"></ons-icon>
               Products
             </div>
-          </ons-list-item>
+          </ons-list-item> -->
           <!-- <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('features.html', {biz_id: business['business_id']});">
             <div>
               <ons-icon icon="fa-book" class="color-vcess"></ons-icon>
@@ -118,18 +154,38 @@
             </div>
           </ons-list-item> -->
 
-          <ons-list-item modifier="chevron" ng-click="alert('There is no available photo or menu.')">
-            <div>
-              <ons-icon icon="fa-book" class="color-vcess"></ons-icon>
-              Store Photos and Menus
-            </div>
-          </ons-list-item>
-
-          <ons-list-item modifier="chevron" ng-click="alert('Reservation is not available now.')">
+          <!-- <ons-list-item modifier="chevron" ng-click="alert('Reservation is not available now.')">
             <div>
               <ons-icon icon="fa-clock-o" class="color-vcess"></ons-icon>
               Make a Reservation
             </div>
+          </ons-list-item> -->
+
+          
+          <ons-list-item ng-click="ShowMenu=!ShowMenu">
+              <ons-icon icon="fa-book" class="color-vcess"></ons-icon>
+              Menu Photos
+              <div ng-show="ShowMenu">
+                  <img src="{{image['path']}}" class="show_photos" ng-repeat="image in menu_images">
+              
+              </div>              
+          </ons-list-item>
+          <ons-list-item ng-click="ShowStore=!ShowStore">
+              <ons-icon icon="fa-book" class="color-vcess"></ons-icon>
+              Store Photos
+              <div ng-show="ShowStore">
+                <img src="{{image['path']}}" class="show_photos" ng-repeat="image in store_images">
+              </div>              
+          </ons-list-item>
+          <ons-list-item ng-click="ShowFood=!ShowFood">
+              <ons-icon icon="fa-book" class="color-vcess"></ons-icon>
+              Food Photos
+              <div ng-show="ShowFood">
+                <div ng-repeat="image in food_images">
+                  <img src="{{image['path']}}" class="show_photos">
+                  <p class="photo_title">{{image['name_en']}}</p><br>
+                </div>
+              </div>
           </ons-list-item>
         </ons-list>
 	</div>		
