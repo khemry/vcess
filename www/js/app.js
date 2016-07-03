@@ -370,12 +370,12 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 	    		location = "";
 	    	}
 	    	GetData(search_text, location, search_item_flag).then(function(result) {
-	    		var count_result = Object.getOwnPropertyNames(result['data']).length
-	    		console.log(count_result);
+	    		$scope.count_result = Object.getOwnPropertyNames(result['data']).length
+	    		console.log($scope.count_result);
 	    		// $scope.businesses = result;
 	    		// $scope.predicate = 'distance';
 	    		// $scope.search_result = 1;
-	    		if (count_result == 0){
+	    		if ($scope.count_result == 0){
 	    			$scope.search_result = 1;
 	    			$scope.data_not_found = 1;
 	    			$scope.load_complete = 1;
@@ -777,9 +777,9 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
     		location = "";
     	}
 	    	GetData(selected_category, selected_category_key, location).then(function(result) {
-	    		var count_result = Object.getOwnPropertyNames(result['data']).length
-	    		console.log(count_result);
-	    		if (count_result == 0){
+	    		$scope.count_result = Object.getOwnPropertyNames(result['data']).length
+	    		console.log($scope.count_result);
+	    		if ($scope.count_result == 0){
 	    			$scope.search_result = 1;
 	    			$scope.data_not_found = 1;
 		    	} else {
@@ -1262,7 +1262,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 	}
 	var page = myNavigator.getCurrentPage();
 	selected_business = page.options.selected_biz;
-	console.log(selected_business['business_id']);
+	console.log(selected_business['id']);
 	LoadData();
 
 	$scope.RateStar = function(star_pos){
@@ -1510,7 +1510,6 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 		$scope.store_images = [];
 
 		if (num_photos > 0){
-			//var all_images = new Array(num_photos);
 			var img = {};
 			GetData(biz_id).then(function(result) {
 				console.log(result);
@@ -1533,12 +1532,10 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 
 				}	
 
-	    	}, function(error){
+		    }, function(error){
 	    		console.log(error);
-	    		all_images = [];
-	    	});	
+		    });	
 		}
-		//return all_images;
 	}
 
 	function GetData(biz_id){
@@ -2027,4 +2024,47 @@ app.controller('RateCtrl', function($scope, GlobalParameters, $q, $http){
 	}
 
 	$scope.RateList();
+});
+
+app.controller('ReviewsCtrl', function($scope, GlobalParameters, $q, $http){
+	console.log('ReviewsCtrl');
+	var page = myNavigator.getCurrentPage();
+	var biz_id = page.options.biz_id;
+
+	function GetData(){
+		var deferred = $q.defer();
+
+		var req = {
+		 	method: 'POST',
+		 	url: 'http://www.vcess.com/ajax/search_kh.php',
+		 	headers: {
+		   		'Content-Type': 'application/json'
+		 	},
+		 	data: {get_review_flag: 1, biz_id: biz_id}
+		}
+
+		console.log(req);
+			$http(req).then(function(data){
+				console.log('req');
+				console.log(data);
+				var all_data = data['data'];
+				deferred.resolve(all_data);
+			}, function(error){
+				deferred.reject('Error was: ' + error);
+			});
+		return deferred.promise;
+	}
+
+	$scope.getRate = function(num) {
+		num = parseInt(num);
+		return new Array(num);   
+	}
+
+	function OnLoad(){
+		GetData().then(function(result) {
+			$scope.reviews = result;
+		});
+	}
+
+	OnLoad();
 });
