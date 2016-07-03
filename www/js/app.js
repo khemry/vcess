@@ -1567,8 +1567,11 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
         else
         	$scope.show_half_star = 1;
 
-        if (selected_business['favorite'] == "")
-	        selected_business['favorite'] = 0;
+        selected_business['favorite'] = selected_business['favorite'].split(',').length-1;
+        selected_business['wish_list'] = selected_business['wish_list'].split(',').length-1;
+
+        // if (selected_business['favorite'] == "")
+	       //  selected_business['favorite'] = 0;
 
 
 	    if (selected_business['owner'] == "")
