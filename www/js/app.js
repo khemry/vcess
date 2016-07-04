@@ -1277,6 +1277,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 
 	$scope.Favorite = function(biz_id, current_fav){
 		console.log('Favorite');
+		console.log(GlobalParameters.login_status);
 		if (GlobalParameters.login_status) {
 			console.log(current_user['favorite']);
 			if (Find(current_user['favorite'], biz_id)){
@@ -1585,13 +1586,17 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 	    
 	    GetPhotos(selected_business['id'], selected_business['photos']);
 
-	    if (Find(current_user['favorite'], selected_business['id'])){
-	    	$scope.fav_color = {'color':'red'};
+	    if (GlobalParameters.login_status) {
+	    	if (Find(current_user['favorite'], selected_business['id'])){
+		    	$scope.fav_color = {'color':'red'};
+		    }
+
+		    if (Find(current_user['wish_list'], selected_business['id'])){
+		    	$scope.wish_color = {'color':'red'};	
+		    }	
 	    }
 
-	    if (Find(current_user['wish_list'], selected_business['id'])){
-	    	$scope.wish_color = {'color':'red'};	
-	    }
+	    
 	}
 
 	$scope.getRate = function(num) {
@@ -1618,7 +1623,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 	            	// ons.notification.alert({
 	             //  		// message: 'You pressed "OK".',
 	            	// });
-	            	$scope.myNavigator.pushPage('login_index.html');
+	            	$scope.myNavigator.pushPage('pages/en/login_index.html');
 	            break;
 	        }
 	      }
