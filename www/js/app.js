@@ -1261,7 +1261,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
         
 	}
 	var page = myNavigator.getCurrentPage();
-	selected_business = page.options.selected_biz;
+	var selected_business = page.options.selected_biz;
 	console.log(selected_business['id']);
 	LoadData();
 
@@ -1282,7 +1282,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 			if (Find(current_user['favorite'], biz_id)){
 				$scope.alert('You have already favorited this place.');
 			} else {
-				var new_favorite = parseInt(current_fav) + 1;
+				var new_favorite = selected_business['favorite'] + "," + user_id;
 				var param = "favorite";
 				var value = new_favorite;
 				var user_value = current_user['favorite'] + "," + biz_id;
@@ -1291,7 +1291,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 				UpdateDB(param, value, user_value, biz_id, user_id).then(function(result) {
 					//$scope.alert('Thanks for your feedback!');
 					$scope.fav_color = {'color':'red'};
-					$scope.business['favorite'] = new_favorite;
+					$scope.business['favorite'] = current_fav + 1;
 					current_user['favorite'] = user_value;
 					GlobalParameters.setCurrentUser(current_user);
 
@@ -1313,7 +1313,8 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 			if (Find(current_user['wish_list'], biz_id)){
 				$scope.alert('You have already added this place to your wish list.');
 			} else {
-				var new_wish_list = parseInt(current_wish_list) + 1;
+				
+				var new_wish_list = selected_business['wish_list'] + "," + user_id;
 				var param = "wish_list";
 				var value = new_wish_list;
 				var user_value = current_user['wish_list'] + "," + biz_id;
@@ -1322,7 +1323,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 				UpdateDB(param, value, user_value, biz_id, user_id).then(function(result) {
 					//$scope.alert('Thanks for your feedback!');
 					$scope.wish_color = {'color':'red'};
-					$scope.business['wish_list'] = new_wish_list;
+					$scope.business['wish_list'] = current_wish_list + 1;
 					current_user['wish_list'] = user_value;
 					GlobalParameters.setCurrentUser(current_user);
 
@@ -1561,26 +1562,27 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 
 	function LoadData(){
 		UpdateViewCount();
+		$scope.business = selected_business;
         
-		if (selected_business['rate'] % 1 == 0)
+		if ($scope.business['rate'] % 1 == 0)
         	$scope.show_half_star = 0;
         else
         	$scope.show_half_star = 1;
 
-        selected_business['favorite'] = selected_business['favorite'].split(',').length-1;
-        selected_business['wish_list'] = selected_business['wish_list'].split(',').length-1;
+        $scope.business['favorite'] = selected_business['favorite'].split(',').length-1;
+        $scope.business['wish_list'] = selected_business['wish_list'].split(',').length-1;
 
         // if (selected_business['favorite'] == "")
 	       //  selected_business['favorite'] = 0;
 
 
-	    if (selected_business['owner'] == "")
-	        selected_business['owner'] = "N/A";
+	    if ($scope.business['owner'] == "")
+	        $scope.business['owner'] = "N/A";
 
 	    var coordinate = selected_business['coordinate'].split(',');
 	    ShowMap(coordinate[0], coordinate[1]);
 	    //console.log(selected_business);
-	    $scope.business = selected_business;
+	    
 	    GetPhotos(selected_business['id'], selected_business['photos']);
 
 	    if (Find(current_user['favorite'], selected_business['id'])){
