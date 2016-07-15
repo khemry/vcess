@@ -193,6 +193,15 @@
 
 /*SHOP*/
 
+.displayClear{
+    cursor:pointer;
+    
+    position: absolute;
+    right: 10px;
+}
+.hideClear{
+  display:none;
+}
 
 
 /*Map*/

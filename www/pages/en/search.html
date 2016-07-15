@@ -22,6 +22,11 @@
     </div>
 
     <div class="margin10 text-center" ng-show="load_complete">
+       <!--  <div>
+            <input type="text" ng-model="userModal" ng-keyup="clearIcon(true)" ng-blur="clearIcon(false)"/>
+            
+        </div> -->
+
         <!-- <div ng-show="things"> -->
             <ons-list modifier="inset" class="margin-10-0-10-0 font-size-14" ng-init="show_current_location=0">
                 <ons-list-item>
@@ -31,6 +36,9 @@
                 </ons-list-item>
                 <ons-list-item ng-click="show_current_location=!show_current_location">
                     <input type="search" class="location-input-no-border" ng-model="location_text" placeholder="Input search location">
+                    <span ng-click="clearInput()" class="displayClear">
+                        <ons-icon icon="fa-times " style="opacity: 0.5"></ons-icon>
+                    </span>
                 </ons-list-item>
                 <div ng-show="show_current_location">
                     <ons-list-item modifier="tappable" ng-click="CurrentLocation(); show_current_location=0;search(search_text, location_text, things);">

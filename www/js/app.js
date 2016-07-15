@@ -267,6 +267,15 @@ app.controller("LoginCtrl", function($scope, $http, GlobalParameters, localStora
 app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 	console.log('SearchCtrl');
 
+		$scope.clearIconVar=false;
+		$scope.clearIcon = function(param){
+		$scope.clearIconVar=param;
+		};
+		// $scope.hi="hi";
+		$scope.clearInput=function(){
+			$scope.location_text = "";
+		};
+
 	$scope.Clear = function(){
 		$scope.search_result = 0;
 		$scope.businesses = {};
@@ -1339,10 +1348,25 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 		}
 	}
 
+	$scope.ShowRateSection = function(){
+		if (GlobalParameters.login_status) {
+			$scope.ShowRate = !$scope.ShowRate;
+		} else {
+			$scope.confirm('Login required. Would you like to login now?');
+		}
+	}
+
+	$scope.ShowReviewSection = function(){
+		if (GlobalParameters.login_status) {
+			$scope.ShowReview = !$scope.ShowReview;
+		} else {
+			$scope.confirm('Login required. Would you like to login now?');
+		}
+	}
+
 	$scope.Rate = function(biz_id, rate_star){
 		console.log('Rate');
-		if (GlobalParameters.login_status) {
-			
+		// if (GlobalParameters.login_status) {
 			var param = "rate";
 			var value = rate_star;
 			var user_value = current_user['rate'] + "," + biz_id;
@@ -1363,14 +1387,14 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 	    	});	
 			
 			
-		} else {
-			$scope.confirm('Login required. Would you like to login now?');
-		}
+		// } else {
+		// 	$scope.confirm('Login required. Would you like to login now?');
+		// }
 	}
 
 	$scope.Review = function(biz_id, review){
 		console.log('Review');
-		if (GlobalParameters.login_status) {
+		// if (GlobalParameters.login_status) {
 			
 			var user_id = current_user['user_id'];
 		
@@ -1385,9 +1409,9 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 	    	});	
 			
 			
-		} else {
-			$scope.confirm('Login required. Would you like to login now?');
-		}
+		// } else {
+		// 	$scope.confirm('Login required. Would you like to login now?');
+		// }
 	}
 
 	function UpdateDBReview(review, biz_id, user_id){
@@ -1629,91 +1653,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 	        }
 	      }
 	    });
-	}
-
-
-	
-
-
-	// $scope.biz = {
-	// 	name: "",
-	// 	rate: 0,
-	// 	favorite: 0,
-	// 	owner: "N/A",
-	// 	addr: "",
-	// 	phone: "",
-	// 	website: "",
-	// 	coordiate: {
-	// 		lat: "",
-	// 		lng: ""
-	// 	}
-	// };
-
-	// $scope.show_half_star = 0;
-	// //console.log('BusinessHomeCtrl');
-	// //var page = myNavigator.getCurrentPage();
-	// //$scope.selected_biz = page.options.selected_biz;
-	// //GlobalParameters.SetIsBusiness(page.options.is_business);
-	// //GlobalParameters.setSelectedBiz(page.options.selected_biz);
-
-	// var url = "http://www.vcess.com/ajax/get_data.php";
-	// $scope.my_items = "data";
-	// console.log(url);
-	// var coordinate = {};
-	// //getItem(); // Load all available items 
-
-
-	// function getItem(){  
-	// 	console.log('getItem1');
-	//   	$http.post(url).success(function(data){
-	//   		//console.log(data[0]['business_id']);
-	//         $scope.biz.name = data[0]['name_en'];
-
-	//         $scope.biz.rate = data[0]['rate'];
-	//         $scope.getRate = function(num) {
-	// 			return new Array(num);   
-	// 		}
-	//         if ($scope.biz.rate % 1 == 0)
-	//         	$scope.show_half_star = 0;
-	//         else
-	//         	$scope.show_half_star = 1;
-
-	//         if (data[0]['favorite'] !== "")
-	//         	$scope.biz.favorite = data[0]['favorite'];
-	       
-
-	//         if (data[0]['owner'] !== "")
-	//         	$scope.biz.owner = data[0]['owner'];
-
-	//         $scope.biz.addr = data[0]['st_addr_en'] + " " + data[0]['city_en'] +  " " + data[0]['state_en'] +  " " + data[0]['zip_code'];
-	//         $scope.biz.phone = data[0]['phone'];
-	//         $scope.biz.website = data[0]['website'];
-	//         $scope.biz.coordinate = data[0]['coordinate'];
-	//         coordinate = data[0]['coordinate'].split(',');
-	
-
-	//         $timeout(function(){
-	//        	$scope.markers = [];
- //    		$scope.markerId = 1;
-	//     	var latlng;
-	//     	latlng = new google.maps.LatLng(coordinate[0], coordinate[1]);
-	// 	      	var myOptions = {
-	// 	            zoom: 14,
-	// 	            center: latlng,
-	// 	            mapTypeId: google.maps.MapTypeId.ROADMAP
-	// 	        };
-	// 	        var map = new google.maps.Map(document.getElementById("map_biz"), myOptions); 
-	// 	      	var marker = new google.maps.Marker({
-	// 	          position: latlng,
-	// 	          map: map
-	// 	        });
-	// 	        map.setCenter(latlng);
-	//     },100);
-
-	//     });
-	// };
-
-	
+	}	
     
 });
 
