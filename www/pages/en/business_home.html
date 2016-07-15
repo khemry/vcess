@@ -141,6 +141,13 @@
             </div>
           </ons-list-item>
 
+          <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/reviews.html', {biz_id: business['id']});">
+            <div>
+              <ons-icon icon="ion-chatboxes" class="color-vcess"></ons-icon>
+              <a>Rate & Review</a>
+            </div>
+          </ons-list-item>
+
           <!-- <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/item_sets.html', {biz_category: business['category']});">
             <div>
               <ons-icon icon="ion-briefcase" class="color-vcess"></ons-icon>
@@ -163,23 +170,24 @@
 
           
           <ons-list-item ng-click="ShowMenu=!ShowMenu">
-              <ons-icon icon="fa-book" class="color-vcess"></ons-icon>
-              Menu Photos
+              <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
+              Menu Photos <span ng-hide="menu_images.length"> (No photos)</span>
               <div ng-show="ShowMenu">
+                  
                   <img src="{{image['path']}}" class="show_photos" ng-repeat="image in menu_images">
               
               </div>              
           </ons-list-item>
           <ons-list-item ng-click="ShowStore=!ShowStore">
-              <ons-icon icon="fa-book" class="color-vcess"></ons-icon>
-              Store Photos
+              <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
+              Store Photos <span ng-hide="store_images.length"> (No photos)</span>
               <div ng-show="ShowStore">
                 <img src="{{image['path']}}" class="show_photos" ng-repeat="image in store_images">
               </div>              
           </ons-list-item>
           <ons-list-item ng-click="ShowFood=!ShowFood">
-              <ons-icon icon="fa-book" class="color-vcess"></ons-icon>
-              Food Photos
+              <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
+              Food Photos <span ng-hide="food_images.length"> (No photos)</span>
               <div ng-show="ShowFood">
                 <div ng-repeat="image in food_images">
                   <img src="{{image['path']}}" class="show_photos">
