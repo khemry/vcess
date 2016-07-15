@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" id="com.vcess.app" version="1.0.0">
+<widget xmlns="http://www.w3.org/ns/widgets" id="com.vcess.app" version="2.0.0">
   <name>VcessApp</name>
   <description/>
-  <author/> 
+  <author/>
   <content src="index.html"/>
   <allow-navigation href="*"/>
   <allow-intent href="itms:*"/>
@@ -36,7 +36,7 @@
   <preference name="AutoHideSplashScreen" value="true"/>
   <preference name="FadeSplashScreen" value="true"/>
   <preference name="ShowSplashScreenSpinner" value="false"/>
-  <access origin="*" />
+  <access origin="*"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="EnableViewportScale" value="false"/>
 </widget>
