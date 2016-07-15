@@ -1570,6 +1570,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
         else
         	$scope.show_half_star = 1;
 
+        console.log(selected_business['favorite']);
         $scope.business['favorite'] = selected_business['favorite'].split(',').length-1;
         $scope.business['wish_list'] = selected_business['wish_list'].split(',').length-1;
 
