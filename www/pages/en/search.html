@@ -33,6 +33,10 @@
                     <input ng-show="things" type="search" class="search-input-no-border" placeholder="Ex: wifi, stationary, coffee, ..." ng-model="search_text">
 
                     <input ng-show="!things" type="search" class="search-input-no-border" placeholder="Ex: Royal Host, Starbucks, ..." ng-model="search_text">
+
+                    <span ng-click="clearInputSearch()" class="displayClear">
+                        <ons-icon icon="fa-times " style="opacity: 0.5"></ons-icon>
+                    </span>
                 </ons-list-item>
                 <ons-list-item ng-click="show_current_location=!show_current_location">
                     <input type="search" class="location-input-no-border" ng-model="location_text" placeholder="Input search location">
