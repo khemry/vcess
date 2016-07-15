@@ -11,6 +11,9 @@
         <ons-list modifier="inset" class="margin-10-0-10-0 font-size-14" ng-init="show_current_location=0">
             <ons-list-item ng-click="show_current_location=!show_current_location">
                 <input type="search" class="location-input-no-border" ng-model="location_text" placeholder="Input search location">
+                <span ng-click="clearInput()" class="displayClear">
+                    <ons-icon icon="fa-times " style="opacity: 0.5"></ons-icon>
+                </span>
             </ons-list-item>
 
             <div ng-show="show_current_location">

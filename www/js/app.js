@@ -174,7 +174,7 @@ app.controller('SignupCtrl', function($scope, GlobalParameters, $http, $window, 
 					GlobalParameters.setCurrentUser(login_user);
 					localStorageService.set('login_user', login_user);
 					//GlobalParameters.current_user = login_user;
-					$scope.myNavigator.pushPage('profile_index.html', {login_user: login_user});
+					$scope.myNavigator.pushPage('pages/en/profile_index.html', {login_user: login_user});
 				}
 			}, function(error){
 				alert('Failed: ' + error);
@@ -272,9 +272,13 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 		$scope.clearIconVar=param;
 		};
 		// $scope.hi="hi";
-		$scope.clearInput=function(){
-			$scope.location_text = "";
-		};
+	$scope.clearInput=function(){
+		$scope.location_text = "";
+	};
+
+	$scope.clearInputSearch=function(){
+		$scope.search_text = "";
+	};
 
 	$scope.Clear = function(){
 		$scope.search_result = 0;
@@ -654,6 +658,10 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
 	//var current_latlng;
 	//var orderBy = $filter('orderBy');
 	//$scope.businesses = [];
+
+	$scope.clearInput=function(){
+		$scope.location_text = "";
+	};
 
 	$scope.Clear = function(){
 		$scope.search_result = 0;
@@ -1100,19 +1108,6 @@ app.controller('HomeCtrl', function($scope, $http, GlobalParameters){
 	$scope.shop_home = GlobalParameters.shop_home;
 	$scope.shop_list_home = GlobalParameters.shop_list_home;
 });
-
-
-
-// app.controller('LoginCtrl', function($scope, localStorageService){
-// 	console.log('Login Ctrl');
-
-	
-// 	$scope.alert = function(msg) {
-//     	ons.notification.alert({message: msg, title: 'Vcess'});
-// 	}
-// });
-
-
 
 app.controller('NormalIndexCtrl', function($scope, GlobalParameters, localStorageService){
 	console.log('NormalIndexCtrl');
