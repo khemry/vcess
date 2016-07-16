@@ -65,7 +65,7 @@
     
         <ons-list modifier="inset" class="margin-10-0-10-0" ng-show="!data_not_found">
               
-            <ons-list-item ng-repeat="business in businesses | orderObjectBy:predicate:0 | limitTo:limit as count_result" modifier="chevron" ng-click="myNavigator.pushPage('pages/en/business_home.html', {selected_biz: business});">
+            <ons-list-item ng-repeat="business in businesses | orderObjectBy:predicate:0 | limitTo:limit as count_result track by $index" modifier="chevron" ng-click="myNavigator.pushPage('pages/en/business_home.html', {selected_biz: business});">
                 <ons-row class="margin-10-0-10-0">
                     <ons-col width="80px">
                         <img src="{{business['profile']}}" class="biz-image margin-top-10">
