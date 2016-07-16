@@ -2,17 +2,6 @@
 
 var app = ons.bootstrap('myApp', ['onsen', 'LocalStorageModule']);
 
-// app.config(function(FacebookProvider) {
-//      // Set your appId through the setAppId method or
-//      // use the shortcut in the initialize method directly.
-//      FacebookProvider.init('1687245944857278');
-// });
-
-// app.config(function (localStorageServiceProvider) {
-//   localStorageServiceProvider
-//     .setStorageType('sessionStorage');
-// });
-
 app.filter('orderObjectBy', function() {
   return function(items, field, reverse) {
     var filtered = [];
@@ -801,6 +790,7 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
 	    			$scope.data_not_found = 1;
 		    	} else {
 		    		$scope.PopList = 1;
+		    		console.log(result['data']);
 		    		original_result = result['data'];
 	    			$scope.businesses = result['data'];
 	    			if (result['pop_list'].length ==0){
@@ -886,7 +876,7 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
 
 		console.log(req);
 			$http(req).then(function(data){
-				console.log('req');
+				//console.log('req');
 				console.log(data);
 
 				data['pop_list'] = data['data']['pop_list'];
@@ -1266,7 +1256,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 	}
 	var page = myNavigator.getCurrentPage();
 	var selected_business = page.options.selected_biz;
-	console.log(selected_business['id']);
+	console.log(selected_business);
 	LoadData();
 
 	$scope.RateStar = function(star_pos){
@@ -1287,11 +1277,15 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 			if (Find(current_user['favorite'], biz_id)){
 				$scope.alert('You have already favorited this place.');
 			} else {
+				if (selected_business['favorite']==0)
+					selected_business['favorite']="";
+				
+				var user_id = current_user['user_id'];
 				var new_favorite = selected_business['favorite'] + "," + user_id;
 				var param = "favorite";
 				var value = new_favorite;
 				var user_value = current_user['favorite'] + "," + biz_id;
-				var user_id = current_user['user_id'];
+				
 				
 				UpdateDB(param, value, user_value, biz_id, user_id).then(function(result) {
 					//$scope.alert('Thanks for your feedback!');
@@ -1318,12 +1312,15 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 			if (Find(current_user['wish_list'], biz_id)){
 				$scope.alert('You have already added this place to your wish list.');
 			} else {
+				if (selected_business['wish_list']==0)
+					selected_business['wish_list']="";
 				
+				var user_id = current_user['user_id'];
 				var new_wish_list = selected_business['wish_list'] + "," + user_id;
 				var param = "wish_list";
 				var value = new_wish_list;
 				var user_value = current_user['wish_list'] + "," + biz_id;
-				var user_id = current_user['user_id'];
+				
 				
 				UpdateDB(param, value, user_value, biz_id, user_id).then(function(result) {
 					//$scope.alert('Thanks for your feedback!');
