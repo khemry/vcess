@@ -78,7 +78,7 @@
                     <ons-col width="10px">
                     </ons-col>
                     <ons-col>
-                        <ons-button modifier="large outline" class="font-size-14" ng-click="sort_by_rate=!sort_by_rate; SortBy('distance')" ng-disabled="disabled"><span>Sort by Distance</span></ons-button>
+                        <ons-button modifier="large outline" class="font-size-14" ng-click="sort_by_rate=!sort_by_rate; SortBy('distance', false)" ng-disabled="disabled"><span>Sort by Distance</span></ons-button>
                     </ons-col>
                 </ons-row>
             </div>
@@ -90,7 +90,7 @@
                     <ons-col width="10px">
                     </ons-col>
                     <ons-col>
-                        <ons-button modifier="large outline" class="font-size-14" ng-click="sort_by_rate=!sort_by_rate; SortBy('-rate')" ng-disabled="disabled"><span>Has Photos</span></ons-button>
+                        <ons-button modifier="large outline" class="font-size-14" ng-click="sort_by_rate=!sort_by_rate; SortBy('rate', true)" ng-disabled="disabled"><span>Sort by Rate</span></ons-button>
                     </ons-col>
                 </ons-row>
             </div>
@@ -102,20 +102,20 @@
         
         <ons-list modifier="inset" class="margin-10-0-10-0" ng-show="!data_not_found">
               
-            <ons-list-item ng-repeat="business in businesses | orderObjectBy:predicate:0 | limitTo:limit as count_result track by $index" modifier="chevron" ng-click="myNavigator.pushPage('pages/en/business_home.html', {selected_biz: business});">
+            <ons-list-item ng-repeat="business in businesses | orderBy:predicate:reverse | limitTo:limit as countResult track by $index" modifier="chevron" ng-click="myNavigator.pushPage('pages/en/business_home.html', {selected_biz: business});">
                 <ons-row class="margin-10-0-10-0">
                     <ons-col width="80px">
-                        <img src="{{business.profile}}" class="biz-image margin-top-10">
+                        <img src="{{business['profile']}}" class="biz-image margin-top-10">
                     </ons-col>
                     <ons-col style="padding-right:10px">
                         <ons-row>
-                            <p class="margin-0 line-height-150">{{business.name_en}}</p>
+                            <p class="margin-0 line-height-150">{{business['name_en']}}</p>
                         </ons-row>
                         <ons-row>
-                            <p class="margin-0 line-height-150 font-size-12 margin-right-20">{{business.category}}</p>
+                            <p class="margin-0 line-height-150 font-size-12 margin-right-20">{{business['category']}}</p>
                         </ons-row>
                         <ons-row>
-                            <p class="margin-0 line-height-150 font-size-12">Photos: {{business.photos}}</p>
+                            <p class="margin-0 line-height-150 font-size-12">Photos: {{business['photos']}}</p>
                             <!-- <p>favorite: {{business.favorite}}</p> -->
                         </ons-row>
                         <ons-row>
@@ -123,56 +123,23 @@
                                 <div class="rating-num">
                                     <ons-icon icon="fa-star" fixed-width="false" ng-repeat="n in getRate(business.rate) track by $index"></ons-icon>
                                     <ons-icon icon="fa-star-half" fixed-width="false" ng-show={{show_half_star}}></ons-icon>
-                                    {{business.rate}}
+                                    {{business['rate']}}
                                 </div>
                             </div>
                         </ons-row>
                     </ons-col>
                     <ons-col width="40px">
-                        <p class="margin-0 line-height-150 font-size-12">{{business.distance}} km</p>
+                        <p class="margin-0 line-height-150 font-size-12">{{business['distance']}} km</p>
                     </ons-col>
                 </ons-row>
             </ons-list-item>
         </ons-list>
 
-        <div ng-show="!data_not_found" class="text-center">
-            <ons-button modifier="quiet" ng-click="limit = limit + 20">Show More</ons-button>
+        <div ng-show="ShowMore" class="text-center">
+        <!-- <button ng-hide="results.length === items.length" ng-click="limit = limit +2">show more...</button -->
+            <ons-button modifier="quiet" ng-hide="results.length === businesses.length" ng-click="limit = limit +20">
+                Show More
+            </ons-button>
         </div>
-
-        <!-- Show Popular Places with more photos -->
-
-        <!-- <ons-list-header ng-show="PopList" class="text-center font-size-18">Popular Places</ons-list-header>
-        <ons-list modifier="inset" class="margin-10-0-10-0" ng-show="PopList">
-            <ons-list-item ng-repeat="business in pop_list" modifier="chevron" ng-click="myNavigator.pushPage('pages/en/business_home.html', {selected_biz: business});">
-                <ons-row class="margin-10-0-10-0">
-                    <ons-col width="80px">
-                        <img src="{{business.profile}}" class="biz-image margin-top-10">
-                    </ons-col>
-                    <ons-col style="padding-right:10px">
-                        <ons-row>
-                            <p class="margin-0 line-height-150">{{business.name_en}}</p>
-                        </ons-row>
-                        <ons-row>
-                            <p class="margin-0 line-height-150 font-size-12 margin-right-20">{{business.category}}</p>
-                        </ons-row>
-                        <ons-row>
-                            <p class="margin-0 line-height-150 font-size-12">{{business.photos}}</p>
-                        </ons-row>
-                        <ons-row>
-                            <div class="rating margin-0 line-height-150 font-size-12">
-                                <div class="rating-num">
-                                    <ons-icon icon="fa-star" fixed-width="false" ng-repeat="n in getRate(business.rate) track by $index"></ons-icon>
-                                    <ons-icon icon="fa-star-half" fixed-width="false" ng-show={{show_half_star}}></ons-icon>
-                                    {{business.rate}}
-                                </div>
-                            </div>
-                        </ons-row>
-                    </ons-col>
-                    <ons-col width="40px">
-                        <p class="margin-0 line-height-150 font-size-12">{{business.distance}} km</p>
-                    </ons-col>
-                </ons-row>
-            </ons-list-item>
-        </ons-list> -->
     </div>
-</onse-page>
+</ons-page>

@@ -3,17 +3,48 @@
 var app = ons.bootstrap('myApp', ['onsen', 'LocalStorageModule']);
 
 app.filter('orderObjectBy', function() {
-  return function(items, field, reverse) {
-    var filtered = [];
-    angular.forEach(items, function(item) {
-      filtered.push(item);
-    });
-    filtered.sort(function (a, b) {
-      return (a[field] > b[field] ? 1 : -1);
-    });
-    if(reverse) filtered.reverse();
-    return filtered;
-  };
+        return function (items, field, reverse) {
+        	console.log(items);
+          function isNumeric(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+          }
+          
+          var filtered = [];
+
+          angular.forEach(items, function(item, key) {
+            item.key = key;
+            filtered.push(item);
+          });
+
+          function index(obj, i) {
+            return obj[i];
+          }
+
+          filtered.sort(function (a, b) {
+            var comparator;
+            var reducedA = field.split('.').reduce(index, a);
+            var reducedB = field.split('.').reduce(index, b);
+
+            if (isNumeric(reducedA) && isNumeric(reducedB)) {
+              reducedA = Number(reducedA);
+              reducedB = Number(reducedB);
+            }
+
+            if (reducedA === reducedB) {
+              comparator = 0;
+            } else {
+              comparator = reducedA > reducedB ? 1 : -1;
+            }
+
+            return comparator;
+          });
+
+          if (reverse) {
+            filtered.reverse();
+          }
+          console.log(filtered);
+          return filtered;
+        };
 });
 
 app.service('GlobalParameters', function(){
@@ -253,8 +284,9 @@ app.controller("LoginCtrl", function($scope, $http, GlobalParameters, localStora
 });
 
 
-app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
+app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 	console.log('SearchCtrl');
+	var all_biz = 0;
 
 		$scope.clearIconVar=false;
 		$scope.clearIcon = function(param){
@@ -269,6 +301,15 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 		$scope.search_text = "";
 	};
 
+	$scope.ShowMoreFunc = function(limit){
+		console.log(limit);
+		console.log(all_biz);
+		$scope.limit = limit + 20;
+		if (limit >= all_biz){
+			$scope.ShowMore = 0;
+		}
+	}
+
 	$scope.Clear = function(){
 		$scope.search_result = 0;
 		$scope.businesses = {};
@@ -280,7 +321,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 		coordinate: {}
 	}];
 
-	var original_result = {};
+	$scope.results = {};
 
 	$scope.data_not_found = 0;
 	//var orderBy = $filter('orderBy');
@@ -366,24 +407,20 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
     	if (search_text == undefined) {
     		alert('Please input your search keyword.');
     	} else {
-    		// var keyword = MatchKeyword(search_text);
-
-    		if (location === "All locations") {
-	    		location = "";
-	    	}
 	    	GetData(search_text, location, search_item_flag).then(function(result) {
-	    		$scope.count_result = Object.getOwnPropertyNames(result['data']).length
-	    		console.log($scope.count_result);
+	    		$scope.countResult = Object.getOwnPropertyNames(result['data']).length
+	    		all_biz = $scope.countResult;
+	    		console.log($scope.countResult);
 	    		// $scope.businesses = result;
 	    		// $scope.predicate = 'distance';
 	    		// $scope.search_result = 1;
-	    		if ($scope.count_result == 0){
+	    		if ($scope.countResult == 0){
 	    			$scope.search_result = 1;
 	    			$scope.data_not_found = 1;
 	    			$scope.load_complete = 1;
 	    		} else {
 	    			$scope.PopList = 1;
-	    			original_result = result['data'];
+	    			$scope.results = result['data'];
 	    			$scope.businesses = result['data'];
 	    			if (result['pop_list'].length ==0){
 	    				$scope.PopList = 0;
@@ -392,15 +429,19 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 		    		$scope.data_not_found = 0;
 		    		//$scope.predicate = 'distance';
 		    		$scope.search_result = 1;
-		    		if (result['data'][0]['distance'] == ""){
-		    			$scope.predicate = '-rate';
-		    			no_distance = 1;
-		    			$scope.disabled = 1;
-		    		} else {
-		    			$scope.predicate = 'distance';
-		    			$scope.disabled = 0;
-		    			no_distance = 0;
-		    		}
+		    		$scope.ShowMore = 1;
+		    		$scope.predicate = 'distance';
+		    		$scope.reverse = false;
+		    		$scope.disabled = 0;
+		    		// if (result['data'][0]['distance'] == ""){
+		    		// 	$scope.predicate = '-rate';
+		    		// 	no_distance = 1;
+		    		// 	$scope.disabled = 1;
+		    		// } else {
+		    		// 	$scope.predicate = 'distance';
+		    		// 	$scope.disabled = 0;
+		    		// 	no_distance = 0;
+		    		// }
 		    		if (selected_keyword != undefined){
 						$scope.load_complete = 1;
 					}
@@ -455,19 +496,13 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 
     var no_distance = 0;
 
-    function SortByPhotos(){
-    	$scope.businesses = $scope.pop_list;
-    }
+  //   function SortByPhotos(){
+  //   	$scope.businesses = $scope.pop_list;
+  //   }
 
-    $scope.SortBy =function(sort_item){
-
-    	if (sort_item == "-rate"){
-    		SortByPhotos();
-    	} else {
-    		$scope.businesses = original_result;
-    		$scope.predicate = sort_item;	
-    	}
-		console.log(sort_item);
+    $scope.SortBy =function(sort_item, reverse){
+    	$scope.predicate = sort_item;
+    	$scope.reverse = reverse;
     }
 
     function GetSearchCity(addr){
@@ -475,16 +510,13 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 
     	if (addr != current_location['addr']){
     		if (addr == "Phnom Penh") {
-    			current_location['coordinate']['lat'] = 11.57609;
-		        current_location['coordinate']['lng'] = 104.92319;
+    			current_location['coordinate'] = {lat: 11.57609, lng: 104.92319};
 		        search_city = addr;
 		    } else if (addr == "Independence Monument") {
-    			current_location['coordinate']['lat'] = 11.556359;
-		        current_location['coordinate']['lng'] = 104.928143; 
+		    	current_location['coordinate'] = {lat: 11.556359, lng: 104.928143};
 		        search_city = "Phnom Penh";
 		    } else if (addr == "Psar Thmey") {
-    			current_location['coordinate']['lat'] = 11.56966;
-		        current_location['coordinate']['lng'] = 104.92117; 
+		    	current_location['coordinate'] = {lat: 11.56966, lng: 104.92117};
 		        search_city = "Phnom Penh";
     		} else {
     			AddrToCoordinate(addr);
@@ -591,57 +623,16 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q, $filter){
 		return deferred.promise;
 	}
 
-	$scope.getAllLocation = function(){
-		$scope.Clear();
-		$scope.location_text = "All locations";
-		current_location['coordinate'] = {};
-		current_location['addr'] = '';
-
-	}
-
-	
-
-	function GetDistance(origin, destination, tmp){
-		var deferred = $q.defer();
-		setTimeout(function() {
-			var distance = "";
-				var service = new google.maps.DistanceMatrixService();
-				service.getDistanceMatrix(
-				{
-					origins: [origin],
-					destinations: [destination],
-					travelMode: google.maps.TravelMode.DRIVING,
-				    unitSystem: google.maps.UnitSystem.METRIC,
-				    avoidHighways: false,
-				    avoidTolls: false
-				}, function(response, status){
-					if (status !== google.maps.DistanceMatrixStatus.OK) {
-		            	alert('Error was: ' + status);
-		            	deferred.reject('Error was: ' + status);
-
-		          	} else {
-		          		distance = response.rows[0].elements[0].distance.text;
-		          		console.log(tmp['distance']);
-		          		tmp['distance'] = distance;
-		          		// tmp['distance'] = distance.replace(' km','');
-		          		// tmp['distance'] = parseFloat(tmp['distance']);
-		          		console.log(tmp['distance']);
-		          		deferred.resolve(tmp);
-		          	}
-				});
-		}, 10);
-	    return deferred.promise;
-	}
-
 });
 
-app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter){
+app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 	console.log('CategoryListCtrl');
 	var page = myNavigator.getCurrentPage();
 	$scope.selected_category = page.options.selected_category;
 	$scope.selected_category_key = page.options.selected_category_key;
 	$scope.data_not_found = 0;
-	var original_result = {};
+	var original_result = [];
+	var all_biz = 0;
 	//var search_city_en = "";
 	//var search_city_en;
 	//var current_latlng;
@@ -654,8 +645,16 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
 
 	$scope.Clear = function(){
 		$scope.search_result = 0;
-		$scope.businesses = {};
+		$scope.businesses = [];
 		$scope.disabled = 0;
+	}
+
+	$scope.ShowMoreFunc = function(limit){
+		//console.log(all_biz);
+		$scope.limit = limit + 20;
+		if (limit >= all_biz){
+			$scope.ShowMore = 0;
+		}
 	}
 
 	var current_location = [{
@@ -740,7 +739,7 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
 	}
 
 	OnLoad = function(){
-		$scope.businesses = {};
+		$scope.businesses = [];
 		getCurrentLocation().then(function(result) {
     		//$scope.location_text = result['addr'];
     		//$scope.load_complete = 1;
@@ -774,7 +773,7 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
 
 	$scope.search = function(selected_category, selected_category_key, location){
 		
-
+		$scope.businesses = [];
 		if(selected_category_key === undefined){
     		selected_category_key = selected_category;
     	}
@@ -784,6 +783,7 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
     	}
 	    	GetData(selected_category, selected_category_key, location).then(function(result) {
 	    		$scope.count_result = Object.getOwnPropertyNames(result['data']).length
+	    		all_biz = $scope.count_result;
 	    		console.log($scope.count_result);
 	    		if ($scope.count_result == 0){
 	    			$scope.search_result = 1;
@@ -801,34 +801,29 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
 		    		$scope.data_not_found = 0;
 		    		//$scope.predicate = 'distance';
 		    		$scope.search_result = 1;
-		    		if (result['data'][0]['distance'] == ""){
-		    			$scope.predicate = '-rate';
-		    			no_distance = 1;
-		    			$scope.disabled = 1;
-		    		} else {
-		    			$scope.predicate = 'distance';
-		    			$scope.disabled = 0;
-		    			no_distance = 0;
-		    		}
+		    		$scope.predicate = 'distance';
+		    		$scope.reverse = false;
+		    		$scope.ShowMore = 1;
+		    		$scope.disabled = 0;
+		    		// if (result['data'][0]['distance'] == ""){
+		    		// 	$scope.predicate = '-rate';
+		    		// 	no_distance = 1;
+		    		// 	$scope.disabled = 1;
+		    		// } else {
+		    		// 	$scope.predicate = 'distance';
+		    		// 	$scope.disabled = 0;
+		    		// 	no_distance = 0;
+		    		// }
 		    	}
 		    	$scope.load_complete = 1;
 	    		
 	    	});
     }
 
-    function SortByPhotos(){
-    	$scope.businesses = $scope.pop_list;
-    }
-
-    $scope.SortBy =function(sort_item){
-
-    	if (sort_item == "-rate"){
-    		SortByPhotos();
-    	} else {
-    		$scope.businesses = original_result;
-    		$scope.predicate = sort_item;	
-    	}
-		console.log(sort_item);
+   
+    $scope.SortBy =function(sort_item, reverse){
+    	$scope.predicate = sort_item;
+    	$scope.reverse = reverse;	
     }
 
     function GetSearchCity(addr){
@@ -836,16 +831,13 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
 
     	if (addr != current_location['addr']){
     		if (addr == "Phnom Penh") {
-    			current_location['coordinate']['lat'] = 11.57609;
-		        current_location['coordinate']['lng'] = 104.92319;
+    			current_location['coordinate'] = {lat: 11.57609, lng: 104.92319};
 		        search_city = addr;
 		    } else if (addr == "Independence Monument") {
-    			current_location['coordinate']['lat'] = 11.556359;
-		        current_location['coordinate']['lng'] = 104.928143; 
+		    	current_location['coordinate'] = {lat: 11.556359, lng: 104.928143};
 		        search_city = "Phnom Penh";
 		    } else if (addr == "Psar Thmey") {
-    			current_location['coordinate']['lat'] = 11.56966;
-		        current_location['coordinate']['lng'] = 104.92117; 
+		    	current_location['coordinate'] = {lat: 11.56966, lng: 104.92117};
 		        search_city = "Phnom Penh";
     		} else {
     			AddrToCoordinate(addr);
@@ -882,29 +874,6 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
 				data['pop_list'] = data['data']['pop_list'];
 				delete data['data']['pop_list'];
 				var all_data = data;
-
-				// if (all_data.length == 0){
-				// 	//$scope.data_not_found = 1;
-				// } else {
-				// 	//var all_data = data['data'];
-				// 	for (i = 0; i < all_data.length; i++) { 
-				// 			all_data[i]['tel-phone'] = "tel:" + all_data[i]['phone'];
-				// 			if (current_location['addr'] != ""){
-				// 				var tmp = GetDistance(current_location['coordinate'], all_data[i]['coordinate'], all_data[i])
-				// 				.then(function(result) {
-
-				// 					all_data[i] = result;
-				// 				  	console.log(all_data[i]);
-				// 				  	return result;
-				// 				}, function(reason) {
-				// 				  	alert('Failed: ' + reason);
-				// 				});
-				// 			} else {
-				// 				all_data[i]['distance'] = "";
-				// 			}
-				// 	}
-		  			
-				// }
 				deferred.resolve(all_data);
 			}, function(error){
 				deferred.reject('Error was: ' + error);
@@ -912,151 +881,7 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q, $filter
 		return deferred.promise;
 	}
 
-	$scope.getAllLocation = function(){
-		$scope.Clear();
-		$scope.location_text = "All locations";
-		current_location['coordinate'] = {};
-		current_location['addr'] = '';
-
-	}
-	// $scope.getCurrentLocation = function(){
- //    	$timeout(function(){
-	// 	var latlng;
- //    	navigator.geolocation.getCurrentPosition(function(position) {
- //    		var latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
- //    		console.log(latlng);
- //    		current_latlng = latlng;
- //    		var geocoder = new google.maps.Geocoder();
- //    		geocoder.geocode({'location': latlng}, function(results, status) {
-	// 	          if (status === google.maps.GeocoderStatus.OK) {
-	// 	            if (results[1]) {
-	// 	            	$scope.$apply($scope.location_text =results[1].formatted_address);
-	// 	            	//search_city_en = results[1].formatted_address.split(',')[1].replace(/-ku|-shi/gi,'').replace(' ','');
-	// 	            	search_city_en = results[1].formatted_address;
-	// 	            	console.log(search_city_en);
-	// 	            } else {
-	// 	              window.alert('No results found');
-	// 	            }
-	// 	          } else {
-	// 	            window.alert('Geocoder failed due to: ' + status);
-	// 	          }
-	// 	        });
-	      		        
-	// 		}, function(error){
-	// 			console.log('code: '    + error.code + ' ' + 'message: ' + error.message + '\n');
-	// 			alert(error.message + " Please enable the location service.");
-	// 		});
- //    	},10);
- //    }
-
-    
- //    $scope.GetData = function(selected_category, selected_category_key, location){
- //    	if(selected_category_key === undefined){
- //    		selected_category_key = selected_category;
-
- //    	}
- //    	if (location === "All locations") {
- //    		location = "";
- //    	}
- //    	TEST(selected_category_key, location).then(function(result) {
- //    		console.log(result);
-    		
-
- //    		//var tmp = orderBy(result, 'distance');
- //    		$scope.businesses = result;
- //    	});
-
-    	
- //    }
-
-   
-	// function TEST(selected_category_key, location){
-	// 	var deferred = $q.defer();
-	// 	var tmp = "";
 	
-	// 	if (search_city_en == undefined){
-	// 		tmp = location;
-	// 		if (tmp.indexOf('-ku') > -1 || tmp.indexOf('-shi') > -1){
-	// 		    tmp = tmp.replace(/-ku|-shi/gi,'');	
-	// 		} 
-	// 	} else {
-	// 		console.log('location');
-	// 		console.log(search_city_en);
-	// 		search_city_en = search_city_en.replace(/,/gi,'').split(" ");
-	// 		for (i = 0; i < search_city_en.length; i++) { 
-	// 		    if (search_city_en[i].indexOf('-ku') > -1 || search_city_en[i].indexOf('-shi') > -1){
-	// 		    	tmp = search_city_en[i].replace(/-ku|-shi/gi,'');	
-	// 		    }
-	// 		}
-	// 	}
-	// 	console.log(tmp);   
-		
-	// 	var req = {
-	// 	 	method: 'POST',
-	// 	 	url: 'http://www.vcess.com/ajax/search.php',
-	// 	 	headers: {
-	// 	   		'Content-Type': 'application/json'
-	// 	 	},
-	// 	 	data: { category: selected_category_key, city_en: tmp }
-	// 	}
-
-	// 	console.log(req);
-			
-	// 		$http(req).then(function(data){
-	// 			console.log('req');
-	// 			console.log(data);
-	// 			if (data['data'].length == 0){
-	// 				$scope.data_not_found = 1;
-	// 			} else {
-	// 				var all_data = data['data'];
-	// 				for (i = 0; i < all_data.length; i++) { 
-	// 						if (current_latlng != undefined){
-	// 							var tmp = GetDistance(current_latlng, all_data[i]['coordinate'], all_data[i])
-	// 							.then(function(result) {
-	// 								all_data[i] = result;
-	// 							  	console.log(all_data[i]);
-	// 							  	return result;
-	// 							}, function(reason) {
-	// 							  	alert('Failed: ' + reason);
-	// 							});
-	// 						} 
-	// 				}
-	// 	  			deferred.resolve(all_data);
-	// 			}
-	// 		}, function(error){
-	// 			deferred.reject('Error was: ' + error);
-	// 		});
-	// 	return deferred.promise;
-	// }
-
-	function GetDistance(origin, destination, tmp){
-		var deferred = $q.defer();
-		setTimeout(function() {
-			var distance = "";
-				var service = new google.maps.DistanceMatrixService();
-				service.getDistanceMatrix(
-				{
-					origins: [origin],
-					destinations: [destination],
-					travelMode: google.maps.TravelMode.DRIVING,
-				    unitSystem: google.maps.UnitSystem.METRIC,
-				    avoidHighways: false,
-				    avoidTolls: false
-				}, function(response, status){
-					if (status !== google.maps.DistanceMatrixStatus.OK) {
-		            	alert('Error was: ' + status);
-		            	deferred.reject('Error was: ' + status);
-		            	//return deferred.promise;
-
-		          	} else {
-		          		distance = response.rows[0].elements[0].distance.text;
-		          		tmp['distance'] = distance;
-		          		deferred.resolve(tmp);
-		          	}
-				});
-		}, 10);
-	    return deferred.promise;
-	}
 
 	$scope.getRate = function(num) {
 		num = parseInt(num);

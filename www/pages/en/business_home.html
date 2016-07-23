@@ -1,4 +1,4 @@
-<ons-page ng-controller="BusinessHomeCtrl" ng-init="ShowRate=0;ShowReview=0;ShowFood=1;ShowMenu=0;ShowStore=0;">
+<ons-page ng-controller="BusinessHomeCtrl" ng-init="ShowRate=0;ShowReview=0;ShowFood=1;ShowMenu=0;ShowStore=0">
 
 	<ons-toolbar>
 	    <div class="left"><ons-back-button></ons-back-button></div>
@@ -169,35 +169,63 @@
           </ons-list-item> -->
 
           
-          <ons-list-item ng-click="ShowMenu=!ShowMenu">
+          <ons-list-item ng-init="menu_limit=5">
               <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
-              Menu Photos <span ng-hide="menu_images.length"> (No photos)</span>
-              <div ng-show="ShowMenu">
-                  
-                  <img src="{{image['path']}}" class="show_photos" ng-repeat="image in menu_images">
-              
-              </div>              
+              Menu Photos 
+              <span ng-hide="menu_images.length"> (No photos)</span>
+              <span ng-show="menu_images.length"> ({{menu_images.length}} photos)</span>
+              <div class="text-center" ng-show="menu_images.length">
+                <div ng-repeat="image in menu_images | limitTo:menu_limit">
+                  <img src="{{image['path']}}" class="show_photos">
+                  <!-- <p class="photo_title">{{image['name_en']}}</p><br> -->
+                </div>
+                
+                <ons-button modifier="quiet" class="font-size-12">
+                    <span ng-show="menu_limit==5" ng-click="menu_limit = menu_images">Show All</span>
+                    <span ng-show="menu_limit == menu_images" ng-click="menu_limit=5">Show Less</span>
+                </ons-button>
+                
+              </div>
           </ons-list-item>
-          <ons-list-item ng-click="ShowStore=!ShowStore">
+          
+          <ons-list-item ng-init="store_limit=5">
               <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
-              Store Photos <span ng-hide="store_images.length"> (No photos)</span>
-              <div ng-show="ShowStore">
-                <img src="{{image['path']}}" class="show_photos" ng-repeat="image in store_images">
-              </div>              
+              Store Photos 
+              <span ng-hide="store_images.length"> (No photos)</span>
+              <span ng-show="store_images.length"> ({{store_images.length}} photos)</span>
+              <div class="text-center" ng-show="store_images.length">
+                <div ng-repeat="image in store_images | limitTo:store_limit">
+                  <img src="{{image['path']}}" class="show_photos">
+                  <!-- <p class="photo_title">{{image['name_en']}}</p><br> -->
+                </div>
+                
+                <ons-button modifier="quiet" class="font-size-12">
+                    <span ng-show="store_limit==5" ng-click="store_limit = store_images">Show All</span>
+                    <span ng-show="store_limit == store_images" ng-click="store_limit=5">Show Less</span>
+                </ons-button>
+                
+              </div>
           </ons-list-item>
-          <ons-list-item ng-click="ShowFood=!ShowFood">
+      
+          <ons-list-item ng-init="food_limit=5">
               <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
-              Food Photos <span ng-hide="food_images.length"> (No photos)</span>
-              <div ng-show="ShowFood">
-                <div ng-repeat="image in food_images">
+              Food Photos 
+              <span ng-hide="food_images.length"> (No photos)</span>
+              <span ng-show="food_images.length"> ({{food_images.length}} photos)</span>
+              <div class="text-center" ng-show="food_images.length">
+                <div ng-repeat="image in food_images | limitTo:food_limit">
                   <img src="{{image['path']}}" class="show_photos">
                   <p class="photo_title">{{image['name_en']}}</p><br>
                 </div>
+                
+              <ons-button modifier="quiet" class="font-size-12">
+                  <span ng-show="food_limit==5" ng-click="food_limit = food_images">Show All</span>
+                  <span ng-show="food_limit == food_images" ng-click="food_limit=5">Show Less</span>
+              </ons-button>
+                
               </div>
           </ons-list-item>
         </ons-list>
 	</div>		
-
-
 </ons-page>
 
