@@ -28,17 +28,13 @@
 
 		    <ons-list modifier="inset" class="margin-10-0-10-0">
 
-		    	<ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/business_list.html');">
-		    	  <ons-icon icon="fa-btc" class="color-vcess"></ons-icon>
-		          Businesses
+		    	<ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/fav_list.html');">
+		    	  <ons-icon icon="ion-ios-heart" class="color-vcess"></ons-icon>
+		          Favorites/Wish List
 		        </ons-list-item>
-		        <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/checkin_list.html');">
-		          <ons-icon icon="ion-android-map" class="color-vcess"></ons-icon>
-		          Check-ins
-		        </ons-list-item>
-		        <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/friend_list.html');">
-		          <ons-icon icon="ion-android-contacts" class="color-vcess"></ons-icon>	
-		          Friends
+		        <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/rate_list.html');">
+		          <ons-icon icon="ion-ios-star-half" class="color-vcess"></ons-icon>	
+		          Rate/Review
 		        </ons-list-item>
 		        <!-- <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/settings.html');">
 		          <ons-icon icon="ion-android-settings" class="color-vcess"></ons-icon>
@@ -50,6 +46,31 @@
 		        </ons-list-item>
 
 		    </ons-list>
+
+		    <div class="settings-header">Upcoming Functions</div>
+
+			<ons-list modifier="inset" class="margin-10-0-10-0">
+				<ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/meetup.html');">
+		    	  	<ons-icon icon="fa-users" class="color-vcess"></ons-icon>
+		          	Meetup
+		        </ons-list-item>
+				<ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/business_list.html');">
+		    	  <ons-icon icon="fa-btc" class="color-vcess"></ons-icon>
+		          Businesses
+		        </ons-list-item>
+		        <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/checkin_list.html');">
+		          <ons-icon icon="ion-android-map" class="color-vcess"></ons-icon>
+		          Check-ins
+		        </ons-list-item>
+		        <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/friend_list.html');">
+		          <ons-icon icon="ion-android-contacts" class="color-vcess"></ons-icon>	
+		          Friends
+		        </ons-list-item>
+		        <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/inbox.html');">
+		          <ons-icon icon="fa-envelope" class="color-vcess"></ons-icon>	
+		          Inbox
+		        </ons-list-item>
+			</ons-list>
 		     
 		</div>
 	</div>
