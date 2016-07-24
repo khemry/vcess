@@ -3,8 +3,8 @@
 var app = ons.bootstrap('myApp', ['onsen', 'LocalStorageModule']);
 
 app.filter('orderObjectBy', function() {
-        return function (items, field, reverse) {
-        	console.log(items);
+    return function (items, field, reverse) {
+        	//console.log(items);
           function isNumeric(n) {
             return !isNaN(parseFloat(n)) && isFinite(n);
           }
@@ -83,6 +83,7 @@ app.service('GlobalParameters', function(){
 	}
 
 	this.setCurrentUser = function(value){
+		console.log('YES');
 		this.current_user = value;
 	}
 	this.setLang = function(value){
@@ -211,23 +212,6 @@ app.controller('SignupCtrl', function($scope, GlobalParameters, $http, $window, 
 	$scope.alert = function(msg) {
     	ons.notification.alert({message: msg, title: 'Vcess'});
 	}
-	
-	// login = function () {
- //    /**
- //     * Calling FB.login with required permissions specified
- //     * https://developers.facebook.com/docs/reference/javascript/FB.login/v2.0
- //     */
- //    ezfb.login(function (res) {
- //      /**
- //       * no manual $scope.$apply, I got that handled
- //       */
- //      if (res.authResponse) {
- //        updateLoginStatus(updateApiMe);
- //      }
- //    }, {scope: 'email'});
- //  };
-
-//scope.login = login();
 });
 
 
@@ -566,12 +550,6 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 		//var search_city = location;
 		console.log(search_city);  
 
-		// MatchKeyword(search_text).then(function(data){
-		// 	console.log('MatchKeyword');
-		// 	console.log(data);
-		// 	search_text = data;
-		// });
-
 		var req = {
 		 	method: 'POST',
 		 	url: 'http://www.vcess.com/ajax/search_kh.php',
@@ -625,6 +603,63 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 
 });
 
+app.controller('PhotoListCtrl', function($scope, $http, $timeout, $q){
+	console.log('PhotoListCtrl');
+	
+	OnLoad = function(){
+
+		GetData($scope.selected_city).then(function(result) {
+			$scope.count_result = Object.getOwnPropertyNames(result['data']).length-1;
+			console.log($scope.count_result);
+			if ($scope.count_result == 0){
+    			$scope.search_result = 1;
+    			$scope.data_not_found = 1;
+	    	} else {
+				$scope.businesses = result['data'];
+	    		$scope.search_result = 1;
+	    		$scope.data_not_found = 0;
+	    		$scope.ShowMore = 1;	
+	    	}
+	    });
+	}
+
+	$scope.SortBy =function(sort_item, reverse){
+    	$scope.predicate = sort_item;
+    	$scope.reverse = reverse;	
+    }
+   
+	function GetData(selected_city){
+		var deferred = $q.defer();
+
+		var req = {
+		 	method: 'POST',
+		 	url: 'http://www.vcess.com/ajax/search_kh.php',
+		 	headers: {
+		   		'Content-Type': 'application/json'
+		 	},
+		 	data: {get_photo_by_city_flag: 1, city: selected_city}
+		}
+
+		console.log(req);
+			$http(req).then(function(data){
+				deferred.resolve(data);
+			}, function(error){
+				deferred.reject('Error was: ' + error);
+			});
+		return deferred.promise;
+	}
+
+	$scope.getRate = function(num) {
+		num = parseInt(num);
+		return new Array(num);   
+	}
+
+	$scope.selected_city = myNavigator.getCurrentPage().options.city;
+	$scope.businesses = {};
+	OnLoad();
+
+});
+
 app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 	console.log('CategoryListCtrl');
 	var page = myNavigator.getCurrentPage();
@@ -633,11 +668,6 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 	$scope.data_not_found = 0;
 	var original_result = [];
 	var all_biz = 0;
-	//var search_city_en = "";
-	//var search_city_en;
-	//var current_latlng;
-	//var orderBy = $filter('orderBy');
-	//$scope.businesses = [];
 
 	$scope.clearInput=function(){
 		$scope.location_text = "";
@@ -1056,7 +1086,7 @@ app.controller('FeaturesCtrl', function($scope, $q, $http){
 });
 
 
-app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http, GlobalParameters){
+app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http, GlobalParameters, localStorageService){
 	console.log('BusinessHomeCtrl');
 
 	$scope.RateIcon = {
@@ -1096,9 +1126,9 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 
 	$scope.Favorite = function(biz_id, current_fav){
 		console.log('Favorite');
-		console.log(GlobalParameters.login_status);
+		//console.log(GlobalParameters.login_status);
 		if (GlobalParameters.login_status) {
-			console.log(current_user['favorite']);
+			//console.log(current_user['favorite']);
 			if (Find(current_user['favorite'], biz_id)){
 				$scope.alert('You have already favorited this place.');
 			} else {
@@ -1118,6 +1148,10 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 					$scope.business['favorite'] = current_fav + 1;
 					current_user['favorite'] = user_value;
 					GlobalParameters.setCurrentUser(current_user);
+					//console.log(localStorageService.get('login_user'));
+					localStorageService.set('login_user', current_user);
+					//console.log(localStorageService.get('login_user'));
+					//console.log(current_user['favorite']);
 
 		    	}, function(error){
 		    		console.log(error);
@@ -1153,6 +1187,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 					$scope.business['wish_list'] = current_wish_list + 1;
 					current_user['wish_list'] = user_value;
 					GlobalParameters.setCurrentUser(current_user);
+					localStorageService.set('login_user', current_user);
 
 		    	}, function(error){
 		    		console.log(error);
@@ -1197,6 +1232,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 				$scope.business['rate'] = rate_star;
 				current_user['rate'] = user_value;
 				GlobalParameters.setCurrentUser(current_user);
+				localStorageService.set('login_user', current_user);
 
 	    	}, function(error){
 	    		console.log(error);
@@ -1412,11 +1448,18 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
         	$scope.show_half_star = 1;
 
         console.log(selected_business['favorite']);
-        $scope.business['favorite'] = selected_business['favorite'].split(',').length-1;
-        $scope.business['wish_list'] = selected_business['wish_list'].split(',').length-1;
+        
+        
 
-        // if (selected_business['favorite'] == "")
-	       //  selected_business['favorite'] = 0;
+        if (selected_business['favorite'] == "")
+	        selected_business['favorite'] = 0;
+	    else 
+	    	$scope.business['favorite'] = selected_business['favorite'].split(',').length-1;
+	    
+	    if (selected_business['wish_list'] == "")
+	        selected_business['wish_list'] = 0;
+	    else
+	    	$scope.business['wish_list'] = selected_business['wish_list'].split(',').length-1;
 
 
 	    if ($scope.business['owner'] == "")
@@ -1667,6 +1710,7 @@ app.controller('SettingsCtrl', function($scope, GlobalParameters){
 
 app.controller('FavCtrl', function($scope, GlobalParameters, $q, $http){
 	console.log('FavCtrl');
+	$scope.businesses = {};
 
 	$scope.getRate = function(num) {
 		num = parseInt(num);
@@ -1677,9 +1721,11 @@ app.controller('FavCtrl', function($scope, GlobalParameters, $q, $http){
 	var current_user = GlobalParameters.current_user;
 
 	$scope.FavList = function(){
+		$scope.businesses = {};
 		var fav_list = current_user['favorite'];
 		if (fav_list == ""){
 			$scope.EmptyList = 1;
+			$scope.EmptyListText = "You haven't favorited any places yet.";
 		} else {
 			GetData(fav_list).then(function(result) {
 				$scope.businesses = result;
@@ -1689,9 +1735,11 @@ app.controller('FavCtrl', function($scope, GlobalParameters, $q, $http){
 	}
 
 	$scope.WishList = function(){
+		$scope.businesses = {};
 		var wish_list = current_user['wish_list'];
 		if (wish_list == ""){
 			$scope.EmptyList = 1;
+			$scope.EmptyListText = "You haven't added any places to your wish list yet.";
 		} else {
 			GetData(wish_list).then(function(result) {
 				$scope.businesses = result;

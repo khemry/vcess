@@ -1,5 +1,7 @@
 <ons-page ng-controller="FavCtrl" ng-init="ShowFav=1; LoadComplete=0">
 
+    
+
     <div class="tab-bar tab-bar--top tab-bar--top-border">
         <label class="tab-bar__item tab-bar--top-border__item">
             <input type="radio" name="top-tab-bar-b" checked="checked" ng-click="ShowFav = !ShowFav; FavList();">
@@ -25,13 +27,7 @@
     </div>
 
     <div class="margin10 text-center" ng-show="login_status">
-        <div ng-show="ShowFav">
-            <p ng-show="EmptyList">You haven't favorited any places yet.</p>
-
-        </div>
-        <div ng-show="!ShowFav">
-            <p ng-show="EmptyList">You haven't added any places to your wish list yet.</p>
-        </div>
+        <p ng-show="EmptyList">{{EmptyListText}}</p>
 
         <div class="margin10" ng-show="!EmptyList">
             <ons-list modifier="inset" class="margin-10-0-10-0" ng-show="LoadComplete">
