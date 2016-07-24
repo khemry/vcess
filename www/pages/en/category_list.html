@@ -28,8 +28,8 @@
                     <ons-list-item modifier="tappable" ng-click="location_text = 'Independence Monument'; show_current_location=0;search(selected_category, selected_category_key, location_text);" >
                         Independence Monument
                     </ons-list-item> 
-                    <ons-list-item modifier="tappable" ng-click="location_text = 'Phnom Penh'; show_current_location=0;search(selected_category, selected_category_key, location_text);">
-                        Phnom Penh
+                    <ons-list-item modifier="tappable" ng-click="location_text = 'Olympic Stadium'; show_current_location=0;search(selected_category, selected_category_key, location_text);">
+                        Olympic Stadium
                     </ons-list-item>    
                     
                 </div>
@@ -61,13 +61,13 @@
             </div>
     </div>
 
-    <div class="margin10" ng-show="search_result">
+    <div class="margin10 text-center" ng-show="search_result">
         
-        <p ng-show="data_not_found" class="text-center">Sorry! No result is found. Please try again.</p>
+        <p ng-show="data_not_found">Sorry! No result is found. Please try again.</p>
         
         <ons-list modifier="inset" class="margin-10-0-10-0" ng-show="!data_not_found">
               
-            <ons-list-item ng-repeat="business in businesses | orderBy:predicate:reverse | limitTo:limit as count_result track by $index" modifier="chevron" ng-click="myNavigator.pushPage('pages/en/business_home.html', {selected_biz: business});">
+            <ons-list-item ng-repeat="business in businesses | limitTo:limit" modifier="chevron" ng-click="myNavigator.pushPage('pages/en/business_home.html', {selected_biz: business});">
                 <ons-row class="margin-10-0-10-0">
                     <ons-col width="80px">
                         <img src="{{business['profile']}}" class="biz-image margin-top-10">
@@ -99,11 +99,9 @@
             </ons-list-item>
         </ons-list>
 
-        <div ng-show="ShowMore" class="text-center">
-            <ons-button modifier="quiet" ng-click="ShowMoreFunc(limit)">
-                Show More
-            </ons-button>
-        </div>
+        <ons-button modifier="quiet" class="font-size-12">
+            <span ng-show="limit<businesses.length" ng-click="limit = limit + 20">Show More</span>
+        </ons-button>
     </div>
   
 

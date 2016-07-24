@@ -1,9 +1,3 @@
-/*@font-face {
-    font-family: exo_medium;
-    src: url("../fonts/Exo-Medium.otf") format("opentype");
-    src: url("../fonts/Bayon.ttf") format("opentype");
-}*/
-
 @font-face {
   font-family: 'exo_medium';
   src: url("../fonts/Exo-Medium.otf") format("opentype");
@@ -74,10 +68,19 @@
 	margin-right: 20px;
 }
 
+a.hidden_link {
+	color: #00aa60;
+	text-decoration: none;
+}
+
 .show_photos {
 	left: auto;
-	right:auto;
-	width: 100%;
+	right: auto;
+	margin-left: 10px;
+	margin-buttom: 10px;
+	width: 40%;
+	border: solid 1px #00aa60;
+	border-radius: 4px;
 }
 
 /*top-right-bottom-left*/

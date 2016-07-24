@@ -247,8 +247,8 @@ app.controller("LoginCtrl", function($scope, $http, GlobalParameters, localStora
 					GlobalParameters.login_status = 1;
 					GlobalParameters.setCurrentUser(login_user);
 					localStorageService.set('login_user', login_user);
-					console.log('local');
-					console.log(localStorageService.get('login_user'));
+					//console.log('local');
+					//console.log(localStorageService.get('login_user'));
 					$scope.myNavigator.pushPage('pages/en/profile_index.html', {login_user: login_user});
 				}
 			}, function(error){
@@ -395,9 +395,6 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 	    		$scope.countResult = Object.getOwnPropertyNames(result['data']).length
 	    		all_biz = $scope.countResult;
 	    		console.log($scope.countResult);
-	    		// $scope.businesses = result;
-	    		// $scope.predicate = 'distance';
-	    		// $scope.search_result = 1;
 	    		if ($scope.countResult == 0){
 	    			$scope.search_result = 1;
 	    			$scope.data_not_found = 1;
@@ -411,27 +408,17 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 	    			}
 	    			$scope.pop_list = result['pop_list'];
 		    		$scope.data_not_found = 0;
-		    		//$scope.predicate = 'distance';
+		    		
 		    		$scope.search_result = 1;
 		    		$scope.ShowMore = 1;
 		    		$scope.predicate = 'distance';
 		    		$scope.reverse = false;
 		    		$scope.disabled = 0;
-		    		// if (result['data'][0]['distance'] == ""){
-		    		// 	$scope.predicate = '-rate';
-		    		// 	no_distance = 1;
-		    		// 	$scope.disabled = 1;
-		    		// } else {
-		    		// 	$scope.predicate = 'distance';
-		    		// 	$scope.disabled = 0;
-		    		// 	no_distance = 0;
-		    		// }
+		    		
 		    		if (selected_keyword != undefined){
 						$scope.load_complete = 1;
 					}
 	    		}
-
-	    		//console.log(result);
 	    		
 	    	});
     	}
@@ -458,10 +445,6 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
     		console.log(error);
     		$scope.load_complete = 1;
     	});
-
-    	// if ($scope.selected_keyword) {
-    	// 	search(selected_keyword, location_text, true)
-    	// }
 	}
 
 	var selected_keyword = myNavigator.getCurrentPage().options.keyword;	
@@ -493,9 +476,9 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
     	var search_city;
 
     	if (addr != current_location['addr']){
-    		if (addr == "Phnom Penh") {
-    			current_location['coordinate'] = {lat: 11.57609, lng: 104.92319};
-		        search_city = addr;
+    		if (addr == "Olympic Stadium") {
+    			current_location['coordinate'] = {lat: 11.55858, lng: 104.91183};
+		        search_city = "Phnom Penh";
 		    } else if (addr == "Independence Monument") {
 		    	current_location['coordinate'] = {lat: 11.556359, lng: 104.928143};
 		        search_city = "Phnom Penh";
@@ -769,24 +752,12 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 	}
 
 	OnLoad = function(){
-		$scope.businesses = [];
+		$scope.businesses = {};
 		getCurrentLocation().then(function(result) {
-    		//$scope.location_text = result['addr'];
-    		//$scope.load_complete = 1;
 
     		$scope.location_text = result['addr'];
 
-    		// $scope.selected_category = page.options.selected_category;
-	// $scope.selected_category_key = page.options.selected_category_key;
-
     		$scope.search($scope.selected_category, $scope.selected_category_key, $scope.location_text);
-    		// if (selected_keyword != undefined){
-				//console.log(selected_keyword);
-				// $scope.search_text = selected_keyword;
-				//$scope.search($scope.search_text, $scope.location_text, 1);
-			// } else {
-				//$scope.load_complete = 1;	
-			// }
 
     	}, function(error){
     		console.log(error);
@@ -803,30 +774,30 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 
 	$scope.search = function(selected_category, selected_category_key, location){
 		
-		$scope.businesses = [];
+		$scope.businesses = {};
 		if(selected_category_key === undefined){
     		selected_category_key = selected_category;
     	}
 
-    	if (location === "All locations") {
-    		location = "";
-    	}
+    	// if (location === "All locations") {
+    	// 	location = "";
+    	// }
 	    	GetData(selected_category, selected_category_key, location).then(function(result) {
-	    		$scope.count_result = Object.getOwnPropertyNames(result['data']).length
+	    		$scope.count_result = Object.getOwnPropertyNames(result['data']).length;
 	    		all_biz = $scope.count_result;
 	    		console.log($scope.count_result);
 	    		if ($scope.count_result == 0){
 	    			$scope.search_result = 1;
 	    			$scope.data_not_found = 1;
 		    	} else {
-		    		$scope.PopList = 1;
-		    		console.log(result['data']);
-		    		original_result = result['data'];
+		    		// $scope.PopList = 1;
+		    		// console.log(result['data']);
+		    		// original_result = result['data'];
 	    			$scope.businesses = result['data'];
-	    			if (result['pop_list'].length ==0){
-	    				$scope.PopList = 0;
-	    			}
-	    			$scope.pop_list = result['pop_list'];
+	    			// if (result['pop_list'].length ==0){
+	    			// 	$scope.PopList = 0;
+	    			// }
+	    			// $scope.pop_list = result['pop_list'];
 		    		
 		    		$scope.data_not_found = 0;
 		    		//$scope.predicate = 'distance';
@@ -835,15 +806,6 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 		    		$scope.reverse = false;
 		    		$scope.ShowMore = 1;
 		    		$scope.disabled = 0;
-		    		// if (result['data'][0]['distance'] == ""){
-		    		// 	$scope.predicate = '-rate';
-		    		// 	no_distance = 1;
-		    		// 	$scope.disabled = 1;
-		    		// } else {
-		    		// 	$scope.predicate = 'distance';
-		    		// 	$scope.disabled = 0;
-		    		// 	no_distance = 0;
-		    		// }
 		    	}
 		    	$scope.load_complete = 1;
 	    		
@@ -860,9 +822,9 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
     	var search_city;
 
     	if (addr != current_location['addr']){
-    		if (addr == "Phnom Penh") {
-    			current_location['coordinate'] = {lat: 11.57609, lng: 104.92319};
-		        search_city = addr;
+    		if (addr == "Olympic Stadium") {
+    			current_location['coordinate'] = {lat: 11.55858, lng: 104.91183};
+		        search_city = "Phnom Penh";
 		    } else if (addr == "Independence Monument") {
 		    	current_location['coordinate'] = {lat: 11.556359, lng: 104.928143};
 		        search_city = "Phnom Penh";
@@ -954,13 +916,67 @@ app.controller('HomeCtrl', function($scope, $http, GlobalParameters){
 	$scope.shop_list_home = GlobalParameters.shop_list_home;
 });
 
-app.controller('NormalIndexCtrl', function($scope, GlobalParameters, localStorageService){
+app.controller('NormalIndexCtrl', function($scope, GlobalParameters, localStorageService, $http){
 	console.log('NormalIndexCtrl');
 	console.log(localStorageService.get('login_user'));
 	var login_user = localStorageService.get('login_user');
+	
 	if (login_user != null){
-		GlobalParameters.current_user = login_user;
-		GlobalParameters.login_status = 1;
+		var user_id = login_user['user_id'];
+		var req = {
+		 	method: 'POST',
+		 	url: 'http://www.vcess.com/ajax/authenticate.php',
+		 	headers: {
+		   		'Content-Type': 'application/json'
+		 	},
+		 	data: { update_login_flag: 1, user_id: user_id }
+		}
+
+		console.log(req);
+			$http(req).then(function(data){
+				console.log(data);
+				if (data['data'].length == 0){
+					alert('Incorrect email or password. Please try again.');
+				} else {
+					var login_user = data['data'];
+					GlobalParameters.login_status = 1;
+					GlobalParameters.setCurrentUser(login_user);
+					localStorageService.set('login_user', login_user);
+				}
+			}, function(error){
+				alert('Failed: ' + error);
+			});
+	}
+
+	update_user_login = function(user_id){
+		//console.log('Login');
+		var req = {
+		 	method: 'POST',
+		 	url: 'http://www.vcess.com/ajax/authenticate.php',
+		 	headers: {
+		   		'Content-Type': 'application/json'
+		 	},
+		 	data: { update_login_flag: 1, user_id: user_id }
+		}
+
+		console.log(req);
+			$http(req).then(function(data){
+				console.log(data);
+				if (data['data'].length == 0){
+					//$scope.data_not_found = 1;
+					alert('Incorrect email or password. Please try again.');
+				} else {
+					var login_user = data['data'];
+					GlobalParameters.login_status = 1;
+					GlobalParameters.setCurrentUser(login_user);
+					localStorageService.set('login_user', login_user);
+					//console.log('local');
+					//console.log(localStorageService.get('login_user'));
+					$scope.myNavigator.pushPage('pages/en/profile_index.html', {login_user: login_user});
+				}
+			}, function(error){
+				alert('Failed: ' + error);
+			});
 	}
 
 });
