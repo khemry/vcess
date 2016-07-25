@@ -1,5 +1,5 @@
 <ons-page ng-controller="RateCtrl" ng-init="ShowRate=1">
-
+<ons-navigator var="myNavigator">
   	<div class="tab-bar tab-bar--top tab-bar--top-border">
         <label class="tab-bar__item tab-bar--top-border__item">
             <input type="radio" name="top-tab-bar-b" checked="checked" ng-click="ShowRate = !ShowRate; RateList();">
@@ -68,4 +68,5 @@
             </ons-list>
         </div>
     </div>
+</ons-navigator>
 </ons-page>
