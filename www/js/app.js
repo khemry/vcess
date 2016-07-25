@@ -195,7 +195,8 @@ app.controller('SignupCtrl', function($scope, GlobalParameters, $http, $window, 
 					GlobalParameters.setCurrentUser(login_user);
 					localStorageService.set('login_user', login_user);
 					//GlobalParameters.current_user = login_user;
-					$scope.myNavigator.pushPage('pages/en/profile_index.html', {login_user: login_user});
+					//$scope.myNavigator.pushPage('pages/en/profile_index.html', {login_user: login_user});
+					myNavigator.pushPage('pages/en/profile.html', {login_user: login_user});
 				}
 			}, function(error){
 				alert('Failed: ' + error);
@@ -249,7 +250,8 @@ app.controller("LoginCtrl", function($scope, $http, GlobalParameters, localStora
 					localStorageService.set('login_user', login_user);
 					//console.log('local');
 					//console.log(localStorageService.get('login_user'));
-					$scope.myNavigator.pushPage('pages/en/profile_index.html', {login_user: login_user});
+					// $scope.myNavigator.pushPage('pages/en/profile_index.html', {login_user: login_user});
+					myNavigator.pushPage('pages/en/profile.html', {login_user: login_user});
 				}
 			}, function(error){
 				alert('Failed: ' + error);
@@ -917,10 +919,9 @@ app.controller('HomeCtrl', function($scope, $http, GlobalParameters){
 });
 
 app.controller('NormalIndexCtrl', function($scope, GlobalParameters, localStorageService, $http){
-	console.log('NormalIndexCtrl');
-	console.log(localStorageService.get('login_user'));
+	// console.log('NormalIndexCtrl');
+	// console.log(localStorageService.get('login_user'));
 	var login_user = localStorageService.get('login_user');
-	
 	if (login_user != null){
 		var user_id = login_user['user_id'];
 		var req = {
@@ -1104,6 +1105,20 @@ app.controller('FeaturesCtrl', function($scope, $q, $http){
 
 app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http, GlobalParameters, localStorageService){
 	console.log('BusinessHomeCtrl');
+
+	$scope.dialogs = {};
+
+	$scope.show = function(dlg, current_photo) {
+		$scope.selected_photo = current_photo;
+		if (!$scope.dialogs[dlg]) {
+		  	ons.createDialog(dlg, {parentScope: $scope}).then(function(dialog) {
+		    	$scope.dialogs[dlg] = dialog;
+		    	dialog.show();
+		  	});
+		} else {
+		  	$scope.dialogs[dlg].show();
+		}
+	}
 
 	$scope.RateIcon = {
 		"1": 'fa-star-o', 
@@ -1658,7 +1673,7 @@ app.controller('ProfileCtrl', function($scope, GlobalParameters, localStorageSer
 	$scope.Logout = function(){
 		GlobalParameters.login_status = 0;
 		//$scope.myNavigator.pushPage('en/normal_index.html');
-		$scope.myNavigator.resetToPage('pages/en/normal_index.html');
+		$scope.myNavigator.resetToPage('pages/en/home.html');
 		localStorageService.remove('login_user');
 	}
 });
@@ -1683,8 +1698,66 @@ app.controller('FriendListCtrl', function($scope, GlobalParameters){
 	}
 });
 
-app.controller('IndexCtrl', function($scope, GlobalParameters){
-	GlobalParameters.SetIsOwner(0);
+app.controller('IndexCtrl', function($scope, GlobalParameters, localStorageService, $http){
+	//GlobalParameters.SetIsOwner(0);
+	var login_user = localStorageService.get('login_user');
+	if (login_user != null){
+		var user_id = login_user['user_id'];
+		var req = {
+		 	method: 'POST',
+		 	url: 'http://www.vcess.com/ajax/authenticate.php',
+		 	headers: {
+		   		'Content-Type': 'application/json'
+		 	},
+		 	data: { update_login_flag: 1, user_id: user_id }
+		}
+
+		console.log(req);
+			$http(req).then(function(data){
+				console.log(data);
+				if (data['data'].length == 0){
+					alert('Incorrect email or password. Please try again.');
+				} else {
+					var login_user = data['data'];
+					GlobalParameters.login_status = 1;
+					GlobalParameters.setCurrentUser(login_user);
+					localStorageService.set('login_user', login_user);
+				}
+			}, function(error){
+				alert('Failed: ' + error);
+			});
+	}
+
+	update_user_login = function(user_id){
+		//console.log('Login');
+		var req = {
+		 	method: 'POST',
+		 	url: 'http://www.vcess.com/ajax/authenticate.php',
+		 	headers: {
+		   		'Content-Type': 'application/json'
+		 	},
+		 	data: { update_login_flag: 1, user_id: user_id }
+		}
+
+		console.log(req);
+			$http(req).then(function(data){
+				console.log(data);
+				if (data['data'].length == 0){
+					//$scope.data_not_found = 1;
+					alert('Incorrect email or password. Please try again.');
+				} else {
+					var login_user = data['data'];
+					GlobalParameters.login_status = 1;
+					GlobalParameters.setCurrentUser(login_user);
+					localStorageService.set('login_user', login_user);
+					//console.log('local');
+					//console.log(localStorageService.get('login_user'));
+					$scope.myNavigator.pushPage('pages/en/profile_index.html', {login_user: login_user});
+				}
+			}, function(error){
+				alert('Failed: ' + error);
+			});
+	}
 });
 
 app.controller('LanguagesCtrl', function($scope, GlobalParameters){
