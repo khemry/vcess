@@ -378,6 +378,16 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 		},100);
 	}
 
+	$scope.CurrentLocation = function(){
+    	$scope.Clear();
+
+    	getCurrentLocation().then(function(result) {
+    		$scope.location_text = result['addr'];
+    	}, function(error){
+    		console.log(error);
+    	});
+    }
+
 	$scope.search = function(search_text, location, search_item_flag){
 		$scope.Clear();
     	console.log(search_text);
