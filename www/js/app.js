@@ -792,7 +792,7 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
     	// }
 	    	GetData(selected_category_key, location).then(function(result) {
 	    		//$scope.count_result = Object.getOwnPropertyNames(result['data']).length;
-	    		$scope.count_result = result.length;
+	    		$scope.count_result = result['data'].length;
 	    		all_biz = $scope.count_result;
 	    		console.log($scope.count_result);
 	    		if ($scope.count_result == 0){
