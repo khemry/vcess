@@ -96,7 +96,7 @@
         
         <ons-list modifier="inset" class="margin-10-0-10-0" ng-show="!data_not_found">
               
-            <ons-list-item ng-repeat="business in businesses | limitTo:limit | orderObjectBy: predicate: reverse track by $index" modifier="chevron" ng-click="myNavigator.pushPage('pages/en/business_home.html', {selected_biz: business});">
+            <ons-list-item ng-repeat="business in businesses | limitTo:limit | orderBy: predicate: reverse track by $index" modifier="chevron" ng-click="myNavigator.pushPage('pages/en/business_home.html', {selected_biz: business});">
                 <ons-row class="margin-10-0-10-0">
                     <ons-col width="80px">
                         <img src="{{business['profile']}}" class="biz-image margin-top-10">
@@ -129,15 +129,9 @@
             </ons-list-item>
         </ons-list>
 
-        <ons-button modifier="quiet" class="font-size-12" ng-show="1" ng-click="limit = limit + 20"><span >Show More</span>
+        <ons-button modifier="quiet" class="font-size-12">
+            <span ng-show="limit<businesses.length" ng-click="limit = limit + 20">Show More</span>
         </ons-button>
-
-        <!-- <div ng-show="ShowMore" class="text-center"> -->
-        <!-- <button ng-hide="results.length === items.length" ng-click="limit = limit +2">show more...</button -->
-            <!-- <ons-button modifier="quiet" ng-hide="results.length === businesses.length" ng-click="limit = limit +20">
-                Show More
-            </ons-button> -->
-        <!-- </div> -->
     </div>
 </ons-navigator>
 </ons-page>
