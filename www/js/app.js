@@ -315,6 +315,17 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 	    });
 	}
 	
+	$scope.CurrentLocation = function(){
+    	$scope.Clear();
+    	//$scope.location_text ="";
+    	getCurrentLocation().then(function(result) {
+    		$scope.location_text = result['addr'];
+    		$scope.search($scope.search_text, $scope.location_text, $scope.things);
+    	}, function(error){
+    		//$scope.location_text ="Input search location";
+    		console.log(error);
+    	});
+    }
 
 	getCurrentLocation = function(){
 		var deferred = $q.defer();
@@ -323,9 +334,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 	    	navigator.geolocation.getCurrentPosition(function(position) {
 	    		var latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
 	    		//var latlng = {lat: 11.5545345, lng: 104.8992934};
-
 	    		var geocoder = new google.maps.Geocoder();
-	    		//'address': address
 	    		geocoder.geocode({'location': latlng}, function(results, status) {
 			          if (status === google.maps.GeocoderStatus.OK) {
 			            if (results[1]) {
@@ -345,6 +354,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 					alert(error.message + " Please enable the location service.");
 					deferred.reject('code: '    + error.code + ' ' + 'message: ' + error.message + '\n');
 					$scope.location_text ="Input search location";
+					
 				});
     		},100);
 		return deferred.promise;
@@ -377,16 +387,6 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 	        });
 		},100);
 	}
-
-	$scope.CurrentLocation = function(){
-    	$scope.Clear();
-
-    	getCurrentLocation().then(function(result) {
-    		$scope.location_text = result['addr'];
-    	}, function(error){
-    		console.log(error);
-    	});
-    }
 
 	$scope.search = function(search_text, location, search_item_flag){
 		$scope.Clear();
@@ -637,9 +637,10 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 
 	$scope.CurrentLocation = function(){
     	$scope.Clear();
-
+    	//$scope.location_text ="";
     	getCurrentLocation().then(function(result) {
     		$scope.location_text = result['addr'];
+    		$scope.search($scope.selected_category_key, $scope.location_text);
     	}, function(error){
     		console.log(error);
     	});
