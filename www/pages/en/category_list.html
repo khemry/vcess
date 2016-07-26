@@ -17,18 +17,18 @@
             </ons-list-item>
 
             <div ng-show="show_current_location">
-                    <ons-list-item modifier="tappable" ng-click="CurrentLocation(); show_current_location=0;search(selected_category, selected_category_key, location_text);">
+                    <ons-list-item modifier="tappable" ng-click="CurrentLocation(); show_current_location=0;search(selected_category_key, location_text);">
                         <ons-icon icon="fa-location-arrow" style="opacity: 0.8"></ons-icon>
                         Current Location
                     </ons-list-item>
 
-                    <ons-list-item modifier="tappable" ng-click="location_text = 'Psar Thmey'; show_current_location=0;search(selected_category, selected_category_key, location_text);">
+                    <ons-list-item modifier="tappable" ng-click="location_text = 'Psar Thmey'; show_current_location=0;search(selected_category_key, location_text);">
                         Psar Thmey
                     </ons-list-item>
-                    <ons-list-item modifier="tappable" ng-click="location_text = 'Independence Monument'; show_current_location=0;search(selected_category, selected_category_key, location_text);" >
+                    <ons-list-item modifier="tappable" ng-click="location_text = 'Independence Monument'; show_current_location=0;search(selected_category_key, location_text);" >
                         Independence Monument
                     </ons-list-item> 
-                    <ons-list-item modifier="tappable" ng-click="location_text = 'Olympic Stadium'; show_current_location=0;search(selected_category, selected_category_key, location_text);">
+                    <ons-list-item modifier="tappable" ng-click="location_text = 'Olympic Stadium'; show_current_location=0;search(selected_category_key, location_text);">
                         Olympic Stadium
                     </ons-list-item>    
                     
@@ -38,7 +38,7 @@
             <div ng-show="sort_by_rate">
                 <ons-row class="margin-10-0-10-0">
                     <ons-col>
-                        <ons-button modifier="large" ng-click="search(search_text, location_text, things)"><span>Search</span></ons-button>
+                        <ons-button modifier="large" ng-click="search(selected_category_key, location_text)"><span>Search</span></ons-button>
                     </ons-col>
                     <ons-col width="10px">
                     </ons-col>
@@ -50,7 +50,7 @@
             <div ng-show="!sort_by_rate">
                 <ons-row class="margin-10-0-10-0">
                     <ons-col>
-                        <ons-button modifier="large" ng-click="search(search_text, location_text, things)"><span>Search</span></ons-button>
+                        <ons-button modifier="large" ng-click="search(selected_category_key, location_text)"><span>Search</span></ons-button>
                     </ons-col>
                     <ons-col width="10px">
                     </ons-col>
