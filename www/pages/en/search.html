@@ -39,24 +39,24 @@
                     </span>
                 </ons-list-item>
                 <ons-list-item ng-click="show_current_location=!show_current_location">
-                    <input type="search" class="location-input-no-border" ng-model="location_text" placeholder="Input search location">
+                    <input type="search" class="location-input-no-border" ng-model="myForm.location_text" placeholder="Input search location">
                     <span ng-click="clearInput()" class="displayClear">
                         <ons-icon icon="fa-times " style="opacity: 0.5"></ons-icon>
                     </span>
                 </ons-list-item>
                 <div ng-show="show_current_location">
-                    <ons-list-item modifier="tappable" ng-click="CurrentLocation(); show_current_location=0;">
+                    <ons-list-item modifier="tappable" ng-click="myForm.location_text ='';CurrentLocation(); show_current_location=0;">
                         <ons-icon icon="fa-location-arrow" style="opacity: 0.8"></ons-icon>
                         Current Location
                     </ons-list-item>
 
-                    <ons-list-item modifier="tappable" ng-click="location_text = 'Psar Thmey'; show_current_location=0;search(search_text, location_text, things);">
+                    <ons-list-item modifier="tappable" ng-click="myForm.location_text = 'Psar Thmey'; show_current_location=0;search(search_text, myForm.location_text, things);">
                         Psar Thmey
                     </ons-list-item>
-                    <ons-list-item modifier="tappable" ng-click="location_text = 'Independence Monument'; show_current_location=0;search(search_text, location_text, things);" >
+                    <ons-list-item modifier="tappable" ng-click="myForm.location_text = 'Independence Monument'; show_current_location=0;search(search_text, myForm.location_text, things);" >
                         Independence Monument
                     </ons-list-item> 
-                    <ons-list-item modifier="tappable" ng-click="location_text = 'Olympic Stadium'; show_current_location=0;search(search_text, location_text, things);">
+                    <ons-list-item modifier="tappable" ng-click="myForm.location_text = 'Olympic Stadium'; show_current_location=0;search(search_text, myForm.location_text, things);">
                         Olympic Stadium
                     </ons-list-item>    
                     
@@ -67,7 +67,7 @@
             <div ng-show="sort_by_rate">
                 <ons-row class="margin-10-0-10-0">
                     <ons-col>
-                        <ons-button modifier="large" ng-click="search(search_text, location_text, things)"><span>Search</span></ons-button>
+                        <ons-button modifier="large" ng-click="search(search_text, myForm.location_text, things)"><span>Search</span></ons-button>
                     </ons-col>
                     <ons-col width="10px">
                     </ons-col>
@@ -79,7 +79,7 @@
             <div ng-show="!sort_by_rate">
                 <ons-row class="margin-10-0-10-0">
                     <ons-col>
-                        <ons-button modifier="large" ng-click="search(search_text, location_text, things)"><span>Search</span></ons-button>
+                        <ons-button modifier="large" ng-click="search(search_text, myForm.location_text, things)"><span>Search</span></ons-button>
                     </ons-col>
                     <ons-col width="10px">
                     </ons-col>

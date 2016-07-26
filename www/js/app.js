@@ -276,7 +276,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 	console.log('SearchCtrl');
 	
 	$scope.clearInput=function(){
-		$scope.location_text = "";
+		$scope.myForm.location_text = "";
 	};
 
 	$scope.clearInputSearch=function(){
@@ -309,8 +309,18 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 	      title: 'Vcess'
 	    });
 	}
-	
-	
+
+	$scope.CurrentLocation = function(){
+    	$scope.Clear();
+    	getCurrentLocation().then(function(result) {
+    		$scope.myForm.location_text = result['addr'];
+    		$scope.search($scope.search_text, $scope.myForm.location_text, $scope.things);
+    		
+    	}, function(error){
+    		console.log(error);
+    		$scope.load_complete = 1;
+    	});
+    }
 
 	getCurrentLocation = function(){
 		var deferred = $q.defer();
@@ -338,7 +348,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 				}, function(error){
 					alert(error.message + " Please enable the location service.");
 					deferred.reject('code: '    + error.code + ' ' + 'message: ' + error.message + '\n');
-					$scope.location_text ="Input search location";
+					$scope.myForm.location_text ="Input search location";
 					
 				});
     		},100);
@@ -372,19 +382,6 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 	        });
 		},100);
 	}
-
-	$scope.CurrentLocation = function(){
-    	$scope.Clear();
-    	getCurrentLocation().then(function(result) {
-    		$scope.location_text = result['addr'];
-    		$scope.search($scope.search_text, $scope.location_text, $scope.things);
-    	}, function(error){
-    		console.log($scope.location_text);
-    		
-    		console.log(error);
-    		
-    	});
-    }
 
 	$scope.search = function(search_text, location, search_item_flag){
 		$scope.Clear();
@@ -427,16 +424,17 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
     }
 
 	OnLoad = function(){
+		$scope.myForm = {};
 		var page = myNavigator.getCurrentPage();
 		var selected_keyword = page.options.keyword;
 
 		$scope.businesses = {};
 		getCurrentLocation().then(function(result) {
-    		$scope.location_text = result['addr'];
+    		$scope.myForm.location_text = result['addr'];
     		if (selected_keyword != undefined){
 				//console.log(selected_keyword);
 				$scope.search_text = selected_keyword;
-				$scope.search($scope.search_text, $scope.location_text, 1);
+				$scope.search($scope.search_text, $scope.myForm.location_text, 1);
 
 			} else {
 				$scope.load_complete = 1;	
