@@ -723,6 +723,8 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 				}, function(error){
 					alert(error.message + " Please enable the location service.");
 					deferred.reject('code: '    + error.code + ' ' + 'message: ' + error.message + '\n');
+					$scope.location_text ="Input search location";
+					$scope.Clear();
 				});
     		},100);
 		return deferred.promise;
@@ -762,7 +764,7 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 
     		$scope.location_text = result['addr'];
 
-    		$scope.search($scope.selected_category, $scope.selected_category_key, $scope.location_text);
+    		$scope.search($scope.selected_category_key, $scope.location_text);
 
     	}, function(error){
     		console.log(error);
@@ -777,8 +779,8 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 	// }
 	// var no_distance = 0;
 
-	$scope.search = function(selected_category, selected_category_key, location){
-		
+	$scope.search = function(selected_category_key, location){
+		console.log(location);
 		$scope.businesses = {};
 		if(selected_category_key === undefined){
     		selected_category_key = selected_category;
@@ -787,7 +789,7 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
     	// if (location === "All locations") {
     	// 	location = "";
     	// }
-	    	GetData(selected_category, selected_category_key, location).then(function(result) {
+	    	GetData(selected_category_key, location).then(function(result) {
 	    		//$scope.count_result = Object.getOwnPropertyNames(result['data']).length;
 	    		$scope.count_result = result.length;
 	    		all_biz = $scope.count_result;
@@ -850,7 +852,7 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
     	return search_city;
     }
    
-	function GetData(selected_category, selected_category_key, location){
+	function GetData(selected_category_key, location){
 		console.log(location);  
 		var deferred = $q.defer();
 		var search_city = GetSearchCity(location);
