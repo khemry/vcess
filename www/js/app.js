@@ -724,7 +724,8 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 					alert(error.message + " Please enable the location service.");
 					deferred.reject('code: '    + error.code + ' ' + 'message: ' + error.message + '\n');
 					$scope.location_text ="Input search location";
-					$scope.Clear();
+					//$scope.Clear();
+					//$scope.load_complete = 1;
 				});
     		},100);
 		return deferred.promise;
