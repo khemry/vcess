@@ -1430,7 +1430,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 		if (num_photos > 0){
 			var img = {};
 			GetData(biz_id).then(function(result) {
-				console.log(result);
+				console.log(result.length);
 				for (i = 0; i < num_photos; i++) {
 					//all_images[i-1] = "http://www.vcess.com/shops/" + biz_id + "/" + result[i]['id'] + ".jpg";
 					photo_path = "http://www.vcess.com/shops/" + biz_id + "/" + result[i]['id'] + ".jpg";
