@@ -769,10 +769,10 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 
 	OnLoad();
 
-	$scope.getAllLocation = function(){
-		$scope.location_text = "All locations";
-	}
-	var no_distance = 0;
+	// $scope.getAllLocation = function(){
+	// 	$scope.location_text = "All locations";
+	// }
+	// var no_distance = 0;
 
 	$scope.search = function(selected_category, selected_category_key, location){
 		
