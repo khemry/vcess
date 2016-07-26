@@ -274,13 +274,12 @@ app.controller("LoginCtrl", function($scope, $http, GlobalParameters, localStora
 
 app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 	console.log('SearchCtrl');
-	var all_biz = 0;
 
-		$scope.clearIconVar=false;
-		$scope.clearIcon = function(param){
+	$scope.clearIconVar=false;
+	$scope.clearIcon = function(param){
 		$scope.clearIconVar=param;
-		};
-		// $scope.hi="hi";
+	};
+	
 	$scope.clearInput=function(){
 		$scope.location_text = "";
 	};
@@ -288,15 +287,6 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 	$scope.clearInputSearch=function(){
 		$scope.search_text = "";
 	};
-
-	$scope.ShowMoreFunc = function(limit){
-		console.log(limit);
-		console.log(all_biz);
-		$scope.limit = limit + 20;
-		if (limit >= all_biz){
-			$scope.ShowMore = 0;
-		}
-	}
 
 	$scope.Clear = function(){
 		$scope.search_result = 0;
@@ -312,7 +302,6 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 	$scope.results = {};
 
 	$scope.data_not_found = 0;
-	//var orderBy = $filter('orderBy');
 
 	$scope.getRate = function(num) {
 		num = parseInt(num);
@@ -355,6 +344,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 				}, function(error){
 					alert(error.message + " Please enable the location service.");
 					deferred.reject('code: '    + error.code + ' ' + 'message: ' + error.message + '\n');
+					$scope.location_text ="Input search location";
 				});
     		},100);
 		return deferred.promise;
@@ -394,27 +384,25 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 
     	if (search_text == undefined) {
     		alert('Please input your search keyword.');
+    	} else if (location == "Input search location") {
+			alert("Please input location to search.");
     	} else {
 	    	GetData(search_text, location, search_item_flag).then(function(result) {
-	    		$scope.countResult = Object.getOwnPropertyNames(result['data']).length
-	    		all_biz = $scope.countResult;
+	    		//$scope.countResult = Object.getOwnPropertyNames(result['data']).length
+	    		$scope.countResult = result['data'].length;
+	    		
 	    		console.log($scope.countResult);
 	    		if ($scope.countResult == 0){
 	    			$scope.search_result = 1;
 	    			$scope.data_not_found = 1;
 	    			$scope.load_complete = 1;
 	    		} else {
-	    			$scope.PopList = 1;
-	    			$scope.results = result['data'];
+	    		
+	    		
 	    			$scope.businesses = result['data'];
-	    			if (result['pop_list'].length ==0){
-	    				$scope.PopList = 0;
-	    			}
-	    			$scope.pop_list = result['pop_list'];
 		    		$scope.data_not_found = 0;
 		    		
 		    		$scope.search_result = 1;
-		    		$scope.ShowMore = 1;
 		    		$scope.predicate = 'distance';
 		    		$scope.reverse = false;
 		    		$scope.disabled = 0;
@@ -464,12 +452,6 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
     		console.log(error);
     	});
     }
-
-    var no_distance = 0;
-
-  //   function SortByPhotos(){
-  //   	$scope.businesses = $scope.pop_list;
-  //   }
 
     $scope.SortBy =function(sort_item, reverse){
     	$scope.predicate = sort_item;
@@ -548,40 +530,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 
 		console.log(req);
 			$http(req).then(function(data){
-				console.log('req');
-				console.log(data);
-
-				data['pop_list'] = data['data']['pop_list'];
-				delete data['data']['pop_list'];
-				var all_data = data;
-
-
-				// if (all_data.length == 0){
-				// 	//$scope.data_not_found = 1;
-				// 	//alert('data_not_found');
-				// } else {
-					
-				// 	// for (i = 0; i < all_data.length; i++) { 
-				// 	// 		all_data[i]['tel-phone'] = "tel:" + all_data[i]['phone'];
-                            
-				// 	// 		if (current_location['addr'] != ""){
-				// 	// 			var tmp = GetDistance(current_location['coordinate'], all_data[i]['coordinate'], all_data[i])
-				// 	// 			.then(function(result) {
-
-				// 	// 				all_data[i] = result;
-				// 	// 			  	console.log(all_data[i]);
-				// 	// 			  	return result;
-				// 	// 			}, function(reason) {
-				// 	// 			  	alert('Failed: ' + reason);
-				// 	// 			});
-				// 	// 		} else {
-				// 	// 			all_data[i]['distance'] = "";
-				// 	// 		}
-
-				// 	// }
-		  			
-				// }
-				deferred.resolve(all_data);
+				deferred.resolve(data);
 			}, function(error){
 				deferred.reject('Error was: ' + error);
 			});
@@ -653,9 +602,11 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 	$scope.selected_category = page.options.selected_category;
 	$scope.selected_category_key = page.options.selected_category_key;
 	$scope.data_not_found = 0;
-	var original_result = [];
-	var all_biz = 0;
-
+	var current_location = [{
+		addr: '', 
+		coordinate: {}
+	}];
+	
 	$scope.clearInput=function(){
 		$scope.location_text = "";
 	};
@@ -666,19 +617,6 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 		$scope.businesses = [];
 		$scope.disabled = 0;
 	}
-
-	$scope.ShowMoreFunc = function(limit){
-		//console.log(all_biz);
-		$scope.limit = limit + 20;
-		if (limit >= all_biz){
-			$scope.ShowMore = 0;
-		}
-	}
-
-	var current_location = [{
-		addr: '', 
-		coordinate: {}
-	}];
 
 	alert = function(msg) {
 	    ons.notification.alert({
@@ -724,8 +662,7 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 					alert(error.message + " Please enable the location service.");
 					deferred.reject('code: '    + error.code + ' ' + 'message: ' + error.message + '\n');
 					$scope.location_text ="Input search location";
-					//$scope.Clear();
-					//$scope.load_complete = 1;
+					
 				});
     		},100);
 		return deferred.promise;
@@ -775,23 +712,14 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 
 	OnLoad();
 
-	// $scope.getAllLocation = function(){
-	// 	$scope.location_text = "All locations";
-	// }
-	// var no_distance = 0;
-
 	$scope.search = function(selected_category_key, location){
 		console.log(location);
 		$scope.businesses = {};
-		if(selected_category_key === undefined){
-    		selected_category_key = selected_category;
-    	}
 
-    	// if (location === "All locations") {
-    	// 	location = "";
-    	// }
-	    	GetData(selected_category_key, location).then(function(result) {
-	    		//$scope.count_result = Object.getOwnPropertyNames(result['data']).length;
+		if (location == "Input search location"){
+			alert("Please input location to search.");
+		} else {
+			GetData(selected_category_key, location).then(function(result) {
 	    		$scope.count_result = result['data'].length;
 	    		all_biz = $scope.count_result;
 	    		console.log($scope.count_result);
@@ -799,31 +727,21 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 	    			$scope.search_result = 1;
 	    			$scope.data_not_found = 1;
 		    	} else {
-		    		// $scope.PopList = 1;
-		    		// console.log(result['data']);
-		    		// original_result = result['data'];
-	    			$scope.businesses = result['data'];
-	    			// if (result['pop_list'].length ==0){
-	    			// 	$scope.PopList = 0;
-	    			// }
-	    			// $scope.pop_list = result['pop_list'];
-		    		
+	    			$scope.businesses = result['data'];		    		
 		    		$scope.data_not_found = 0;
-		    		//$scope.predicate = 'distance';
 		    		$scope.search_result = 1;
 		    		$scope.predicate = 'distance';
 		    		$scope.reverse = false;
-		    		$scope.ShowMore = 1;
 		    		$scope.disabled = 0;
 		    	}
 		    	$scope.load_complete = 1;
 	    		
 	    	});
+		}   	
     }
 
    
     $scope.SortBy =function(sort_item, reverse_flag){
-    	//$scope.Clear();
     	$scope.predicate = sort_item;
     	$scope.reverse = reverse_flag;	
     }
@@ -870,12 +788,7 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 
 		console.log(req);
 			$http(req).then(function(data){
-				//console.log('req');
 				console.log(data);
-
-				// data['pop_list'] = data['data']['pop_list'];
-				// delete data['data']['pop_list'];
-				// var all_data = data;
 				deferred.resolve(data);
 			}, function(error){
 				deferred.reject('Error was: ' + error);
