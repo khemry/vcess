@@ -4,7 +4,7 @@ var app = ons.bootstrap('myApp', ['onsen', 'LocalStorageModule']);
 
 app.filter('orderObjectBy', function() {
     return function (items, field, reverse) {
-        	//console.log(items);
+        	console.log('orderObjectBy');
           function isNumeric(n) {
             return !isNaN(parseFloat(n)) && isFinite(n);
           }
@@ -19,6 +19,8 @@ app.filter('orderObjectBy', function() {
           function index(obj, i) {
             return obj[i];
           }
+
+
 
           filtered.sort(function (a, b) {
             var comparator;
@@ -42,7 +44,7 @@ app.filter('orderObjectBy', function() {
           if (reverse) {
             filtered.reverse();
           }
-          console.log(filtered);
+          //console.log(filtered.length);
           return filtered;
         };
 });
@@ -659,6 +661,7 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 	};
 
 	$scope.Clear = function(){
+		console.log('clear');
 		$scope.search_result = 0;
 		$scope.businesses = [];
 		$scope.disabled = 0;
@@ -785,7 +788,8 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
     	// 	location = "";
     	// }
 	    	GetData(selected_category, selected_category_key, location).then(function(result) {
-	    		$scope.count_result = Object.getOwnPropertyNames(result['data']).length;
+	    		//$scope.count_result = Object.getOwnPropertyNames(result['data']).length;
+	    		$scope.count_result = result.length;
 	    		all_biz = $scope.count_result;
 	    		console.log($scope.count_result);
 	    		if ($scope.count_result == 0){
@@ -815,9 +819,10 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
     }
 
    
-    $scope.SortBy =function(sort_item, reverse){
+    $scope.SortBy =function(sort_item, reverse_flag){
+    	//$scope.Clear();
     	$scope.predicate = sort_item;
-    	$scope.reverse = reverse;	
+    	$scope.reverse = reverse_flag;	
     }
 
     function GetSearchCity(addr){
@@ -857,7 +862,7 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 		 	headers: {
 		   		'Content-Type': 'application/json'
 		 	},
-		 	data: { category: selected_category_key, city_en: search_city, lat: current_location['coordinate']['lat'], lng: current_location['coordinate']['lng']}
+		 	data: { find_category_flag: 1, category: selected_category_key, city_en: search_city, lat: current_location['coordinate']['lat'], lng: current_location['coordinate']['lng']}
 		}
 
 		console.log(req);
@@ -865,10 +870,10 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 				//console.log('req');
 				console.log(data);
 
-				data['pop_list'] = data['data']['pop_list'];
-				delete data['data']['pop_list'];
-				var all_data = data;
-				deferred.resolve(all_data);
+				// data['pop_list'] = data['data']['pop_list'];
+				// delete data['data']['pop_list'];
+				// var all_data = data;
+				deferred.resolve(data);
 			}, function(error){
 				deferred.reject('Error was: ' + error);
 			});
