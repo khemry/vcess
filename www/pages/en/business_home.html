@@ -212,8 +212,8 @@
                 <div class="text-center" ng-show="food_images.length">
                     <img src="{{image['path']}}" class="show_photos" ng-repeat="image in food_images | limitTo:food_limit" ng-click="show('show_photo.html', image['path'])">
                     <!-- <p class="photo_title">{{image['name_en']}}</p> -->
-                </div>  
-                <div class="text-center">
+                
+                
                     <ons-button modifier="quiet" class="font-size-12">
                         <span ng-show="food_limit==4" ng-click="food_limit = food_images">Show All</span>
                         <span ng-show="food_limit == food_images" ng-click="food_limit=4"><a href="#food" class="hidden_link">Show Less</a></span>
