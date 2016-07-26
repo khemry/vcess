@@ -274,11 +274,6 @@ app.controller("LoginCtrl", function($scope, $http, GlobalParameters, localStora
 
 app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 	console.log('SearchCtrl');
-
-	$scope.clearIconVar=false;
-	$scope.clearIcon = function(param){
-		$scope.clearIconVar=param;
-	};
 	
 	$scope.clearInput=function(){
 		$scope.location_text = "";
@@ -315,17 +310,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 	    });
 	}
 	
-	$scope.CurrentLocation = function(){
-    	$scope.Clear();
-    	//$scope.location_text ="";
-    	getCurrentLocation().then(function(result) {
-    		$scope.location_text = result['addr'];
-    		$scope.search($scope.search_text, $scope.location_text, $scope.things);
-    	}, function(error){
-    		//$scope.location_text ="Input search location";
-    		console.log(error);
-    	});
-    }
+	
 
 	getCurrentLocation = function(){
 		var deferred = $q.defer();
@@ -387,6 +372,19 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 	        });
 		},100);
 	}
+
+	$scope.CurrentLocation = function(){
+    	$scope.Clear();
+    	getCurrentLocation().then(function(result) {
+    		$scope.location_text = result['addr'];
+    		$scope.search($scope.search_text, $scope.location_text, $scope.things);
+    	}, function(error){
+    		console.log($scope.location_text);
+    		
+    		console.log(error);
+    		
+    	});
+    }
 
 	$scope.search = function(search_text, location, search_item_flag){
 		$scope.Clear();
@@ -451,17 +449,6 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 
 	var selected_keyword = myNavigator.getCurrentPage().options.keyword;	
 	OnLoad();
-
-    $scope.CurrentLocation = function(){
-    	console.log('current');
-    	$scope.Clear();
-
-    	getCurrentLocation().then(function(result) {
-    		$scope.location_text = result['addr'];
-    	}, function(error){
-    		console.log(error);
-    	});
-    }
 
     $scope.SortBy =function(sort_item, reverse){
     	$scope.predicate = sort_item;
