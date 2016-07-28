@@ -147,35 +147,6 @@ app.controller('SignupCtrl', function($scope, GlobalParameters, $http, $window, 
 	console.log('Signup Ctrl');
 	//console.log(FB);
 
-	$scope.SignUpWithFacebook = function(){
-		alert('signup');
-		Facebook.login(function(response) {
-        	console.log(response);
-      	});
-		// FB.getLoginStatus(function(response) {
-		// console.log(response);			
-		//   if (response.status === 'connected') {
-		//     console.log('Logged in.');
-		//   }
-		//   else {
-		//     FB.login();
-		//   }
-		// });
-
-	// 	FB.login(function(response) {
-	//     if (response.authResponse) {
-	//     	console.log('Welcome!  Fetching your information.... ');
-	//     	FB.api('/me', function(response) {
-	//        	console.log('Good to see you, ' + response.name + '.');
-	//      });
-	//     } else {
-	//      	//console.log('User cancelled login or did not fully authorize.');
-	//      	//url = 'https://www.facebook.com/dialog/oauth?client_id=1687245944857278&redirect_uri=https://www.facebook.com/connect/login_success.html&display=touch';
- //        	//$window.open(url);
-	//     }
-	// }, {scope: 'email,user_likes'});
-    }
-
 	$scope.signup = function(fullname, email, password){
 		var req = {
 		 	method: 'POST',
@@ -205,6 +176,52 @@ app.controller('SignupCtrl', function($scope, GlobalParameters, $http, $window, 
 			});
 	}
 
+	$scope.SignUpWithFacebook = function(){
+		console.log('singup');
+		var client_id = '191042334383020'; //YOUR App ID or API Key
+        var client_secret = '50a3083a12e0fd435f77ad06900dc371'; //// YOUR App Secret
+        var redirect_uri = 'https://www.facebook.com/connect/login_success.html';  //// YOUR CALLBACK URL
+        var display = 'touch';
+        var authorize_url = "https://graph.facebook.com/v2.0/oauth/authorize?";
+        authorize_url += "client_id=" + client_id;
+        authorize_url += "&redirect_uri=" + redirect_uri;
+        authorize_url += "&display=" + display;
+        authorize_url += "&scope=public_profile,email";
+        
+        var ref = window.open(authorize_url, '_blank', 'location=yes');
+        //var ref = window.open(authorize_url, '_blank', 'location=yes,clearsessioncache=yes,clearcache=yes');
+        ref.addEventListener('loadstart', function(event)
+        {
+            var loc = event.url;
+            $scope.test = loc;
+
+            if(loc.indexOf(redirect_uri + "?") >= 0)
+            {
+                ref.close();
+                $scope.data = "YES";
+                var result = loc.split("#")[0];
+                login_accessToken = result.split("&")[0].split("=")[1];
+                
+                var url = 'https://graph.facebook.com/v2.0/oauth/access_token?';
+                    url += 'client_id=' + client_id;
+                    url += '&client_secret=' + client_secret;
+                    url += '&code=' + login_accessToken;
+                    url += '&redirect_uri=' + redirect_uri;
+        
+                $http.post(url,null).success(function(data){
+                    accessToken = data.split("&")[0].split("=")[1];
+                    console.log(accessToken);
+                    url = "https://graph.facebook.com/v2.0/me?access_token=" + accessToken;
+                    $http.get(url).success(function(data){
+                    	$scope.signup(data['name'], data['email'], 'facebook');
+                    });
+                });
+            }
+        });
+    }
+
+	
+
 	alert = function(msg) {
 	    ons.notification.alert({
 	      message: msg
@@ -222,6 +239,63 @@ app.controller("LoginCtrl", function($scope, $http, GlobalParameters, localStora
 	console.log('LoginCtrl');
 
 	//console.log(FB);
+	$scope.test = function(){
+		FB.login(function(response) {
+		    if (response.authResponse) {
+		     console.log('Welcome!  Fetching your information.... ');
+		     FB.api('/me', function(response) {
+		       console.log('Good to see you, ' + response.name + '.');
+		     });
+		    } else {
+		     console.log('User cancelled login or did not fully authorize.');
+		    }
+		});
+	}
+
+	$scope.login_facebook = function(){
+		console.log('login');
+		var client_id = '191042334383020'; //YOUR App ID or API Key
+        var client_secret = '50a3083a12e0fd435f77ad06900dc371'; //// YOUR App Secret
+        var redirect_uri = 'https://www.facebook.com/connect/login_success.html';  //// YOUR CALLBACK URL
+        var display = 'touch';
+        var authorize_url = "https://graph.facebook.com/v2.0/oauth/authorize?";
+        authorize_url += "client_id=" + client_id;
+        authorize_url += "&redirect_uri=" + redirect_uri;
+        authorize_url += "&display=" + display;
+        authorize_url += "&scope=public_profile,email";
+        
+        var ref = window.open(authorize_url, '_blank', 'location=yes');
+        //var ref = window.open(authorize_url, '_blank', 'location=yes,clearsessioncache=yes,clearcache=yes');
+        ref.addEventListener('loadstart', function(event)
+        {
+            var loc = event.url;
+            $scope.test = loc;
+
+            if(loc.indexOf(redirect_uri + "?") >= 0)
+            {
+                ref.close();
+                $scope.data = "YES";
+                var result = loc.split("#")[0];
+                login_accessToken = result.split("&")[0].split("=")[1];
+                
+                var url = 'https://graph.facebook.com/v2.0/oauth/access_token?';
+                    url += 'client_id=' + client_id;
+                    url += '&client_secret=' + client_secret;
+                    url += '&code=' + login_accessToken;
+                    url += '&redirect_uri=' + redirect_uri;
+        
+                $http.post(url,null).success(function(data){
+                    accessToken = data.split("&")[0].split("=")[1];
+                    console.log(accessToken);
+                    url = "https://graph.facebook.com/v2.0/me?access_token=" + accessToken;
+                    $http.get(url).success(function(data){
+                    
+                    	$scope.login(data['email'], 'facebook');
+                    });
+                });
+            }
+        });
+    }
 
 	$scope.SendEmail = function(email){
 		alert("A password recovery email has been sent.");
@@ -264,10 +338,6 @@ app.controller("LoginCtrl", function($scope, $http, GlobalParameters, localStora
 	    ons.notification.alert({
 	      message: msg
 	    });
-	}
-
-	$scope.login_facebook = function(){
-		console.log('login facebook');
 	}
 });
 

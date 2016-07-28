@@ -11,19 +11,19 @@
         <!-- <div id="fb-root"></div> -->
         <p style="text-align: left">Sign up with:</p>
     
-        <!-- <div ng-show="!showEmail">
+        <div ng-show="!showEmail">
             
             <ons-button modifier="large" class="bg-color-facebook" ng-click="SignUpWithFacebook()">Facebook</ons-button>
-            <ons-button modifier="large" class="bg-color-twitter margin-top-10" ng-click="alert('Coming soon!');">Twitter</ons-button>
-            <ons-button modifier="large" class="bg-color-line margin-top-10" ng-click="alert('Coming soon!');">Line</ons-button> 
+            <!-- <ons-button modifier="large" class="bg-color-twitter margin-top-10" ng-click="alert('Coming soon!');">Twitter</ons-button>
+            <ons-button modifier="large" class="bg-color-line margin-top-10" ng-click="alert('Coming soon!');">Line</ons-button>  -->
             <ons-button modifier="outline" class="email-button" ng-click="showEmail=!showEmail">Email</ons-button>
-        </div>  -->
+        </div> 
             
-        <!-- <div ng-show="showEmail && !login" class="email-signup-form"> -->
+        <div ng-show="showEmail && !login" class="email-signup-form">
             <input type="text" class="text-input--underbar" placeholder="Full Name*" value="" ng-model="txt_name">
             <input type="email" class="text-input--underbar" placeholder="Email*" value="" ng-model="txt_email">
             <input type="password" class="text-input--underbar" placeholder="Password*" value="" ng-model="txt_pass">
             <ons-button modifier="large" ng-click="signup(txt_name, txt_email, txt_pass);">Sign Up</ons-button>
-        <!-- </div> -->
+        </div>
     </div>
 </ons-page>
