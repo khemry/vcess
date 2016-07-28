@@ -44,20 +44,27 @@
                             <ons-row>
                                 <p class="margin-0 line-height-150">{{business.name_en}}</p>
                             </ons-row>
-                            <ons-row>
+                            <!-- <ons-row>
                                 <p class="margin-0 line-height-150 font-size-12 margin-right-20">{{business.category}}</p>
-                            </ons-row>
+                            </ons-row> -->
                             <ons-row>
                                 <p class="margin-0 line-height-150 font-size-12">Photos: {{business.photos}}</p>
                             </ons-row>
-                            <ons-row>
-                                <div class="rating margin-0 line-height-150 font-size-12">
+                            <ons-row class="font-size-12">
+                                <span style="padding-right:10px; margin-top:-8px">Your Rate: </span>
+                                <span style="padding-right:10px; margin-top:-8px" ng-hide="{{business.user_rate}}">No Rate</span>
+                                <div class="rating margin-0 line-height-150" ng-show="{{business.user_rate}}">
                                     <div class="rating-num">
-                                        <ons-icon icon="fa-star" fixed-width="false" ng-repeat="n in getRate(business.rate) track by $index"></ons-icon>
+                                        <ons-icon icon="fa-star" fixed-width="false" ng-repeat="n in getRate(business.user_rate) track by $index"></ons-icon>
                                         <ons-icon icon="fa-star-half" fixed-width="false" ng-show={{show_half_star}}></ons-icon>
-                                        {{business.rate}}
+                                        {{business.user_rate}}
                                     </div>
                                 </div>
+                            </ons-row>
+                            <ons-row>
+                                <p class="margin-0 line-height-150 font-size-12 margin-right-20">
+                                    Your review: {{business.user_review}}
+                                </p>
                             </ons-row>
                         </ons-col>
                         <!-- <ons-col width="40px">
