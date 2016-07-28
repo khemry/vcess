@@ -14,8 +14,9 @@
                     {{review['username']}}<br>
                     {{review['posted_date']}}
                 </ons-col>
-                <ons-col class="float-right">    
-                    <div class="rating">
+                <ons-col class="float-right">  
+                    <span style="padding-right:10px; margin-top:-8px" ng-hide="{{review['rate']}}">No Rate</span>  
+                    <div class="rating" ng-show="{{review['rate']}}">
                       <div class="rating-num">
                           <ons-icon icon="fa-star" fixed-width="false" ng-repeat="n in getRate(review['rate']) track by $index"></ons-icon>
                           <ons-icon icon="fa-star-half" fixed-width="false" ng-show={{show_half_star}}></ons-icon>

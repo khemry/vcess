@@ -163,62 +163,61 @@
           </ons-list-item> -->
 
           
-          <ons-list-item ng-init="menu_limit=4" id="menu">
-              <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
-              Menu Photos 
-              <span ng-hide="menu_images.length"> (No photos)</span>
-              <span ng-show="menu_images.length"> ({{menu_images.length}} photos)</span>
-              <div class="text-center" ng-show="menu_images.length">
-                <!-- <div ng-repeat="image in menu_images | limitTo:menu_limit"> -->
+          <ons-list-item ng-init="menu_limit=4" id="menu" class="text-center">
+              <div class="text-left">
+                <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
+                Menu Photos 
+                <span ng-hide="menu_images.length"> (No photos)</span>
+                <span ng-show="menu_images.length"> ({{menu_images.length}} photos)</span>  
+              </div>
+              
+              <div ng-show="menu_images.length">
                   <img src="{{image['path']}}" class="show_photos" ng-repeat="image in menu_images | limitTo:menu_limit" ng-click="show('show_photo.html', image['path'])">
                   <!-- <p class="photo_title">{{image['name_en']}}</p><br> -->
                 <!-- </div> -->
+              </div>  
+              <ons-button modifier="quiet" class="font-size-12" ng-show="menu_images.length">
+                  <span ng-show="menu_limit==4" ng-click="menu_limit = menu_images">Show All</span>
+                  <span ng-show="menu_limit == menu_images" ng-click="menu_limit=4"><a href="#menu" class="hidden_link">Show Less</a></span>
+              </ons-button>
                 
-                <ons-button modifier="quiet" class="font-size-12">
-                    <span ng-show="menu_limit==4" ng-click="menu_limit = menu_images">Show All</span>
-                    <span ng-show="menu_limit == menu_images" ng-click="menu_limit=4"><a href="#menu" class="hidden_link">Show Less</a></span>
-                </ons-button>
-                
-              </div>
+              
           </ons-list-item>
           
-          <ons-list-item ng-init="store_limit=4" id="store">
-              <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
-              Store Photos 
-              <span ng-hide="store_images.length"> (No photos)</span>
-              <span ng-show="store_images.length"> ({{store_images.length}} photos)</span>
-              <div class="text-center" ng-show="store_images.length">
-                
+          <ons-list-item ng-init="store_limit=4" id="store" class="text-center">
+              <div class="text-left">
+                <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
+                Store Photos 
+                <span ng-hide="store_images.length"> (No photos)</span>
+                <span ng-show="store_images.length"> ({{store_images.length}} photos)</span>
+              </div>
+              <div ng-show="store_images.length">
                   <img src="{{image['path']}}" class="show_photos" ng-repeat="image in store_images | limitTo:store_limit" ng-click="show('show_photo.html', image['path'])">
                   <!-- <p class="photo_title">{{image['name_en']}}</p><br> -->
-                
-                
-                
-                <ons-button modifier="quiet" class="font-size-12">
-                    <span ng-show="store_limit==4" ng-click="store_limit = store_images">Show All</span>
-                    <span ng-show="store_limit == store_images" ng-click="store_limit=4"><a href="#store" class="hidden_link">Show Less</a></span>
-                </ons-button>
-                
-                
+              </div>
 
-                </div>
+              <ons-button modifier="quiet" class="font-size-12" ng-show="store_images.length">
+                  <span ng-show="store_limit==4" ng-click="store_limit = store_images">Show All</span>
+                  <span ng-show="store_limit == store_images" ng-click="store_limit=4"><a href="#store" class="hidden_link">Show Less</a></span>
+              </ons-button>
             </ons-list-item>
       
-            <ons-list-item ng-init="food_limit=4" id="food">
-                <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
-                Food Photos 
-                <span ng-hide="food_images.length"> (No photos)</span>
-                <span ng-show="food_images.length"> ({{food_images.length}} photos)</span>
-                <div class="text-center" ng-show="food_images.length">
+            <ons-list-item ng-init="food_limit=4" id="food" class="text-center">
+                <div class="text-left">
+                  <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
+                  Food Photos 
+                  <span ng-hide="food_images.length"> (No photos)</span>
+                  <span ng-show="food_images.length"> ({{food_images.length}} photos)</span>
+                </div>
+                <div ng-show="food_images.length">
                     <img src="{{image['path']}}" class="show_photos" ng-repeat="image in food_images | limitTo:food_limit" ng-click="show('show_photo.html', image['path'])">
                     <!-- <p class="photo_title">{{image['name_en']}}</p> -->
-                
-                
-                    <ons-button modifier="quiet" class="font-size-12">
-                        <span ng-show="food_limit==4" ng-click="food_limit = food_images">Show All</span>
-                        <span ng-show="food_limit == food_images" ng-click="food_limit=4"><a href="#food" class="hidden_link">Show Less</a></span>
-                    </ons-button>
                 </div>  
+                <ons-button modifier="quiet" class="font-size-12" ng-show="food_images.length">
+                    <span ng-show="food_limit==4" ng-click="food_limit = food_images">Show All</span>
+                    <span ng-show="food_limit == food_images" ng-click="food_limit=4"><a href="#food" class="hidden_link">Show Less</a></span>
+                </ons-button>
+                
             </ons-list-item>
         </ons-list>
 	</div>

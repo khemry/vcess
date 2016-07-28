@@ -16,8 +16,8 @@
 		
 			<div ng-show="login_status">  
 				<ons-row>
-			        <ons-col width="60px">
-			          <img src="images/default_user.png" class="profile-image">
+			        <ons-col width="70px">
+			          <img ng-src="{{login_user['profile']}}" class="profile-image">
 			        </ons-col>
 			        <ons-col>
 			          {{login_user['full_name']}}
