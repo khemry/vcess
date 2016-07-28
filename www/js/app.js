@@ -193,12 +193,12 @@ app.controller('SignupCtrl', function($scope, GlobalParameters, $http, $window, 
         ref.addEventListener('loadstart', function(event)
         {
             var loc = event.url;
-            $scope.test = loc;
+            //$scope.test = loc;
 
             if(loc.indexOf(redirect_uri + "?") >= 0)
             {
                 ref.close();
-                $scope.data = "YES";
+                //$scope.data = "YES";
                 var result = loc.split("#")[0];
                 login_accessToken = result.split("&")[0].split("=")[1];
                 
@@ -210,7 +210,7 @@ app.controller('SignupCtrl', function($scope, GlobalParameters, $http, $window, 
         
                 $http.post(url,null).success(function(data){
                     accessToken = data.split("&")[0].split("=")[1];
-                    console.log(accessToken);
+                    //console.log(accessToken);
                     url = "https://graph.facebook.com/v2.0/me?access_token=" + accessToken;
                     $http.get(url).success(function(data){
                     	$scope.signup(data['name'], data['email'], 'facebook');
@@ -269,12 +269,12 @@ app.controller("LoginCtrl", function($scope, $http, GlobalParameters, localStora
         ref.addEventListener('loadstart', function(event)
         {
             var loc = event.url;
-            $scope.test = loc;
+            //$scope.test = loc;
 
             if(loc.indexOf(redirect_uri + "?") >= 0)
             {
                 ref.close();
-                $scope.data = "YES";
+                //$scope.data = "YES";
                 var result = loc.split("#")[0];
                 login_accessToken = result.split("&")[0].split("=")[1];
                 
@@ -286,7 +286,7 @@ app.controller("LoginCtrl", function($scope, $http, GlobalParameters, localStora
         
                 $http.post(url,null).success(function(data){
                     accessToken = data.split("&")[0].split("=")[1];
-                    console.log(accessToken);
+                    //console.log(accessToken);
                     url = "https://graph.facebook.com/v2.0/me?access_token=" + accessToken;
                     $http.get(url).success(function(data){
                     
