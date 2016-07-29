@@ -22,7 +22,7 @@
                 <p>{{business['distance']}} km from here</p>
               </ons-row>
               <ons-row>
-                Views: {{business['views']}} | Favorite: {{business['favorite']}} | Wish List: {{business['wish_list']}}
+                Views: {{business['views']}} | Favorite: {{business['favorite_num']}} | Wish List: {{business['wish_list_num']}}
               </ons-row>
               <ons-row>
                 <p>Owner: {{business['owner']}}</p>
@@ -135,10 +135,10 @@
             </div>
           </ons-list-item>
 
-          <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/reviews.html', {biz_id: business['id']});">
+          <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/reviews.html', {reviews: all_reviews});">
             <div>
               <ons-icon icon="ion-chatboxes" class="color-vcess"></ons-icon>
-              <a>Rate & Review</a>
+              Rate & Review ({{all_reviews.length}})
             </div>
           </ons-list-item>
 
@@ -176,7 +176,7 @@
                   <!-- <p class="photo_title">{{image['name_en']}}</p><br> -->
                 <!-- </div> -->
               </div>  
-              <ons-button modifier="quiet" class="font-size-12" ng-show="menu_images.length">
+              <ons-button modifier="quiet" class="font-size-12" ng-show="menu_images.length>4">
                   <span ng-show="menu_limit==4" ng-click="menu_limit = menu_images">Show All</span>
                   <span ng-show="menu_limit == menu_images" ng-click="menu_limit=4"><a href="#menu" class="hidden_link">Show Less</a></span>
               </ons-button>
@@ -196,7 +196,7 @@
                   <!-- <p class="photo_title">{{image['name_en']}}</p><br> -->
               </div>
 
-              <ons-button modifier="quiet" class="font-size-12" ng-show="store_images.length">
+              <ons-button modifier="quiet" class="font-size-12" ng-show="store_images.length>4">
                   <span ng-show="store_limit==4" ng-click="store_limit = store_images">Show All</span>
                   <span ng-show="store_limit == store_images" ng-click="store_limit=4"><a href="#store" class="hidden_link">Show Less</a></span>
               </ons-button>
@@ -213,7 +213,7 @@
                     <img src="{{image['path']}}" class="show_photos" ng-repeat="image in food_images | limitTo:food_limit" ng-click="show('show_photo.html', image['path'])">
                     <!-- <p class="photo_title">{{image['name_en']}}</p> -->
                 </div>  
-                <ons-button modifier="quiet" class="font-size-12" ng-show="food_images.length">
+                <ons-button modifier="quiet" class="font-size-12" ng-show="food_images.length>4">
                     <span ng-show="food_limit==4" ng-click="food_limit = food_images">Show All</span>
                     <span ng-show="food_limit == food_images" ng-click="food_limit=4"><a href="#food" class="hidden_link">Show Less</a></span>
                 </ons-button>

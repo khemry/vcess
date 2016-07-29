@@ -1,5 +1,5 @@
 <ons-page ng-controller="FavCtrl" ng-init="ShowFav=1; LoadComplete=0">
-<ons-navigator var="myNavigator">
+<ons-navigator var="myNavigator" animation="slide">
     
 
     <div class="tab-bar tab-bar--top tab-bar--top-border">
@@ -22,8 +22,8 @@
         <img src="images/logos/Final_logo_green.png" class="logo-frame"/>
         <h4>Welcome to Vcess App!</h3>
         <p>You are required to login in order to view this page.</p>
-        <ons-button modifier="large" ng-click="myNavigator.pushPage('pages/en/login.html');">Log In</ons-button>
-        <ons-button class="button--large--quiet" ng-click="myNavigator.pushPage('pages/en/signup.html');">Sign Up</ons-button>
+        <ons-button modifier="large" ng-click="myNavigator.pushPage('pages/en/login.html',{origin: 'pages/en/fav.html'});">Log In</ons-button>
+        <ons-button class="button--large--quiet" ng-click="myNavigator.pushPage('pages/en/signup.html',{origin: 'pages/en/fav.html'});">Sign Up</ons-button>
     </div>
 
     <div class="margin10 text-center" ng-show="login_status">
