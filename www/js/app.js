@@ -50,11 +50,16 @@ app.service('GlobalParameters', function(){
 //     	ons.notification.alert({message: msg});
 //    	};
 // }]);
-
+app.controller('AuthCtrl', function($scope){
+	console.log('AuthCtrl');
+	$scope.origin = myNavigator.getCurrentPage().options.origin;
+	$scope.selected_business = myNavigator.getCurrentPage().options.selected_business;
+});
 
 app.controller('SignupCtrl', function($scope, GlobalParameters, $http, $window, localStorageService){
 	console.log('Signup Ctrl');
-	//console.log(FB);
+	var origin = myNavigator.getCurrentPage().options.origin;
+	var selected_business = myNavigator.getCurrentPage().options.selected_business;
 
 	$scope.signup = function(fullname, email, password, profile_url){
 		var req = {
@@ -79,7 +84,13 @@ app.controller('SignupCtrl', function($scope, GlobalParameters, $http, $window, 
 					GlobalParameters.login_status = 1;
 					GlobalParameters.setCurrentUser(login_user);
 					localStorageService.set('login_user', login_user);
-					myNavigator.pushPage('pages/en/profile.html', {login_user: login_user});
+					//myNavigator.pushPage('pages/en/profile.html', {login_user: login_user});
+					//myNavigator.resetToPage(origin, {animation: 'fade', login_user: login_user});
+
+					if (selected_business == undefined)
+						myNavigator.resetToPage(origin, {animation: 'fade', login_user: login_user});
+					else
+						myNavigator.resetToPage(origin, {animation: 'fade', login_user: login_user, selected_biz: selected_business});
 				}
 			}, function(error){
 				alert('Failed: ' + error);
@@ -144,6 +155,9 @@ app.controller('SignupCtrl', function($scope, GlobalParameters, $http, $window, 
 
 app.controller("LoginCtrl", function($scope, $http, GlobalParameters, localStorageService){
 	console.log('LoginCtrl');
+	var origin = myNavigator.getCurrentPage().options.origin;
+	var selected_business = myNavigator.getCurrentPage().options.selected_business;
+	//console.log(selected_business);
 
 	$scope.login_facebook = function(){
 		console.log('login');
@@ -216,7 +230,11 @@ app.controller("LoginCtrl", function($scope, $http, GlobalParameters, localStora
 					GlobalParameters.login_status = 1;
 					GlobalParameters.setCurrentUser(login_user);
 					localStorageService.set('login_user', login_user);
-					myNavigator.pushPage('pages/en/profile.html', {login_user: login_user});
+					//myNavigator.pushPage('pages/en/profile.html', {login_user: login_user});
+					if (selected_business == undefined)
+						myNavigator.resetToPage(origin, {animation: 'fade', login_user: login_user});
+					else
+						myNavigator.resetToPage(origin, {animation: 'fade', login_user: login_user, selected_biz: selected_business});
 				}
 			}, function(error){
 				alert('Failed: ' + error);
@@ -1240,9 +1258,36 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 		return deferred.promise;
 	}
 
+	function GetReview(biz_id){
+		$scope.all_reviews = 0;
+		//var deferred = $q.defer();
+
+		var req = {
+		 	method: 'POST',
+		 	url: 'http://www.vcess.com/ajax/search_kh.php',
+		 	headers: {
+		   		'Content-Type': 'application/json'
+		 	},
+		 	data: {get_review_flag: 1, biz_id: biz_id}
+		}
+
+		console.log(req);
+			$http(req).then(function(data){
+				// console.log('req');
+				// console.log(data);
+				$scope.all_reviews = data['data'];
+				//deferred.resolve(all_data);
+			}, function(error){
+				console.log('Error was: ' + error);
+			});
+		//return deferred.promise;
+	
+	}	
+
 	function LoadData(){
-		UpdateViewCount();
 		$scope.business = selected_business;
+		UpdateViewCount();
+		GetReview(selected_business['id']);
         
 		if ($scope.business['rate'] % 1 == 0)
         	$scope.show_half_star = 0;
@@ -1251,17 +1296,17 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 
         console.log(selected_business['favorite']);
         
-        
+        console.log(typeof selected_business['favorite']);
 
         if (selected_business['favorite'] == "")
-	        selected_business['favorite'] = 0;
+	        selected_business['favorite_num'] = 0;
 	    else 
-	    	$scope.business['favorite'] = selected_business['favorite'].split(',').length-1;
+	    	$scope.business['favorite_num'] = selected_business['favorite'].split(',').length-1;
 	    
 	    if (selected_business['wish_list'] == "")
-	        selected_business['wish_list'] = 0;
+	        selected_business['wish_list_num'] = 0;
 	    else
-	    	$scope.business['wish_list'] = selected_business['wish_list'].split(',').length-1;
+	    	$scope.business['wish_list_num'] = selected_business['wish_list'].split(',').length-1;
 
 
 	    if ($scope.business['owner'] == "")
@@ -1302,15 +1347,9 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 	      	callback: function(idx) {
 	        switch (idx) {
 	          	case 0:
-	            	// ons.notification.alert({
-	             //  		message: 'You pressed "Cancel".',
-	            	// });
 	            	break;
 	          	case 1:
-	            	// ons.notification.alert({
-	             //  		// message: 'You pressed "OK".',
-	            	// });
-	            	$scope.myNavigator.pushPage('pages/en/login_index.html');
+	            	$scope.myNavigator.pushPage('pages/en/authentication.html', {origin: 'pages/en/business_home.html', selected_business: selected_business});
 	            break;
 	        }
 	      }
@@ -1414,9 +1453,22 @@ app.controller('ProfileCtrl', function($scope, GlobalParameters, localStorageSer
 	$scope.login_user = GlobalParameters.current_user;
 
 	$scope.Logout = function(){
-		GlobalParameters.login_status = 0;
-		$scope.myNavigator.resetToPage('pages/en/home.html');
-		localStorageService.remove('login_user');
+		ons.notification.confirm({
+	      	message: "Are you sure you want to log out of Vcess?",
+	      	title: 'Vcess',
+	      	buttonLabels: ["Yes", "No"],
+	      	callback: function(idx) {
+	        switch (idx) {
+	          	case 0:
+	            	GlobalParameters.login_status = 0;
+					$scope.myNavigator.resetToPage('pages/en/home.html');
+					localStorageService.remove('login_user');
+	          	case 1:
+	            	break;
+	            break;
+	        }
+	      }
+	    });
 	}
 });
 
@@ -1665,42 +1717,43 @@ app.controller('RateCtrl', function($scope, GlobalParameters, $q, $http){
 app.controller('ReviewsCtrl', function($scope, GlobalParameters, $q, $http){
 	console.log('ReviewsCtrl');
 	var page = myNavigator.getCurrentPage();
-	var biz_id = page.options.biz_id;
+	//var biz_id = page.options.biz_id;
+	$scope.reviews = page.options.reviews;
+	
+	// function GetData(){
+	// 	var deferred = $q.defer();
 
-	function GetData(){
-		var deferred = $q.defer();
+	// 	var req = {
+	// 	 	method: 'POST',
+	// 	 	url: 'http://www.vcess.com/ajax/search_kh.php',
+	// 	 	headers: {
+	// 	   		'Content-Type': 'application/json'
+	// 	 	},
+	// 	 	data: {get_review_flag: 1, biz_id: biz_id}
+	// 	}
 
-		var req = {
-		 	method: 'POST',
-		 	url: 'http://www.vcess.com/ajax/search_kh.php',
-		 	headers: {
-		   		'Content-Type': 'application/json'
-		 	},
-		 	data: {get_review_flag: 1, biz_id: biz_id}
-		}
-
-		console.log(req);
-			$http(req).then(function(data){
-				console.log('req');
-				console.log(data);
-				var all_data = data['data'];
-				deferred.resolve(all_data);
-			}, function(error){
-				deferred.reject('Error was: ' + error);
-			});
-		return deferred.promise;
-	}
+	// 	console.log(req);
+	// 		$http(req).then(function(data){
+	// 			console.log('req');
+	// 			console.log(data);
+	// 			var all_data = data['data'];
+	// 			deferred.resolve(all_data);
+	// 		}, function(error){
+	// 			deferred.reject('Error was: ' + error);
+	// 		});
+	// 	return deferred.promise;
+	// }
 
 	$scope.getRate = function(num) {
 		num = parseInt(num);
 		return new Array(num);   
 	}
 
-	function OnLoad(){
-		GetData().then(function(result) {
-			$scope.reviews = result;
-		});
-	}
+	// function OnLoad(){
+	// 	GetData().then(function(result) {
+	// 		$scope.reviews = result;
+	// 	});
+	// }
 
-	OnLoad();
+	// OnLoad();
 });
