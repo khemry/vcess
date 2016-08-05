@@ -793,6 +793,7 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 
 app.controller('HomeCtrl', function($scope, $http, GlobalParameters){
 	console.log('Home Ctrl');
+	
 	$scope.top_keywords = ['Khmer Food', 'Japanese Food', 'Chinese Food', 'Coffee', 'Bubble Tea', 'Soup'];
 
 	$scope.top_categories = [
