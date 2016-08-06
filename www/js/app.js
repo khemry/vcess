@@ -1,5 +1,9 @@
 var app = ons.bootstrap('myApp', ['LocalStorageModule']);
 
+ons.ready(function(){
+    
+});
+
 app.service('GlobalParameters', function(){
     
 	this.search_home = 1;
@@ -286,24 +290,145 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 	      title: 'Vcess'
 	    });
 	}
-
-	$scope.CurrentLocation = function(){
-    	$scope.Clear();
-    	getCurrentLocation().then(function(result) {
-    		$scope.myForm.location_text = result['addr'];
-    		$scope.search($scope.search_text, $scope.myForm.location_text, $scope.things);
-    		
-    	}, function(error){
-    		console.log(error);
-    		$scope.load_complete = 1;
-    	});
+    
+    var MAX_POSITION_ERRORS_BEFORE_RESET = 3;
+    var MIN_ACCURACY_IN_METRES = 20;
+    var positionWatchId = null;
+    var watchpositionErrorCount = 0;
+    options = {
+        maximumAge: 60000, 
+        timeout: 15000, 
+        enableHighAccuracy: true
+    };
+    
+    function addWatch(){
+        alert('add watch');
+        positionWatchId = navigator.geolocation.watchPosition(onWatchPositionSuccess, onWatchPositionError, options);
+    }
+    
+    function clearWatch(){
+        alert('clear watch');
+        navigator.geolocation.clearWatch(positionWatchId);
+    }
+    
+    function onWatchPositionSuccess(position) {
+        alert('on watch success');
+        watchpositionErrorCount = 0;
+    
+        // Reject if accuracy is not sufficient
+        if(position.coords.accuracy > MIN_ACCURACY_IN_METRES){
+          return;        
+        }
+    
+        // If only single position is required, clear watcher
+        clearWatch();
+    
+        // Do something with position
+        //var lat = position.coords.latitude,lon = position.coords.longitude;
+        var latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
+        var geocoder = new google.maps.Geocoder();
+		geocoder.geocode({'location': latlng}, function(results, status) {
+	          if (status === google.maps.GeocoderStatus.OK) {
+	            if (results[1]) {
+	            	current_location['coordinate'] = latlng;
+	            	current_location['addr'] = results[1].formatted_address;
+                    
+                    $scope.myForm.location_text = current_location['addr'];
+                    $scope.search($scope.search_text, $scope.myForm.location_text, $scope.things);
+	            	//deferred.resolve(current_location);
+	            } else {
+	              	alert('No address found');
+                    $scope.load_complete = 1;
+	              	//deferred.reject('No results found');
+	            }
+	          } else {
+	            //deferred.reject('Geocoder failed due to: ' + status);
+                alert('Geocoder failed due to: ' + status);
+                $scope.load_complete = 1;
+	          }
+	        });
+    }
+    
+    
+    function onWatchPositionError(err) {
+        alert('watch error');
+        watchpositionErrorCount++;
+        if (err.code == 3 // TIMEOUT
+            && watchpositionErrorCount >= MAX_POSITION_ERRORS_BEFORE_RESET) {        
+            clearWatch();
+            addWatch();
+            watchpositionErrorCount = 0;
+        }
+    
     }
 
-	getCurrentLocation = function(){
-		var deferred = $q.defer();
+	$scope.CurrentLocation = function(){
+        alert('current location');
+    	$scope.Clear();
+        cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
+            console.log("Location is " + (enabled ? "enabled" : "disabled"));
+            if(!enabled){
+                navigator.notification.confirm("Your GPS is switched OFF - would you like to open the Settings page to turn it ON?", 
+                    function(result){
+                        if(result == 1){ // Yes
+                            cordova.plugins.diagnostic.switchToLocationSettings();
+                        }
+                    }, "Open Location Settings?");
+            }else{
+                alert('success!');
+                getCurrentLocation().then(function(result) {
+                    $scope.myForm.location_text = result['addr'];
+            		$scope.search($scope.search_text, $scope.myForm.location_text, $scope.things);
+            		
+            	}, function(error){
+            		console.log(error);
+            		$scope.load_complete = 1;
+            	});
+                // if(positionWatchId){
+                //     clearWatch();
+                // }
+                // addWatch();
+            }
+        }, function(error){
+            console.error("The following error occurred: "+error);
+        });
+        // cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
+        //     switch(status){
+        //         case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
+        //             alert("Permission not requested");
+        //             break;
+        //         case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+        //             alert("Permission granted");
+        //          //    getCurrentLocation().then(function(result) {
+        //          //    	$scope.myForm.location_text = result['addr'];
+        //         	// 	$scope.search($scope.search_text, $scope.myForm.location_text, $scope.things);
+        //         	// 	
+        //         	// }, function(error){
+        //         	// 	console.log(error);
+        //         	// 	$scope.load_complete = 1;
+        //         	// });
+        //             break;
+        //         case cordova.plugins.diagnostic.permissionStatus.DENIED:
+        //             alert("Permission denied");
+        //             break;
+        //         case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
+        //             alert("Permission permanently denied");
+        //             break;
+        //     }
+        // }, function(error){
+        //     console.error(error);
+        // });
+    	
+    }
+
+	getCurrentLocation = function(){	
+        alert('getCurrentLocation');
+        var deferred = $q.defer();
 		
 		$timeout(function(){
 	    	navigator.geolocation.getCurrentPosition(function(position) {
+            //navigator.geolocation.watchPosition(function(position) {
+                alert(position);
 	    		var latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
 	    		//var latlng = {lat: 11.5545345, lng: 104.8992934};
 	    		var geocoder = new google.maps.Geocoder();
@@ -312,6 +437,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 			            if (results[1]) {
 			            	current_location['coordinate'] = latlng;
 			            	current_location['addr'] = results[1].formatted_address;
+                            alert(current_location['addr']);
 			            	deferred.resolve(current_location);
 			            } else {
 			              	console.log('No results found');
@@ -399,6 +525,19 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
     	
     	
     }
+    
+    function requestLocation(){
+        alert('requestLocation');
+        getCurrentLocation().then(function(result) {
+            $scope.myForm.location_text = result['addr'];
+            $scope.load_complete = 1;
+        	//$scope.search($scope.search_text, $scope.myForm.location_text, $scope.things);
+    		
+    	}, function(error){
+    		console.log(error);
+    		$scope.load_complete = 1;
+    	});
+    }
 
 	OnLoad = function(){
 		$scope.myForm = {};
@@ -406,20 +545,41 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 		var selected_keyword = page.options.keyword;
 
 		$scope.businesses = {};
-		getCurrentLocation().then(function(result) {
-    		$scope.myForm.location_text = result['addr'];
-    		if (selected_keyword != undefined){
-				//console.log(selected_keyword);
-				$scope.search_text = selected_keyword;
-				$scope.search($scope.search_text, $scope.myForm.location_text, 1);
+        
+        cordova.plugins.diagnostic.getLocationAuthorizationStatus(function(status){
+            if(status == "GRANTED"){
+                requestLocation();
+                
+            }else{
+                cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
+                        if(status == "GRANTED"){
+                            requestLocation();
+                            
+                        }else{
+                            // Handle other cases
+                        }
+                    }, function(error){
+                        console.error(error);
+                });
+            }
+        }, onError);
 
-			} else {
-				$scope.load_complete = 1;	
-			}
-    	}, function(error){
-    		console.log(error);
-    		$scope.load_complete = 1;
-    	});
+        //$scope.CurrentLocation();
+        
+// 		getCurrentLocation().then(function(result) {
+//     		$scope.myForm.location_text = result['addr'];
+//     		if (selected_keyword != undefined){
+// 				//console.log(selected_keyword);
+// 				$scope.search_text = selected_keyword;
+// 				$scope.search($scope.search_text, $scope.myForm.location_text, 1);
+// 
+// 			} else {
+// 				$scope.load_complete = 1;	
+// 			}
+//     	}, function(error){
+//     		console.log(error);
+//     		$scope.load_complete = 1;
+//     	});
 	}
 
 	var selected_keyword = myNavigator.getCurrentPage().options.keyword;	
@@ -1526,7 +1686,7 @@ app.controller('IndexCtrl', function($scope, GlobalParameters, localStorageServi
 				console.log(data);
 				if (data['data'].length == 0){
 					//$scope.data_not_found = 1;
-					alert('Incorrect email or password. Please try again.');
+				//	alert('Incorrect email or password. Please try again.');
 				} else {
 					var login_user = data['data'];
 					GlobalParameters.login_status = 1;
