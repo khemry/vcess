@@ -14,13 +14,17 @@ app.service('GlobalParameters', function(){
 	this.selected_biz="";
 	this.login_status = 0;
 	this.current_user = {};
-	this.lang = "en";
+	this.lang = "English";
 
 	this.SetHomePage = function(a, b, c){
 		this.search_home = a;
 		this.shop_list_home = b;
 		this.shop_home = c;
 
+	}
+
+	this.SetLanguage = function(value){
+		this.lang = value;
 	}
 
 	this.SetIsOwner = function(value){
@@ -960,7 +964,7 @@ app.controller('HomeCtrl', function($scope, $http, GlobalParameters){
 		{name: 'Khmer Restaurants', key: 'khmer'},
 		{name: 'Coffee Shops', key: 'coffee'},
 		{name: 'Chinese Restaurants', key: 'chinese'},
-		{name: 'Green & Bubble Tea', key: 'tea'},
+		{name: 'Green & Bubble Tea', key: ' tea'},
 		{name: 'BBQ Restaurants', key: 'bbq'},
 		{name: 'Bars & Pubs', key: 'bars'},
 		{name: 'Soup', key: 'soup'},
@@ -1605,13 +1609,30 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 	   	
 // 	}
 // });
-
+app.controller('LanguagesCtrl', function($scope, GlobalParameters){
+	$scope.lang = GlobalParameters.lang;
+});
 
 app.controller('ProfileCtrl', function($scope, GlobalParameters, localStorageService){
 	console.log('Profile Ctrl');
 
 	$scope.login_status = GlobalParameters.login_status;
 	$scope.login_user = GlobalParameters.current_user;
+	$scope.current_lang = GlobalParameters.lang;
+
+	$scope.dialogs = {};
+
+	$scope.show = function(dlg) {
+		//$scope.selected_photo = current_photo;
+		if (!$scope.dialogs[dlg]) {
+		  	ons.createDialog(dlg, {parentScope: $scope}).then(function(dialog) {
+		    	$scope.dialogs[dlg] = dialog;
+		    	dialog.show();
+		  	});
+		} else {
+		  	$scope.dialogs[dlg].show();
+		}
+	}
 
 	$scope.Logout = function(){
 		ons.notification.confirm({
@@ -1657,7 +1678,7 @@ app.controller('IndexCtrl', function($scope, GlobalParameters, localStorageServi
 			$http(req).then(function(data){
 				console.log(data);
 				if (data['data'].length == 0){
-					alert('Incorrect email or password. Please try again.');
+					//alert('Incorrect email or password. Please try again.');
 				} else {
 					login_user = data['data'];
 					login_user['profile'] = profile_url;

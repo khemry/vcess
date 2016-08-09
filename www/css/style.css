@@ -44,6 +44,8 @@
     z-index: 0;*/
 }
 
+
+
 .margin10 {
 	margin: 10px;
 }
@@ -147,6 +149,10 @@ ons-dialog {
 
 .font-size-18 {
     font-size: 18px;
+}
+
+.color-current {
+	color: red;
 }
 
 .color-vcess {
