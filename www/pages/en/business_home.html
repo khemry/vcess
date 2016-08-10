@@ -163,7 +163,7 @@
           </ons-list-item> -->
 
           
-          <ons-list-item ng-init="menu_limit=4" id="menu" class="text-center">
+          <ons-list-item ng-init="menu_limit=6" id="menu" class="text-center">
               <div class="text-left">
                 <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
                 Menu Photos 
@@ -172,13 +172,13 @@
               </div>
               
               <div ng-show="menu_images.length">
-                  <img src="{{image['path']}}" class="show_photos" ng-repeat="image in menu_images | limitTo:menu_limit" ng-click="show('show_photo.html', image['path'])">
+                  <img src="{{image['path']}}" class="show_photos" ng-repeat="image in menu_images | limitTo:menu_limit track by $index" ng-click="show('show_photo.html', menu_images, $index)">
                   <!-- <p class="photo_title">{{image['name_en']}}</p><br> -->
                 <!-- </div> -->
               </div>  
               <ons-button modifier="quiet" class="font-size-12" ng-show="menu_images.length>4">
-                  <span ng-show="menu_limit==4" ng-click="menu_limit = menu_images">Show All</span>
-                  <span ng-show="menu_limit == menu_images" ng-click="menu_limit=4"><a href="#menu" class="hidden_link">Show Less</a></span>
+                  <span ng-show="menu_limit==6" ng-click="menu_limit = menu_images">Show All</span>
+                  <span ng-show="menu_limit == menu_images" ng-click="menu_limit=6"><a href="#menu" class="hidden_link">Show Less</a></span>
               </ons-button>
                 
               
@@ -192,7 +192,7 @@
                 <span ng-show="store_images.length"> ({{store_images.length}} photos)</span>
               </div>
               <div ng-show="store_images.length">
-                  <img src="{{image['path']}}" class="show_photos" ng-repeat="image in store_images | limitTo:store_limit" ng-click="show('show_photo.html', image['path'])">
+                  <img src="{{image['path']}}" class="show_photos" ng-repeat="image in store_images | limitTo:store_limit track by $index" ng-click="show('show_photo.html', store_images, $index)">
                   <!-- <p class="photo_title">{{image['name_en']}}</p><br> -->
               </div>
 
@@ -210,7 +210,7 @@
                   <span ng-show="food_images.length"> ({{food_images.length}} photos)</span>
                 </div>
                 <div ng-show="food_images.length">
-                    <img src="{{image['path']}}" class="show_photos" ng-repeat="image in food_images | limitTo:food_limit" ng-click="show('show_photo.html', image['path'])">
+                    <img src="{{image['path']}}" class="show_photos" ng-repeat="image in food_images | limitTo:food_limit track by $index" ng-click="show('show_photo.html', food_images, $index)">
                     <!-- <p class="photo_title">{{image['name_en']}}</p> -->
                 </div>  
                 <ons-button modifier="quiet" class="font-size-12" ng-show="food_images.length>4">
@@ -221,11 +221,19 @@
             </ons-list-item>
         </ons-list>
 	</div>
-
+    
     <ons-template id="show_photo.html">
-        <ons-dialog var="dialog" cancelable>    
-                <img ng-src="{{selected_photo}}" class="big-photo">   
+        <ons-dialog var="dialog" cancelable> 
+            <ons-icon icon="fa-times-circle" fixed-width="false" class="close" ng-click="dialog.hide()"></ons-icon>
+            <div class="pic_viewer" ng-style="{backgroundImage: 'url(' + selected_photos[ind]['path'] + ')'}">
+                <span class="pic">
+                    <ons-icon icon="fa-chevron-circle-right" fixed-width="false" class="next" ng-click="ind=ind+1" ng-hide="ind==selected_photos.length-1"></ons-icon>
+                    <ons-icon icon="fa-chevron-circle-left" fixed-width="false" class="prev" ng-click="ind=ind-1" ng-hide="ind==0"></ons-icon>
+                </span>
+            </div>
         </ons-dialog>
-    </ons-template>		
+    </ons-template> 
 </ons-page>
+
+   	
 
