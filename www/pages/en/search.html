@@ -1,5 +1,5 @@
 <ons-page ng-controller="SearchCtrl" ng-init="things=1; load_complete=0; search_result = 0;disabled=1; limit=20">
-<ons-navigator var="myNavigator" animation="slide">
+<!-- <ons-navigator var="myNavigator" animation="slide"> -->
     <ons-toolbar>
         <div class="left"><ons-back-button>Back</ons-back-button></div>
         <div class="center"><span>Vcess</span></div>
@@ -130,5 +130,5 @@
             <span ng-show="limit<businesses.length" ng-click="limit = limit + 20">Show More</span>
         </ons-button>
     </div>
-</ons-navigator>
+<!-- </ons-navigator> -->
 </ons-page>

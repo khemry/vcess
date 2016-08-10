@@ -450,13 +450,13 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
     }
 
 	getCurrentLocation = function(){	
-        alert('getCurrentLocation');
+        //alert('getCurrentLocation');
         var deferred = $q.defer();
 		
 		$timeout(function(){
 	    	navigator.geolocation.getCurrentPosition(function(position) {
             //navigator.geolocation.watchPosition(function(position) {
-                alert(position);
+                //alert(position);
 	    		var latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
 	    		//var latlng = {lat: 11.5545345, lng: 104.8992934};
 	    		var geocoder = new google.maps.Geocoder();
@@ -465,7 +465,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 			            if (results[1]) {
 			            	current_location['coordinate'] = latlng;
 			            	current_location['addr'] = results[1].formatted_address;
-                            alert(current_location['addr']);
+                            //alert(current_location['addr']);
 			            	deferred.resolve(current_location);
 			            } else {
 			              	console.log('No results found');
@@ -1380,19 +1380,27 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
     		$scope.markerId = 1;
 	    	var latlng;
 	    	latlng = new google.maps.LatLng(lat, lng);
-		      	var myOptions = {
-		            zoom: 14,
-		            center: latlng,
-		            mapTypeId: google.maps.MapTypeId.ROADMAP
-		        };
-		        var map = new google.maps.Map(document.getElementById("map_biz"), myOptions); 
-		      	var marker = new google.maps.Marker({
-		          position: latlng,
-		          map: map
-		        });
-		        map.setCenter(latlng);
+      	var myOptions = {
+            zoom: 14,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map_biz"), myOptions); 
+      	var marker = new google.maps.Marker({
+          position: latlng,
+          map: map
+        });
+        map.setCenter(latlng);
+        // marker.addListener('click', function() {
+        //   map.setZoom(8);
+        //   map.setCenter(marker.getPosition());
+        // });
 	    },100);
+    
+    
 	}
+
+
 
 	function GetPhotos(biz_id, num_photos){
 		$scope.food_images = [];

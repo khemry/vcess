@@ -37,10 +37,10 @@
 			          <ons-icon icon="ion-ios-star-half" class="color-vcess"></ons-icon>	
 			          Rate/Review
 			        </ons-list-item>
-			        <ons-list-item ng-click="show('languages.html')">
+			        <!-- <ons-list-item ng-click="show('languages.html')">
 			          <ons-icon icon="fa-language" class="color-vcess"></ons-icon>
 			          Language <span class="color-current float-right">{{current_lang}}</span>
-			        </ons-list-item>
+			        </ons-list-item> -->
 			        <ons-list-item modifier="tappable" ng-click="Logout()">
 			          <ons-icon icon="fa-sign-out" class="color-vcess"></ons-icon>
 			          Log out
@@ -76,9 +76,8 @@
 			</div>
 		</div>
 	</ons-navigator>
-</ons-page>
-
-<ons-template id="languages.html">
+	
+	<ons-template id="languages.html">
     <ons-dialog var="dialog" cancelable>
     	<div class="margin10 text-center" ng-controller="LanguagesCtrl">
     		<p class="color-vcess">Languages {{lang}}</p>
@@ -94,4 +93,7 @@
 			</ons-list>
     	</div>
 	</ons-dialog>
-</ons-template>		
+</ons-template>	
+</ons-page>
+
+	
