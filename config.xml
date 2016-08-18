@@ -85,15 +85,14 @@
   <preference name="FadeSplashScreen" value="true"/>
   <preference name="ShowSplashScreenSpinner" value="false"/>
   <preference name="EnableViewportScale" value="false"/>
+  <preference name="WindowsStorePublisherName" value="My Name"/>
+  <preference name="BackgroundColor" value="#FFFFFF"/>
+  <preference name="WindowsStoreIdentityName" value="e24d9426-eeef-49a3-b6af-9d389728c5b6"/>
   <access origin="*"/>
   <preference name="KeepRunning" value="true"/>
   <preference name="monaca:AndroidIsPackageNameSeparate" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
-  <preference name="monaca:WebViewEngine" value="default"/>
   <preference name="Orientation" value="default"/>
   <preference name="SplashScreenDelay" value="1000"/>
   <preference name="Fullscreen" value="false"/>
-  <preference name="WindowsStorePublisherName" value="My Name"/>
-  <preference name="BackgroundColor" value="#FFFFFF"/>
-  <preference name="WindowsStoreIdentityName" value="e24d9426-eeef-49a3-b6af-9d389728c5b6"/>
 </widget>

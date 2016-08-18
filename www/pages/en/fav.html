@@ -6,14 +6,14 @@
         <label class="tab-bar__item tab-bar--top-border__item">
             <input type="radio" name="top-tab-bar-b" checked="checked" ng-click="ShowFav = !ShowFav; FavList();">
             <button class="tab-bar__button tab-bar--top-border__button">
-                <span>Favorites</span>
+                <span>{{ 'Favorites' | translate }}</span>
             </button>
         </label>
 
         <label class="tab-bar__item tab-bar--top-border__item">
             <input type="radio" name="top-tab-bar-b" ng-click="ShowFav = !ShowFav; WishList();">
             <button class="tab-bar__button tab-bar--top-border__button">
-                <span>Wish List</span>
+                <span>{{ 'Wish List' | translate }}</span>
             </button>
         </label>
   </div>

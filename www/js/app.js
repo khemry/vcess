@@ -1,4 +1,39 @@
-var app = ons.bootstrap('myApp', ['LocalStorageModule']);
+// Including ngTranslate
+angular.module("ngTranslate",["ng"]).config(["$provide",function(t){$TranslateProvider=function(){var t,n={};this.translations=function(t,r){if(!t&&!r)return n;if(t&&!r){if(angular.isString(t))return n[t];n=t}else n[t]=r},this.uses=function(r){if(!r)return t;if(!n[r])throw Error("$translateProvider couldn't find translationTable for langKey: '"+r+"'");t=r},this.$get=["$interpolate","$log",function(r,a){return $translate=function(e,i){var l=t?n[t][e]:n[e];return l?r(l)(i):(a.warn("Translation for "+e+" doesn't exist"),e)},$translate.uses=function(n){return n?(t=n,void 0):t},$translate}]},t.provider("$translate",$TranslateProvider)}]),angular.module("ngTranslate").directive("translate",["$filter","$interpolate",function(t,n){var r=t("translate");return{restrict:"A",scope:!0,link:function(t,a,e){e.$observe("translate",function(r){t.translationId=angular.equals(r,"")?n(a.text())(t.$parent):r}),e.$observe("values",function(n){t.interpolateParams=n}),t.$watch("translationId + interpolateParams",function(){a.html(r(t.translationId,t.interpolateParams))})}}}]),angular.module("ngTranslate").filter("translate",["$parse","$translate",function(t,n){return function(r,a){return angular.isObject(a)||(a=t(a)()),n(r,a)}}]);
+
+var app = ons.bootstrap('myApp', ['LocalStorageModule', 'ngTranslate']);
+
+app.config(['$translateProvider', function ($translateProvider) {
+    
+    // Simply register translation table as object hash
+    $translateProvider.translations('English', {
+    });   
+
+    $translateProvider.translations('Khmer', {
+        'Profile': 'ទំព័រផ្ទាល់ខ្លួន',
+        'Favorites/Wish List': 'បញ្ជីចូលចិត្ត/កន្លែងចង់ទៅ',
+        'Rate/Review' : 'រង្វាយតម្លៃ/ការបញ្ចេញយោបល់',
+        'Languages' : 'ភាសា',
+        'Logout' : 'ចាកចេញ',
+        'Upcoming Functions' : 'មុខងារដែលនឹងមានក្នុងពេលឆាប់ៗ',
+        'Meetup' : 'ការជួបជុំ',
+        'Businesses' : 'មុខជំនួញ',
+        'Check-in' : 'ទីកន្លែងដែលបានទៅ',
+        'Friends' : 'មិត្តភ័ក្ត',
+        'Inbox' : 'ប្រអប់សំបុត្រ',
+        'Khmer' : 'ខ្មែរ',
+        'English' : 'អង់គ្លេស',
+        'Save' : 'រក្សាទុក',
+        'Favorites' : 'បញ្ជីចូលចិត្ត',
+        'Wish List' : 'កន្លែងចង់ទៅ',
+        'Rates' : 'រង្វាយតម្លៃ',
+        'Reviews' : 'ការបញ្ចេញយោបល់',
+        "You haven't rated any places yet." : "អ្នកមិនទាន់បានវាយតម្លៃលើកន្លែងណាមួយទេ",
+        "You haven't reviewed any places yet." : "អ្នកមិនទាន់បានបញ្ចេញយោបល់លើកន្លែងណាមួយទេ"
+    });   
+    
+    $translateProvider.uses('Khmer');
+}]);
 
 
 app.service('GlobalParameters', function(){
@@ -11,7 +46,7 @@ app.service('GlobalParameters', function(){
 	this.selected_biz="";
 	this.login_status = 0;
 	this.current_user = {};
-	this.lang = "English";
+	this.lang = "Khmer";
 
 	this.SetHomePage = function(a, b, c){
 		this.search_home = a;
@@ -201,6 +236,8 @@ app.controller("LoginCtrl", function($scope, $http, GlobalParameters, localStora
         authorize_url += "&redirect_uri=" + redirect_uri;
         authorize_url += "&display=" + display;
         authorize_url += "&scope=public_profile,email";
+        
+        authorize_url += "&output=embed";
         
         var ref = window.open(authorize_url, '_blank', 'location=yes');
         //var ref = window.open(authorize_url, '_blank', 'location=yes,clearsessioncache=yes,clearcache=yes');
@@ -576,39 +613,39 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
        
         
         // cordova.plugins.diagnostic.getLocationAuthorizationStatus(function(status){
-        //     if(status == "GRANTED"){
-        //         requestLocation();
-        //         
-        //     }else{
-        //         cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
-        //                 if(status == "GRANTED"){
-        //                     requestLocation();
-        //                     
-        //                 }else{
-        //                     // Handle other cases
-        //                 }
-        //             }, function(error){
-        //                 console.error(error);
-        //         });
-        //     }
+        //      if(status == "GRANTED"){
+        //          requestLocation();
+        //          
+        //      }else{
+        //          cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
+        //                  if(status == "GRANTED"){
+        //                      requestLocation();
+        //                      
+        //                  }else{
+        //                      // Handle other cases
+        //                  }
+        //              }, function(error){
+        //                  console.error(error);
+        //          });
+        //      }
         // }, onError);
 
-        // $scope.CurrentLocation();
+         // $scope.CurrentLocation();
         
-		getCurrentLocation().then(function(result) {
-    		$scope.myForm.location_text = result['addr'];
-    		if (selected_keyword != undefined){
-				//console.log(selected_keyword);
-				$scope.search_text = selected_keyword;
-				$scope.search($scope.search_text, $scope.myForm.location_text, 1);
-
-			} else {
-				$scope.load_complete = 1;	
-			}
-    	}, function(error){
-    		console.log(error);
-    		$scope.load_complete = 1;
-    	});
+ 		getCurrentLocation().then(function(result) {
+     		$scope.myForm.location_text = result['addr'];
+     		if (selected_keyword != undefined){
+ 				//console.log(selected_keyword);
+ 				$scope.search_text = selected_keyword;
+ 				$scope.search($scope.search_text, $scope.myForm.location_text, 1);
+ 
+ 			} else {
+ 				$scope.load_complete = 1;	
+ 			}
+     	}, function(error){
+     		console.log(error);
+     		$scope.load_complete = 1;
+     	});
 	}
 
 	var selected_keyword = myNavigator.getCurrentPage().options.keyword;	
@@ -1643,13 +1680,19 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 	   	
 // 	}
 // });
-app.controller('LanguagesCtrl', function($scope, GlobalParameters){
-	$scope.lang = GlobalParameters.lang;
+app.controller('LangCtrl', function($scope, GlobalParameters){
+	//$scope.lang = GlobalParameters.lang;
+    console.log('LangCtrl');
+    $scope.Save = function(selected_lang){
+        GlobalParameters.SetLanguage(selected_lang);
+        $translate.uses(selected_lang);
+        $scope.myNavigator.resetToPage('pages/en/profile.html');
+    }
 });
 
-app.controller('ProfileCtrl', function($scope, GlobalParameters, localStorageService){
+app.controller('ProfileCtrl', function($scope, GlobalParameters, localStorageService, $translate){
 	console.log('Profile Ctrl');
-
+    //$translate.uses('Khmer');
 	$scope.login_status = GlobalParameters.login_status;
 	$scope.login_user = GlobalParameters.current_user;
 	$scope.current_lang = GlobalParameters.lang;
@@ -1657,23 +1700,37 @@ app.controller('ProfileCtrl', function($scope, GlobalParameters, localStorageSer
 	$scope.dialogs = {};
 
 	$scope.show = function(dlg) {
-		//$scope.selected_photo = current_photo;
-    $scope.lang = $scope.current_lang;
+        $scope.lang = $scope.current_lang;
 		if (!$scope.dialogs[dlg]) {
-		  	ons.createDialog(dlg, {parentScope: $scope}).then(function(dialog) {
-		    	$scope.dialogs[dlg] = dialog;
-		    	dialog.show();
+		  	ons.createDialog(dlg, {parentScope: $scope}).then(function(langDialog) {
+		    	$scope.dialogs[dlg] = langDialog;
+		    	langDialog.show();
+                
+                langDialog.on('posthide', function(){
+                   //$scope.current_lang = GlobalParameters.lang;
+                });
 		  	});
 		} else {
 		  	$scope.dialogs[dlg].show();
 		}
+        
+        
 	}
 
 	$scope.Logout = function(){
+        if (GlobalParameters.lang =="Khmer"){
+            var msg = "តើអ្នកពិតជាចង់ចាកចេញពី Vcess មែនទេ?";
+            var choice1 = "មែន";
+            var choice2 = "ទេ";
+        } else {
+            var msg = "Are you sure you want to log out of Vcess?";
+            var choice1 = "Yes";
+            var choice2 = "No";
+        }
 		ons.notification.confirm({
-	      	message: "Are you sure you want to log out of Vcess?",
+	      	message: msg,
 	      	title: 'Vcess',
-	      	buttonLabels: ["Yes", "No"],
+	      	buttonLabels: [choice1, choice2],
 	      	callback: function(idx) {
 	        switch (idx) {
 	          	case 0:
@@ -1797,6 +1854,13 @@ app.controller('LanguagesCtrl', function($scope, GlobalParameters){
 
 app.controller('FavCtrl', function($scope, GlobalParameters, $q, $http){
 	console.log('FavCtrl');
+    if (GlobalParameters.lang =="Khmer"){
+        var msg_no_fav = "អ្នកមិនទាន់មានកន្លែងដែលចូលចិត្តទេ";
+        var msg_no_wish = "អ្នកមិនទាន់មានកន្លែងដែលចង់ទៅទេ";
+    } else {
+        var msg_no_fav = "You haven't favorited any places yet.";
+        var msg_no_wish = "You haven't added any places to your wish list yet.";
+    }
 	$scope.businesses = {};
 
 	$scope.getRate = function(num) {
@@ -1806,13 +1870,14 @@ app.controller('FavCtrl', function($scope, GlobalParameters, $q, $http){
 
 	$scope.login_status = GlobalParameters.login_status;
 	var current_user = GlobalParameters.current_user;
+    
 
 	$scope.FavList = function(){
 		$scope.businesses = {};
 		var fav_list = current_user['favorite'];
 		if (fav_list == ""){
 			$scope.EmptyList = 1;
-			$scope.EmptyListText = "You haven't favorited any places yet.";
+			$scope.EmptyListText = msg_no_fav;
 		} else {
 			GetData(fav_list).then(function(result) {
 				$scope.businesses = result;
@@ -1826,7 +1891,7 @@ app.controller('FavCtrl', function($scope, GlobalParameters, $q, $http){
 		var wish_list = current_user['wish_list'];
 		if (wish_list == ""){
 			$scope.EmptyList = 1;
-			$scope.EmptyListText = "You haven't added any places to your wish list yet.";
+			$scope.EmptyListText = msg_no_wish;
 		} else {
 			GetData(wish_list).then(function(result) {
 				$scope.businesses = result;

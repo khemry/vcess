@@ -4,14 +4,14 @@
         <label class="tab-bar__item tab-bar--top-border__item">
             <input type="radio" name="top-tab-bar-b" checked="checked" ng-click="ShowRate = !ShowRate; RateList();">
             <button class="tab-bar__button tab-bar--top-border__button">
-                <span>Rates</span>
+                <span>{{ 'Rates' | translate }}</span>
             </button>
         </label>
 
         <label class="tab-bar__item tab-bar--top-border__item">
             <input type="radio" name="top-tab-bar-b" ng-click="ShowRate = !ShowRate; ReviewList();">
             <button class="tab-bar__button tab-bar--top-border__button">
-                <span>Reviews</span>
+                <span>{{ 'Reviews' | translate }}</span>
             </button>
         </label>
     </div>
@@ -27,10 +27,10 @@
   	
     <div class="margin10 text-center" ng-show="login_status">
         <div ng-show="ShowRate">
-            <p ng-show="EmptyList">You haven't rated any places yet.</p>
+            <p ng-show="EmptyList">{{ "You haven't rated any places yet." | translate }}</p>
         </div>
         <div ng-show="!ShowRate">
-            <p ng-show="EmptyList">You haven't reviewed any places yet.</p>
+            <p ng-show="EmptyList">{{ "You haven't reviewed any places yet." | translate }}</p>
         </div>
 
         <div class="margin10" ng-show="!EmptyList">
