@@ -1658,6 +1658,7 @@ app.controller('ProfileCtrl', function($scope, GlobalParameters, localStorageSer
 
 	$scope.show = function(dlg) {
 		//$scope.selected_photo = current_photo;
+    $scope.lang = $scope.current_lang;
 		if (!$scope.dialogs[dlg]) {
 		  	ons.createDialog(dlg, {parentScope: $scope}).then(function(dialog) {
 		    	$scope.dialogs[dlg] = dialog;
