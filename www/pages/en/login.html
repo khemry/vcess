@@ -1,7 +1,7 @@
 <ons-page ng-controller="LoginCtrl" ng-init="forgot_pass=0">
     <ons-toolbar>
-        <div class="left"><ons-back-button>Back</ons-back-button></div>
-        <div class="center"><span>Login</span></div>
+        <div class="left"><ons-back-button></ons-back-button></div>
+        <div class="center"><span>{{ "Log In" | translate }}</span></div>
     </ons-toolbar>
 
     <div ng-init="showEmail= 0;" class="login-page">
@@ -10,12 +10,16 @@
         
         <!-- <fb:login-button show-faces="true" max-rows="1" size="large"></fb:login-button> -->
         <div ng-show="!showEmail">
-            <p style="text-align: left">Log in with:</p>
+            <p style="text-align: left">{{ "Log in with:" | translate }}</p>
             
-            <ons-button modifier="large" class="bg-color-facebook" ng-click="login_facebook();">Facebook</ons-button>
+            <ons-button modifier="large" class="bg-color-facebook" ng-click="login_facebook();">
+                Facebook
+            </ons-button>
             <!-- <ons-button modifier="large" class="bg-color-twitter margin-top-10" ng-click="alert('Coming soon!');">Twitter</ons-button>
             <ons-button modifier="large" class="bg-color-line margin-top-10" ng-click="alert('Coming soon!');">Line</ons-button> -->
-            <ons-button modifier="outline" class="email-button" ng-click="showEmail=!showEmail">Email</ons-button>
+            <ons-button modifier="outline" class="email-button" ng-click="showEmail=!showEmail">
+                {{ "Email" | translate }}
+            </ons-button>
 
         </div> 
 
@@ -23,14 +27,18 @@
             <div ng-show="!forgot_pass">
                 <input type="email" class="text-input--underbar" placeholder="Email*" value="" ng-model="txt_email">
                 <input type="password" class="text-input--underbar" placeholder="Password*" value="" ng-model="txt_password">
-                <ons-button modifier="large" class="margin-10-0-10-0" ng-click="login(txt_email, txt_password,'');">Log in</ons-button>
-                <ons-button modifier="large--quiet" class="margin-10-0-10-0" ng-click="forgot_pass=!forgot_pass">Forgot password?</ons-button>
+                <ons-button modifier="large" class="margin-10-0-10-0" ng-click="login(txt_email, txt_password,'');">{{ "Log In" | translate }}</ons-button>
+                <ons-button modifier="large--quiet" class="margin-10-0-10-0" ng-click="forgot_pass=!forgot_pass">
+                    {{ "Forgot password?" | translate }}
+                </ons-button>
             </div>
 
             <div ng-show="forgot_pass">
-                <p style="text-align: left">Input your registered email:</p>
+                <p style="text-align: left">{{ "Input your registered email:" | translate }}</p>
                 <input type="email" class="text-input--underbar" placeholder="Email*" value="" ng-model="recover_email">
-                <ons-button modifier="large" class="margin-10-0-10-0" ng-click="SendEmail(recover_email);">Recover Password</ons-button>
+                <ons-button modifier="large" class="margin-10-0-10-0" ng-click="SendEmail(recover_email);">
+                    {{ "Recover Password" | translate }}
+                </ons-button>
             </div>
         </div>
 

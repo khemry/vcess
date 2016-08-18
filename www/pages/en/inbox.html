@@ -1,7 +1,7 @@
 <ons-page ng-controller="InboxCtrl">
     <ons-toolbar>
         <div class="left"><ons-back-button></ons-back-button></div>
-        <div class="center"><span>Inbox</spand></div>
+        <div class="center"><span>{{ "Inbox" | translate }}</spand></div>
         <!-- <div class="right">
             <ons-toolbar-button>
                 <ons-icon icon="fa-pencil-square-o" fixed-width="false" style="vertical-align: -4px;"></ons-icon>
@@ -9,9 +9,9 @@
         </div> -->
     </ons-toolbar>
 
-    <div class="margin10 text-center" ng-show="login_status">
+    <div class="margin10 text-center opacity05" ng-show="login_status">
       <br/>
-      Currently, you don't have any messages in <span class="color-vcess">Vcess</span> yet.
+      {{ "Currently, you don't have any messages yet." | translate }}
     </div>
 
     <div ng-show="!login_status" class="margin10 text-center">

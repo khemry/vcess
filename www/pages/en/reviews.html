@@ -1,11 +1,11 @@
 <ons-page ng-controller="ReviewsCtrl">
     <ons-toolbar>
-        <div class="left"><ons-back-button>Back</ons-back-button></div>
-        <div class="center"><span>Reviews</span></div>
+        <div class="left"><ons-back-button></ons-back-button></div>
+        <div class="center"><span>{{ "Reviews" | translate }}</span></div>
     </ons-toolbar>
 
     <div class="margin10">
-        <p>{{reviews.length}} Reviews</p>
+        <p>{{reviews.length}} {{ "Reviews" | translate }}</p>
         
         <div ng-repeat="review in reviews" class="font-size-12">
             <hr>

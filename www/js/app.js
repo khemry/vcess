@@ -29,7 +29,79 @@ app.config(['$translateProvider', function ($translateProvider) {
         'Rates' : 'រង្វាយតម្លៃ',
         'Reviews' : 'ការបញ្ចេញយោបល់',
         "You haven't rated any places yet." : "អ្នកមិនទាន់បានវាយតម្លៃលើកន្លែងណាមួយទេ",
-        "You haven't reviewed any places yet." : "អ្នកមិនទាន់បានបញ្ចេញយោបល់លើកន្លែងណាមួយទេ"
+        "You haven't reviewed any places yet." : "អ្នកមិនទាន់បានបញ្ចេញយោបល់លើកន្លែងណាមួយទេ",
+        'Upcoming' : 'អនាគត',
+        'Past' : 'អតីត',
+        "Currently, you don't have any meetup yet." : "អ្នកមិនទាន់មានការជួបជុំនៅឡើយទេ",
+        'Business List' : 'បញ្ជីមុខជំនួញ',
+        'My Businesses' : 'មុខជំនួញផ្ទាល់ខ្លួន',
+        "Others' Businesses" : "មុខជំនួយរបស់អ្នកដទៃ",
+        "Currently, you don't have any businesses yet." : "អ្នកមិនទាន់មានមុខជំនួយណាមួយនៅឡើយទេ",
+        'Check-in List' : 'បញ្ជីកន្លែងដែលបានទៅ',
+        'List' : 'បញ្ជី',
+        'Map' : 'ផែនទី',
+        "Currently, you don't have any check-in yet." : "អ្នកមិនទាន់បានទៅកន្លែងណាមួយនៅឡើយទេ", 
+        "Currently, you don't have any messages yet." : "ប្រអប់សំបុត្រទទេ",
+        'Friend List' : 'បញ្ជីមិត្តភ័ក្ត',
+        "Currently, you don't have any friends yet." : "អ្នកមិនទាន់មានមិត្តភ័ក្តនៅទីនេះទេ",
+        "Search" : "ស្វែងរក",
+        "Foods/Drinks" : "ម្ហូប/ភេសជ្ជៈ",
+        "Places" : "ទីកន្លែង",
+        "Sort by Rate" : "តម្រៀបតាមរង្វាយតម្លៃ",
+        "Sort by Distance" : "តម្រៀបតាមចម្ងាយ",
+        "Current Location" : "ទីកន្លែងបច្ចុប្បន្ន",
+        "Psar Thmey" : "ផ្សារថ្មី",
+        "Independence Monument" : "វិមានឯករាជ្យ",
+        "Olympic Stadium" : "ពហុកីឡាដ្ធានអូឡាំពិក",
+        "Sorry! No result is found. Please try again." : "មិនមានលទ្ធផល សូមព្យាយាមម្តងទៀត",
+        "Photos: " : "រូបថត: ",
+        " photos)" : " រូបថត)",
+        "Show More" : "បង្ហាញបន្ថែម",
+        "Welcome to Vcess!" : "សូមស្វាគមន៍មកកាន់ Vcess!",
+        "Most Popular Keywords" : "ពាក្យគន្លឹះពេញនិយម",
+        "Main Cities" : "ទីក្រុងសំខាន់ៗ",
+        "Phnom Penh" : "ភ្នំពេញ",
+        "Siem Reap" : "សៀមរាប",
+        "Preah Sihanouk" : "កំពង់សោម",
+        "Top Categories" : "ប្រភេទហាងសំខាន់ៗ",
+        "Khmer Food" : "ម្ហូបខ្មែរ",
+        "Japanese Food" : "ម្ហូបជប៉ុន",
+        "Chinese Food" : "ម្ហូបចិន",
+        "Coffee" : "កាហ្វេ",
+        "Bubble Tea" : "តែគុច",
+        "Soup" : "ស៊ុប",
+        "Khmer Restaurants": "ហាងម្ហូបខ្មែរ",
+        "Coffee Shops" : "ហាងកាហ្វេ",
+        "Chinese Restaurants" : "ហាងម្ហូបចិន",
+        "Green & Bubble Tea" : "តែបៃតង & តែគុច",
+        "BBQ Restaurants" : "ហាងសាច់អាំង",
+        "Bars & Pubs" : "បារ & ហាងស្រា",
+        "Fast Food" : "អាហារទាន់ចិត្ត",
+        "from here" : "ពីទីនេះ",
+        "Owner: " : "ម្ចាស់ហាង: ",
+        "Rate" : "វាយតម្លៃ",
+        "Review" : "បញ្ចេញមតិ",
+        "Favorite" : "ចូលចិត្ត",
+        "Submit" : "បញ្ចូន",
+        "Open Map" : "បើកផែនទី",
+        "Rate & Review" : "រង្វាយតម្លៃ & មតិអតិថិជន",
+        "Menu Photos" : "រូបថតបញ្ជីមុខម្ហូប",
+        "Food Photos" : "រូបថតម្ហូប",
+        "Store Photos" : "រូបតងហាង",
+        "Show All" : "បង្ហាញទាំងអស់",
+        "Show Less" : "បង្ហាញតិច",
+        " (No photos)" : " (គ្មានរូបថត)",
+        "Wish List: " : "ចង់ទៅ: ",
+        "views" : "បើកមើល",
+        "You are required to login in order to view this page." : "អ្នកត្រូវចូលគណនីដើម្បីមើលទំព័រនេះ",
+        "Log In" : "ចូលគណនី",
+        "Sign Up" : "ចុះឈ្មោះ",
+        "Log in with:" : "ចូលគណនីដោយប្រើ:",
+        "Email" : "អុីម៉េល",
+        "Forgot password?" : "ភ្លេចពាក្យសម្ងាត់?",
+        "Input your registered email:" : "បញ្ចូលអុីម៉េល:",
+        "Recover Password" : "សង្គ្រោះពាក្យសម្ងាត់",
+        "Sign up with:" : "ចុះឈ្មោះដោយប្រើ:"
     });   
     
     $translateProvider.uses('Khmer');
@@ -1131,6 +1203,19 @@ app.controller('InboxCtrl', function($scope, GlobalParameters){
 
 app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http, GlobalParameters, localStorageService){
 	console.log('BusinessHomeCtrl');
+  if (GlobalParameters.lang =="Khmer"){
+      var msg_dup_fav = "អ្នកបានបញ្ចូលកន្លែងនេះទៅក្នុងបញ្ជីកន្លែងចូលចិត្តរួចហើយ";
+      var msg_dup_wish = "អ្នកបានបញ្ចូលកន្លែងនេះទៅក្នុងបញ្ជីកន្លែងចង់ទៅរួចហើយ";
+      var msg_login_required = "ទាមទារការចូលគណនី។ តើអ្នកចង់ចូលគណនីឥលូវឬទេ?";
+      var choice1 = "ទេ";
+      var choice2 = "យល់ព្រម";
+  } else {
+      var msg_dup_fav = 'You have already favorited this place.';
+      var msg_dup_wish = 'You have already added this place to your wish list.';
+      var msg_login_required = 'Login required. Would you like to login now?';
+      var choice1 = "Cancel";
+      var choice2 = "OK";
+  }
 
 	$scope.dialogs = {};
     
@@ -1188,7 +1273,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 		if (GlobalParameters.login_status) {
 			//console.log(current_user['favorite']);
 			if (Find(current_user['favorite'], biz_id)){
-				$scope.alert('You have already favorited this place.');
+				$scope.alert(msg_dup_fav);
 			} else {
 				if (selected_business['favorite']==0)
 					selected_business['favorite']="";
@@ -1214,7 +1299,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 			}
 			
 		} else {
-			$scope.confirm('Login required. Would you like to login now?');
+			$scope.confirm(msg_login_required);
 		}
 	}
 
@@ -1223,7 +1308,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 		if (GlobalParameters.login_status) {
 			
 			if (Find(current_user['wish_list'], biz_id)){
-				$scope.alert('You have already added this place to your wish list.');
+				$scope.alert(msg_dup_wish);
 			} else {
 				if (selected_business['wish_list']==0)
 					selected_business['wish_list']="";
@@ -1250,7 +1335,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 			}
 			
 		} else {
-			$scope.confirm('Login required. Would you like to login now?');
+			$scope.confirm(msg_login_required);
 		}
 	}
 
@@ -1260,7 +1345,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 			if ($scope.ShowReview)
 				$scope.ShowReview = !$scope.ShowReview;
 		} else {
-			$scope.confirm('Login required. Would you like to login now?');
+			$scope.confirm(msg_login_required);
 		}
 	}
 
@@ -1270,7 +1355,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 			if ($scope.ShowRate)
 				$scope.ShowRate = !$scope.ShowRate;
 		} else {
-			$scope.confirm('Login required. Would you like to login now?');
+			$scope.confirm(msg_login_required);
 		}
 	}
 
@@ -1580,6 +1665,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 	    ons.notification.confirm({
 	      	message: msg,
 	      	title: 'Vcess',
+          buttonLabels: [choice1, choice2],
 	      	callback: function(idx) {
 	        switch (idx) {
 	          	case 0:
@@ -1685,6 +1771,7 @@ app.controller('LangCtrl', function($scope, GlobalParameters){
     console.log('LangCtrl');
     $scope.Save = function(selected_lang){
         GlobalParameters.SetLanguage(selected_lang);
+        localStorageService.set('lang', selected_lang);
         $translate.uses(selected_lang);
         $scope.myNavigator.resetToPage('pages/en/profile.html');
     }
@@ -1751,9 +1838,12 @@ app.controller('FriendListCtrl', function($scope, GlobalParameters){
 
 });
 
-app.controller('IndexCtrl', function($scope, GlobalParameters, localStorageService, $http){
+app.controller('IndexCtrl', function($scope, GlobalParameters, localStorageService, $http, $translate){
 	//GlobalParameters.SetIsOwner(0);
 	var login_user = localStorageService.get('login_user');
+  var lang = localStorageService.get('lang');
+  $translate.uses(lang);
+
 	if (login_user != null){
 		var profile_url = login_user['profile'];
 		var user_id = login_user['user_id'];
@@ -1815,29 +1905,29 @@ app.controller('IndexCtrl', function($scope, GlobalParameters, localStorageServi
 	}
 });
 
-app.controller('LanguagesCtrl', function($scope, GlobalParameters){
-	console.log("LanguagesCtrl");
+// app.controller('LanguagesCtrl', function($scope, GlobalParameters){
+// 	console.log("LanguagesCtrl");
 
-	var cur_lang = GlobalParameters.lang;
-	if (cur_lang == "en"){
-		document.getElementById("english").checked = true;
-	} else if (cur_lang == "kh") {
-		document.getElementById("khmer").checked = true;
-	}
+// 	var cur_lang = GlobalParameters.lang;
+// 	if (cur_lang == "en"){
+// 		document.getElementById("english").checked = true;
+// 	} else if (cur_lang == "kh") {
+// 		document.getElementById("khmer").checked = true;
+// 	}
 	
-	$scope.ChangeLang = function (lang){
-		GlobalParameters.setLang(lang);
-		cur_lang = lang;
-	}
+// 	$scope.ChangeLang = function (lang){
+// 		GlobalParameters.setLang(lang);
+// 		cur_lang = lang;
+// 	}
 
-	$scope.Save = function(){
-		if (cur_lang == "en"){
-			$scope.myNavigator.resetToPage('pages/en/normal_index.html');
-		} else if (cur_lang == "kh") {
-			$scope.myNavigator.resetToPage('pages/kh/normal_index.html');
-		}
-	}
-});
+// 	$scope.Save = function(){
+// 		if (cur_lang == "en"){
+// 			$scope.myNavigator.resetToPage('pages/en/normal_index.html');
+// 		} else if (cur_lang == "kh") {
+// 			$scope.myNavigator.resetToPage('pages/kh/normal_index.html');
+// 		}
+// 	}
+// });
 
 // app.controller('SettingsCtrl', function($scope, GlobalParameters){
 // 	$scope.SetShopListHome = function(){

@@ -1,18 +1,17 @@
 <ons-page ng-controller="AuthCtrl">
     <ons-toolbar>
-        <div class="left"><ons-back-button>Back</ons-back-button></div>
-        <div class="center"><span>Authentication</span></div>
+        <div class="left"><ons-back-button></ons-back-button></div>
+        <!-- <div class="center"><span>Authentication</span></div> -->
     </ons-toolbar>
 
     <div class="margin10 text-center">
         <img src="images/logos/Final_logo_green.png" class="logo-frame"/>
-        <h4>Welcome to Vcess App!</h4>
-        <p>You are required to login in order to view this page.</p>
+        <h4>{{ "Welcome to Vcess!" | translate }}</h3>
         <ons-button modifier="large" ng-click="myNavigator.pushPage('pages/en/login.html', {origin: origin, selected_business: selected_business});">
-            Log In
+            {{ "Log In" | translate }}
         </ons-button>
         <ons-button class="button--large--quiet" ng-click="myNavigator.pushPage('pages/en/signup.html', {origin: origin, selected_business: selected_business});">
-            Sign Up
+            {{ "Sign Up" | translate }}
         </ons-button>
     </div>
 

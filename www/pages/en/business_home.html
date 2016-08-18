@@ -19,13 +19,13 @@
 
             <ons-col class="font-size-12">
               <ons-row>
-                <p>{{business['distance']}} km from here</p>
+                <p>{{business['distance']}} km {{ "from here" | translate }}</p>
               </ons-row>
               <ons-row>
-                Views: {{business['views']}} | Favorite: {{business['favorite_num']}} | Wish List: {{business['wish_list_num']}}
+                {{ "Views" | translate }}: {{business['views']}} | {{ "Favorite" | translate }}: {{business['favorite_num']}} | {{ "Wish List: " | translate }}{{business['wish_list_num']}}
               </ons-row>
               <ons-row>
-                <p>Owner: {{business['owner']}}</p>
+                <p>{{ "Owner: " | translate }}{{business['owner']}}</p>
               </ons-row>
               <ons-row>
                 <div class="rating">
@@ -46,17 +46,17 @@
 
             <ons-col class="action-col" ng-click="ShowRateSection()">
               <div class="action-icon"><ons-icon icon="ion-ios-star-half" ng-style="rate_color"></ons-icon></div>
-              <div class="action-label">Rate</div>
+              <div class="action-label">{{ "Rate" | translate }}</div>
             </ons-col>
 
             <ons-col class="action-col" ng-click="ShowReviewSection()">
               <div class="action-icon"><ons-icon icon="ion-compose" ng-style="review_color"></ons-icon></div>
-              <div class="action-label">Review</div>
+              <div class="action-label">{{ "Review" | translate }}</div>
             </ons-col>
 
             <ons-col class="action-col" ng-click="Favorite(business['id'], business['favorite'])">
               <div class="action-icon"><ons-icon icon="ion-heart" ng-style="fav_color"></ons-icon></div>
-              <div class="action-label">Favorite</div>
+              <div class="action-label">{{ "Favorite" | translate }}</div>
             </ons-col>
 
             <!-- <ons-col class="action-col">
@@ -73,7 +73,7 @@
 
             <ons-col class="action-col" ng-click="WishList(business['id'], business['wish_list'])">
               <div class="action-icon"><ons-icon icon="ion-bookmark" ng-style="wish_color"></ons-icon></div>
-              <div class="action-label">Wish List</div>
+              <div class="action-label">{{ "Wish List" | translate }}</div>
             </ons-col>
 
           </ons-row>
@@ -86,17 +86,17 @@
             <ons-icon icon="{{RateIcon['4']}}" fixed-width="false" ng-click="RateStar(4)"></ons-icon>
             <ons-icon icon="{{RateIcon['5']}}" fixed-width="false" ng-click="RateStar(5)"></ons-icon>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <ons-button ng-click="Rate(business['id'], current_star)" class="font-size-14"><span>Rate</span></ons-button>
+            <ons-button ng-click="Rate(business['id'], current_star)" class="font-size-14"><span>{{ "Rate" | translate }}</span></ons-button>
         </div>
 
         <div style="padding-top: 10px; padding-bottom: 10px" ng-show="ShowReview" class="color-vcess font-size-14">
             <ons-row>
               <ons-col width="70%">
-                <textarea class="textarea" style="width: 100%" rows="3" placeholder="Textarea" ng-model="review_text"></textarea>
+                <textarea class="textarea" style="width: 100%" rows="3" placeholder="Type here..." ng-model="review_text"></textarea>
               </ons-col>
               <ons-col style="float: right">
                 <br>
-                <ons-button ng-click="Review(business['id'], review_text)"><span>Submit</span></ons-button>
+                <ons-button ng-click="Review(business['id'], review_text)"><span>{{ "Submit" | translate }}</span></ons-button>
               </ons-col>
             </ons-row>
             
@@ -109,7 +109,7 @@
           <ons-list-item modifier="chevron" ng-click="GetDirection(business['coordinate'])">
           <div>
               <ons-icon class="color-vcess" icon="fa-map-marker"></ons-icon>
-              <a>Get Direction</a>
+              <a>{{ "Open Map" | translate }}</a>
             </div>
           </ons-list-item>
           <ons-list-item>
@@ -137,7 +137,7 @@
           <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/reviews.html', {reviews: all_reviews});">
             <div>
               <ons-icon icon="ion-chatboxes" class="color-vcess"></ons-icon>
-              Rate & Review ({{all_reviews.length}})
+              {{ "Rate & Review" | translate }} ({{all_reviews.length}})
             </div>
           </ons-list-item>
 
@@ -165,9 +165,9 @@
           <ons-list-item ng-init="menu_limit=6" id="menu" class="text-center" style="line-height: 0px;">
               <div class="text-left" style="line-height: 44px;">
                 <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
-                Menu Photos 
-                <span ng-hide="menu_images.length"> (No photos)</span>
-                <span ng-show="menu_images.length"> ({{menu_images.length}} photos)</span>  
+                {{ "Menu Photos" | translate }}
+                <span ng-hide="menu_images.length">{{ " (No photos)" | translate }}</span>
+                <span ng-show="menu_images.length"> ({{menu_images.length}} {{ " photos)" | translate }}</span>  
               </div>
               
               <div ng-show="menu_images.length">
@@ -176,8 +176,12 @@
                 <!-- </div> -->
               </div>  
               <ons-button modifier="quiet" class="font-size-12" ng-show="menu_images.length>6">
-                  <span ng-show="menu_limit==6" ng-click="menu_limit = menu_images">Show All</span>
-                  <span ng-show="menu_limit == menu_images" ng-click="menu_limit=6"><a href="#menu" class="hidden_link">Show Less</a></span>
+                  <span ng-show="menu_limit==6" ng-click="menu_limit = menu_images">
+                    {{ "Show All" | translate }}
+                  </span>
+                  <span ng-show="menu_limit == menu_images" ng-click="menu_limit=6"><a href="#menu" class="hidden_link">
+                    {{ "Show Less" | translate }}</a>
+                  </span>
               </ons-button>
                 
               
@@ -186,9 +190,9 @@
           <ons-list-item ng-init="store_limit=6" id="store" class="text-center" style="line-height: 0px;">
               <div class="text-left" style="line-height: 44px;">
                 <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
-                Store Photos 
-                <span ng-hide="store_images.length"> (No photos)</span>
-                <span ng-show="store_images.length"> ({{store_images.length}} photos)</span>
+                {{ "Store Photos" | translate }}
+                <span ng-hide="store_images.length">{{ " (No photos)" | translate }}</span>
+                <span ng-show="store_images.length"> ({{store_images.length}} {{ " photos)" | translate }}</span>
               </div>
               <div ng-show="store_images.length">
                   <img src="{{image['path']}}" class="show_photos" ng-repeat="image in store_images | limitTo:store_limit track by $index" ng-click="show('show_photo.html', store_images, $index)">
@@ -196,25 +200,33 @@
               </div>
 
               <ons-button modifier="quiet" class="font-size-12" ng-show="store_images.length>6">
-                  <span ng-show="store_limit==6" ng-click="store_limit = store_images">Show All</span>
-                  <span ng-show="store_limit == store_images" ng-click="store_limit=6"><a href="#store" class="hidden_link">Show Less</a></span>
+                  <span ng-show="store_limit==6" ng-click="store_limit = store_images">
+                    {{ "Show All" | translate }}
+                  </span>
+                  <span ng-show="store_limit == store_images" ng-click="store_limit=6"><a href="#store" class="hidden_link">
+                    {{ "Show Less" | translate }}</a>
+                  </span>
               </ons-button>
             </ons-list-item>
       
             <ons-list-item ng-init="food_limit=6" id="food" class="text-center" style="line-height: 0px;">
                 <div class="text-left" style="line-height: 44px;">
                   <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
-                  Food Photos 
-                  <span ng-hide="food_images.length"> (No photos)</span>
-                  <span ng-show="food_images.length"> ({{food_images.length}} photos)</span>
+                  {{ "Food Photos" | translate }}
+                  <span ng-hide="food_images.length">{{ " (No photos)" | translate }}</span>
+                  <span ng-show="food_images.length"> ({{food_images.length}} {{ " photos)" | translate }}</span>
                 </div>
                 <div ng-show="food_images.length">
                     <img src="{{image['path']}}" class="show_photos" ng-repeat="image in food_images | limitTo:food_limit track by $index" ng-click="show('show_photo.html', food_images, $index)">
                     <!-- <p class="photo_title">{{image['name_en']}}</p> -->
                 </div>  
                 <ons-button modifier="quiet" class="font-size-12" ng-show="food_images.length>6">
-                    <span ng-show="food_limit==6" ng-click="food_limit = food_images">Show All</span>
-                    <span ng-show="food_limit == food_images" ng-click="food_limit=6"><a href="#food" class="hidden_link">Show Less</a></span>
+                    <span ng-show="food_limit==6" ng-click="food_limit = food_images">
+                      {{ "Show All" | translate }}
+                    </span>
+                    <span ng-show="food_limit == food_images" ng-click="food_limit=6"><a href="#food" class="hidden_link">
+                      {{ "Show Less" | translate }}</a>
+                    </span>
                 </ons-button>
                 
             </ons-list-item>

@@ -1,5 +1,10 @@
 <ons-page ng-controller="RateCtrl" ng-init="ShowRate=1">
 <ons-navigator var="myNavigator" animation="slide">
+    <ons-toolbar>
+        <div class="left"><ons-back-button></ons-back-button></div>
+        <div class="center"><span>Vcess</span></div>
+    </ons-toolbar>
+    
   	<div class="tab-bar tab-bar--top tab-bar--top-border">
         <label class="tab-bar__item tab-bar--top-border__item">
             <input type="radio" name="top-tab-bar-b" checked="checked" ng-click="ShowRate = !ShowRate; RateList();">
@@ -19,18 +24,18 @@
   	
   	<div ng-show="!login_status" class="margin10 text-center">
         <img src="images/logos/Final_logo_green.png" class="logo-frame"/>
-        <h4>Welcome to Vcess App!</h3>
-        <p>You are required to login in order to view this page.</p>
-        <ons-button modifier="large" ng-click="myNavigator.pushPage('pages/en/login.html', {origin: 'pages/en/rate.html'});">Log In</ons-button>
-	    <ons-button class="button--large--quiet" ng-click="myNavigator.pushPage('pages/en/signup.html', {origin: 'pages/en/rate.html'});">Sign Up</ons-button>
+        <h4>{{ "Welcome to Vcess!" | translate }}</h3>
+        <p>{{ "You are required to login in order to view this page." | translate}}</p>
+        <ons-button modifier="large" ng-click="myNavigator.pushPage('pages/en/login.html', {origin: 'pages/en/profile.html'});">{{ "Log In" | translate }}</ons-button>
+        <ons-button class="button--large--quiet" ng-click="myNavigator.pushPage('pages/en/signup.html', {origin: 'pages/en/profile.html'});">{{ "Sign Up" | translate }}</ons-button>
   	</div>
   	
     <div class="margin10 text-center" ng-show="login_status">
         <div ng-show="ShowRate">
-            <p ng-show="EmptyList">{{ "You haven't rated any places yet." | translate }}</p>
+            <p ng-show="EmptyList" class="opacity05">{{ "You haven't rated any places yet." | translate }}</p>
         </div>
         <div ng-show="!ShowRate">
-            <p ng-show="EmptyList">{{ "You haven't reviewed any places yet." | translate }}</p>
+            <p ng-show="EmptyList" class="opacity05">{{ "You haven't reviewed any places yet." | translate }}</p>
         </div>
 
         <div class="margin10" ng-show="!EmptyList">
@@ -48,7 +53,9 @@
                                 <p class="margin-0 line-height-150 font-size-12 margin-right-20">{{business.category}}</p>
                             </ons-row> -->
                             <ons-row>
-                                <p class="margin-0 line-height-150 font-size-12">Photos: {{business.photos}}</p>
+                                <p class="margin-0 line-height-150 font-size-12">
+                                    {{ "Photos: " | translate }}{{business.photos}}
+                                </p>
                             </ons-row>
                             <ons-row class="font-size-12">
                                 <span style="padding-right:10px; margin-top:-8px">Your Rate: </span>

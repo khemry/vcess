@@ -1,7 +1,7 @@
 <ons-page ng-controller="FriendListCtrl">
     <ons-toolbar>
         <div class="left"><ons-back-button></ons-back-button></div>
-        <div class="center"><span>Friend List</span></div>
+        <div class="center"><span>{{ "Friend List" | translate }}</span></div>
         <!-- <div class="right">
             <ons-toolbar-button ng-click="alert('Coming soon in our next update!')">
                 <ons-icon icon="fa-user-plus" style="opacity: 0.8"></ons-icon>
@@ -19,9 +19,9 @@
               </div>
             </div> -->
 
-            <div class="margin10 text-center">
+            <div class="margin10 text-center opacity05">
               <br/>
-              <p>Currently, you don't have any friends in <span class="color-vcess">Vcess</span> yet.</p>
+              <p>{{ "Currently, you don't have any friends yet." | translate }}</p>
               <!-- Start creating one now and grow your business. -->
             </div>
                 

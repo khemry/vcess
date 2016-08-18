@@ -1,7 +1,7 @@
 <ons-page>
     <ons-toolbar>
         <div class="left"><ons-back-button></ons-back-button></div>
-        <div class="center"><span>Meetups</span></div>
+        <div class="center"><span>{{ 'Meetup' | translate }}</span></div>
         <!-- <div class="right">
             <ons-toolbar-button ng-click="">
                 <ons-icon icon="fa-plus" fixed-width="false" style="vertical-align: -4px;"></ons-icon>
@@ -14,22 +14,22 @@
             <label class="tab-bar__item tab-bar--top-border__item">
                 <input type="radio" name="top-tab-bar-b" checked="checked">
                 <button class="tab-bar__button tab-bar--top-border__button">
-                    <span>Upcoming</span>
+                    <span>{{ 'Upcoming' | translate }}</span>
                 </button>
             </label>
 
             <label class="tab-bar__item tab-bar--top-border__item">
                 <input type="radio" name="top-tab-bar-b">
                 <button class="tab-bar__button tab-bar--top-border__button">
-                    <span>Past</span>
+                    <span>{{ 'Past' | translate }}</span>
                 </button>
             </label>
         </div>
     </div>
 
-    <div class="margin10 text-center" ng-show="login_status">
+    <div class="margin10 text-center opacity05" ng-show="login_status">
               <br/>
-              <p>Currently, you don't have any meetups in <span class="color-vcess">Vcess</span> yet.</p>
+              <p>{{ "Currently, you don't have any meetup yet." | translate }}</p>
               <!-- Start creating one now and grow your business. -->
     </div>
 

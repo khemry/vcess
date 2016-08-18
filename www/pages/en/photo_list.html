@@ -2,7 +2,7 @@
 
     <ons-toolbar>
         <div class="left"><ons-back-button></ons-back-button></div>
-        <div class="center"><span>{{selected_city}}</span></div>
+        <div class="center"><span>{{selected_city | translate }}</span></div>
     </ons-toolbar>
 
 
@@ -27,7 +27,7 @@
                             <p class="margin-0 line-height-150 font-size-12 margin-right-20">{{business['category']}}</p>
                         </ons-row>
                         <ons-row>
-                            <p class="margin-0 line-height-150 font-size-12">Photos: {{business['photos']}}</p>
+                            <p class="margin-0 line-height-150 font-size-12">{{ "Photos: " | translate }}{{business['photos']}}</p>
                         </ons-row>
                         <ons-row>
                             <div class="rating margin-0 line-height-150 font-size-12">
@@ -47,7 +47,9 @@
         </ons-list>
 
         <ons-button modifier="quiet" class="font-size-12">
-            <span ng-show="limit<businesses.length" ng-click="limit = limit + 20">Show More</span>
+            <span ng-show="limit<businesses.length" ng-click="limit = limit + 20">
+                {{ "Show More" | translate }}
+            </span>
         </ons-button>
     </div>
   

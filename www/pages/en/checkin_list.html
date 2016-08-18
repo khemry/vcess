@@ -1,7 +1,7 @@
 
 <ons-toolbar>
     <div class="left"><ons-back-button></ons-back-button></div>
-    <div class="center"><span>Check-in List</span></div>
+    <div class="center"><span>{{ "Check-in List" | translate }}</span></div>
 </ons-toolbar>
 
 <div style="text-align: center" ng-init="checked=1">
@@ -10,7 +10,7 @@
     <label class="tab-bar__item tab-bar--top-border__item" ng-click="checked=1">
       <input type="radio" name="top-tab-bar-b" checked="checked">
       <button class="tab-bar__button tab-bar--top-border__button">
-        <span>List</span>
+        <span>{{ "List" | translate }}</span>
       </button>
       
     </label>
@@ -18,14 +18,14 @@
     <label class="tab-bar__item tab-bar--top-border__item" ng-click="checked=0">
       <input type="radio" name="top-tab-bar-b">
       <button class="tab-bar__button tab-bar--top-border__button">
-        <span ng-click="showList = !showList">Map</span>
+        <span ng-click="showList = !showList">{{ "Map" | translate }}</span>
       </button>
     </label>
   </div>
 
-  <div class="margin10 text-center">
+  <div class="margin10 text-center opacity05">
       <br/>
-      Currently, you don't have any check-in in <span class="color-vcess">Vcess</span> yet.
+      {{ "Currently, you don't have any check-in yet." | translate }}
   </div>
 
   <!-- <ons-list modifier="inset" class="settings-list" ng-show="checked">

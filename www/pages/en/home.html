@@ -6,29 +6,29 @@
         	<!-- <img src="images/search.png" class="biz-image margin10"> -->
         </div>
         <div class="center">
-        	<span>Welcome to Vcess!</span>
+        	<span>{{ "Welcome to Vcess!" | translate }}</span>
         	
         </div>
     </ons-toolbar>
 
 	<div ng-show="search_home" style="width: 100%; height: 100%" class="text-center font-size-14">
 		<div>
-			<p class="top-keyword">Most Popular Keywords</p>
-				<ons-button ng-repeat="keyword in top_keywords" class="tag" ng-click="myNavigator.pushPage('pages/en/search.html', {keyword: keyword})";><span>{{keyword}}</span></ons-button>      
+			<p class="top-keyword">{{ "Most Popular Keywords" | translate }}</p>
+				<ons-button ng-repeat="keyword in top_keywords" class="tag" ng-click="myNavigator.pushPage('pages/en/search.html', {keyword: keyword})";><span>{{keyword | translate}}</span></ons-button>      
 		</div>
 		<div>
 			<hr>
-			<p class="top-keyword">Main Cities</p>
+			<p class="top-keyword">{{ "Main Cities" | translate }}</p>
 		
-				<ons-button class="tag" ng-click="myNavigator.pushPage('pages/en/photo_list.html', {city: 'Phnom Penh'})"><span>Phnom Penh</span></ons-button>
-				<ons-button class="tag" ng-click="myNavigator.pushPage('pages/en/photo_list.html', {city: 'Siem Reap'})"><span>Siem Reap</span></ons-button>
-				<ons-button class="tag" ng-click="myNavigator.pushPage('pages/en/photo_list.html', {city: 'Preah Sihanouk'})"><span>Preah Sihanouk</span></ons-button>      
+				<ons-button class="tag" ng-click="myNavigator.pushPage('pages/en/photo_list.html', {city: 'Phnom Penh'})"><span>{{ "Phnom Penh" | translate }}</span></ons-button>
+				<ons-button class="tag" ng-click="myNavigator.pushPage('pages/en/photo_list.html', {city: 'Siem Reap'})"><span>{{ "Siem Reap" | translate }}</span></ons-button>
+				<ons-button class="tag" ng-click="myNavigator.pushPage('pages/en/photo_list.html', {city: 'Preah Sihanouk'})"><span>{{ "Preah Sihanouk" | translate }}</span></ons-button>      
 		</div>
 		
 		<hr>
-		<p class="top-keyword">Top Categories</p>
+		<p class="top-keyword">{{ "Top Categories" | translate }}</p>
 		<div ng-repeat="category in top_categories" style="text-align: center" class="{{category['key']}}" ng-click="myNavigator.pushPage('pages/en/category_list.html', {selected_category: category['name'], selected_category_key: category['key']})";>
-			<h4 style="color: white" class="text-middle">{{category['name']}}</h4>
+			<h4 style="color: white" class="text-middle">{{category['name'] | translate}}</h4>
 			
 		</div>
 	</div>

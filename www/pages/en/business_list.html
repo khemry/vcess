@@ -2,7 +2,7 @@
 <ons-page>
   <ons-toolbar>
       <div class="left"><ons-back-button></ons-back-button></div>
-      <div class="center"><span>Business List</span></div>
+      <div class="center"><span>{{ 'Business List' | translate }}</span></div>
       <!-- <div class="right">
         <ons-toolbar-button ng-click="alert('Coming soon in our next update!')">
           <ons-icon icon="fa-plus" fixed-width="false" style="vertical-align: -4px;"></ons-icon>
@@ -16,7 +16,7 @@
       <label class="tab-bar__item tab-bar--top-border__item" ng-click="checked=1">
         <input type="radio" name="top-tab-bar-b" checked="checked">
         <button class="tab-bar__button tab-bar--top-border__button">
-          <span>My Business</span>
+          <span>{{ 'My Businesses' | translate }}</span>
         </button>
         
       </label>
@@ -24,14 +24,14 @@
       <label class="tab-bar__item tab-bar--top-border__item" ng-click="checked=0">
         <input type="radio" name="top-tab-bar-b">
         <button class="tab-bar__button tab-bar--top-border__button">
-          <span>Others' Business</span>
+          <span>{{ "Others' Businesses" | translate }}</span>
         </button>
       </label>
     </div>
 
     <div class="margin10 text-center">
       <br/>
-      <p>Currently, you don't own any business in <span class="color-vcess">Vcess</span>.</p>
+      <p class="opacity05">{{ "Currently, you don't have any businesses yet." | translate }}</p>
       <!-- Start creating one now and grow your business. -->
     </div>
 
