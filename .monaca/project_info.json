@@ -23,6 +23,7 @@
         "cordova-plugin-contacts@2.1.0",
         "cordova-plugin-splashscreen@3.2.2",
         "cordova-plugin-device@1.1.2",
-        "cordova-plugin-inappbrowser@1.4.0"
+        "cordova-plugin-inappbrowser@1.4.0",
+        "cordova-custom-config"
     ]
 }
