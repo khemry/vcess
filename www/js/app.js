@@ -1766,7 +1766,7 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
 	   	
 // 	}
 // });
-app.controller('LangCtrl', function($scope, GlobalParameters){
+app.controller('LangCtrl', function($scope, GlobalParameters, localStorageService, $translate){
 	//$scope.lang = GlobalParameters.lang;
     console.log('LangCtrl');
     $scope.Save = function(selected_lang){
