@@ -500,76 +500,33 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 
 	$scope.CurrentLocation = function(){
         $scope.Clear();
-     //    alert('current location');
-    	// $scope.Clear();
-     //    cordova.plugins.diagnostic.isLocationEnabled(function(enabled){
-     //        console.log("Location is " + (enabled ? "enabled" : "disabled"));
-     //        if(!enabled){
-     //            navigator.notification.confirm("Your GPS is switched OFF - would you like to open the Settings page to turn it ON?", 
-     //                function(result){
-     //                    if(result == 1){ // Yes
-     //                        cordova.plugins.diagnostic.switchToLocationSettings();
-     //                    }
-     //                }, "Open Location Settings?");
-     //        }else{
-     //            alert('success!');
-     //            getCurrentLocation().then(function(result) {
-     //                $scope.myForm.location_text = result['addr'];
-     //        		$scope.search($scope.search_text, $scope.myForm.location_text, $scope.things);
-     //        		
-     //        	}, function(error){
-     //        		console.log(error);
-     //        		$scope.load_complete = 1;
-     //        	});
-     //            // if(positionWatchId){
-     //            //     clearWatch();
-     //            // }
-     //            // addWatch();
-     //        }
-     //    }, function(error){
-     //        console.error("The following error occurred: "+error);
-     //    });
-        // cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
-        //     switch(status){
-        //         case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
-        //             alert("Permission not requested");
-        //             break;
-        //         case cordova.plugins.diagnostic.permissionStatus.GRANTED:
-        //             alert("Permission granted");
-        //          //    getCurrentLocation().then(function(result) {
-        //          //    	$scope.myForm.location_text = result['addr'];
-        //         	// 	$scope.search($scope.search_text, $scope.myForm.location_text, $scope.things);
-        //         	// 	
-        //         	// }, function(error){
-        //         	// 	console.log(error);
-        //         	// 	$scope.load_complete = 1;
-        //         	// });
-        //             break;
-        //         case cordova.plugins.diagnostic.permissionStatus.DENIED:
-        //             alert("Permission denied");
-        //             break;
-        //         case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
-        //             alert("Permission permanently denied");
-        //             break;
-        //     }
-        // }, function(error){
-        //     console.error(error);
-        // });
+        getCurrentLocation().then(function(result) {
+            $scope.myForm.location_text = result['addr'];
+            $scope.search($scope.search_text, $scope.myForm.location_text, $scope.things);
+    		
+    	}, function(error){
+    		console.log(error);
+    	});
     	
     }
 
 	getCurrentLocation = function(){	
-        //alert('getCurrentLocation');
+        alert('getCurrentLocation');
         var deferred = $q.defer();
 		
 		$timeout(function(){
+            alert('inside time out!');
+            alert(navigator);
+            alert(navigator.geolocation);
 	    	navigator.geolocation.getCurrentPosition(function(position) {
+            //navigator.geolocation.getCurrentPosition
             //navigator.geolocation.watchPosition(function(position) {
-                //alert(position);
+                alert(position);
 	    		var latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
 	    		//var latlng = {lat: 11.5545345, lng: 104.8992934};
 	    		var geocoder = new google.maps.Geocoder();
 	    		geocoder.geocode({'location': latlng}, function(results, status) {
+                    alert(results);
 			          if (status === google.maps.GeocoderStatus.OK) {
 			            if (results[1]) {
 			            	current_location['coordinate'] = latlng;
@@ -577,7 +534,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
                             //alert(current_location['addr']);
 			            	deferred.resolve(current_location);
 			            } else {
-			              	console.log('No results found');
+			              	alert('No results found');
 			              	deferred.reject('No results found');
 			            }
 			          } else {
@@ -663,18 +620,22 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
     	
     }
     
-    // function requestLocation(){
-    //     alert('requestLocation');
-    //     getCurrentLocation().then(function(result) {
-    //         $scope.myForm.location_text = result['addr'];
-    //         $scope.load_complete = 1;
-    //     	//$scope.search($scope.search_text, $scope.myForm.location_text, $scope.things);
-    // 		
-    // 	}, function(error){
-    // 		console.log(error);
-    // 		$scope.load_complete = 1;
-    // 	});
-    // }
+    function requestLocation(){
+        alert('requestLocation');
+        getCurrentLocation().then(function(result) {
+            $scope.myForm.location_text = result['addr'];
+            $scope.load_complete = 1;
+            if (selected_keyword != undefined){
+                $scope.search_text = selected_keyword;
+            }
+        	//$scope.search($scope.search_text, $scope.myForm.location_text, $scope.things);
+    		
+    	}, function(error){
+    		alert(error);
+    		$scope.load_complete = 1;
+    	});
+       // $scope.load_complete = 1;
+    }
 
 	OnLoad = function(){
 		$scope.myForm = {};
@@ -682,42 +643,47 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 		var selected_keyword = page.options.keyword;
 
 		$scope.businesses = {};
-       
+        $scope.load_complete = 1;
+        requestLocation();
         
-        // cordova.plugins.diagnostic.getLocationAuthorizationStatus(function(status){
-        //      if(status == "GRANTED"){
-        //          requestLocation();
-        //          
-        //      }else{
-        //          cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
-        //                  if(status == "GRANTED"){
-        //                      requestLocation();
-        //                      
-        //                  }else{
-        //                      // Handle other cases
-        //                  }
-        //              }, function(error){
-        //                  console.error(error);
-        //          });
-        //      }
-        // }, onError);
-
-         // $scope.CurrentLocation();
         
- 		getCurrentLocation().then(function(result) {
-     		$scope.myForm.location_text = result['addr'];
-     		if (selected_keyword != undefined){
- 				//console.log(selected_keyword);
- 				$scope.search_text = selected_keyword;
- 				$scope.search($scope.search_text, $scope.myForm.location_text, 1);
- 
- 			} else {
- 				$scope.load_complete = 1;	
- 			}
-     	}, function(error){
-     		console.log(error);
-     		$scope.load_complete = 1;
-     	});
+        // cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
+        //     switch(status){
+        //         case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
+        //             alert("Permission not requested");
+        //             break;
+        //         case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+        //             alert("Permission granted");
+        //             requestLocation();
+        //             break;
+        //         case cordova.plugins.diagnostic.permissionStatus.DENIED:
+        //             alert("Permission denied");
+        //             break;
+        //         case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
+        //             alert("Permission permanently denied");
+        //             break;
+        //     }
+        //     $scope.load_complete = 1;
+        // }, function(error){
+        //     alert(error);
+        // });
+        
+        
+        
+ // 		getCurrentLocation().then(function(result) {
+ //     		$scope.myForm.location_text = result['addr'];
+ //     		if (selected_keyword != undefined){
+ // 				//console.log(selected_keyword);
+ // 				$scope.search_text = selected_keyword;
+ // 				$scope.search($scope.search_text, $scope.myForm.location_text, 1);
+ // 
+ // 			} else {
+ // 				$scope.load_complete = 1;	
+ // 			}
+ //     	}, function(error){
+ //     		console.log(error);
+ //     		$scope.load_complete = 1;
+ //     	});
 	}
 
 	var selected_keyword = myNavigator.getCurrentPage().options.keyword;	
@@ -1841,8 +1807,13 @@ app.controller('FriendListCtrl', function($scope, GlobalParameters){
 app.controller('IndexCtrl', function($scope, GlobalParameters, localStorageService, $http, $translate){
 	//GlobalParameters.SetIsOwner(0);
 	var login_user = localStorageService.get('login_user');
-  var lang = localStorageService.get('lang');
-  $translate.uses(lang);
+    var lang = localStorageService.get('lang');
+    if (lang == null){
+        lang = GlobalParameters.lang;
+    } else {
+        GlobalParameters.SetLanguage(lang);    
+    }
+    $translate.uses(lang);
 
 	if (login_user != null){
 		var profile_url = login_user['profile'];

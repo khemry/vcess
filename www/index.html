@@ -36,7 +36,55 @@
     <script type="text/javascript" charset="utf-8">
         
         document.addEventListener("deviceready", function() {
-            console.log('Ready');
+            //alert('Ready');
+            cordova.plugins.diagnostic.isLocationAvailable(function(available){
+                alert("Location is " + (available ? "available" : "not available"));
+                cordova.plugins.diagnostic.isLocationAuthorized(function(enabled){
+                    alert("Location authorization is " + (enabled ? "enabled" : "disabled"));
+                    cordova.plugins.diagnostic.getLocationAuthorizationStatus(function(status){
+                        switch(status){
+                            case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
+                                alert("Permission not requested");
+                                break;
+                            case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+                                alert("Permission granted");
+                                break;
+                            case cordova.plugins.diagnostic.permissionStatus.DENIED:
+                                alert("Permission denied");
+                                break;
+                            case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
+                                alert("Permission permanently denied");
+                                break;
+                        }
+                        
+                        cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
+                            switch(status){
+                                case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
+                                    alert("Permission not requested");
+                                    break;
+                                case cordova.plugins.diagnostic.permissionStatus.GRANTED:
+                                    alert("Permission granted");
+                                    break;
+                                case cordova.plugins.diagnostic.permissionStatus.DENIED:
+                                    alert("Permission denied");
+                                    break;
+                                case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
+                                    alert("Permission permanently denied");
+                                    break;
+                            }
+                        }, function(error){
+                            alert(error);
+                        });
+                    }, function(error){
+                        alert(error);
+                    });
+                }, function(error){
+                    alert("The following error occurred: "+error);
+                });
+            }, function(error){
+                alert("The following error occurred: "+error);
+            });
+            
         }, false);
 
     </script>
