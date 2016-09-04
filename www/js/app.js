@@ -1667,6 +1667,18 @@ app.controller('LangCtrl', function($scope, GlobalParameters, localStorageServic
     }
 });
 
+app.controller('FullscreenCtrl', function($scope){
+    // var all_photos = $scope.selected_photos.length;
+    // $scope.Next = function(current_ind){
+    //     if (current_ind<all_photos)
+    //         $scope.ind = current_ind+1;
+    // }
+    
+    // $scope.Prev = function(current_ind){
+    //     if (current_ind>0)
+    //         $scope.ind = current_ind-1;
+    // }
+});
 
 app.controller('ShowPhotoCtrl', function($scope){
     var all_photos = $scope.selected_photos.length;

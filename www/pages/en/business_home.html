@@ -172,7 +172,7 @@
               
               <div ng-show="menu_images.length">
                   <!--<img src="{{image['path']}}" class="show_photos" ng-repeat="image in menu_images | limitTo:menu_limit track by $index" ng-click="show('show_photo.html', menu_images, $index)">-->
-                  <img src="{{image['path']}}" class="show_photos" ng-repeat="image in menu_images | limitTo:menu_limit track by $index" ng-click="myNavigator.pushPage('fullscreen.html')">
+                  <img src="{{image['path']}}" class="show_photos" ng-repeat="image in menu_images | limitTo:menu_limit track by $index" ng-click="myNavigator.pushPage('pages/en/fullscreen.html', { animation : 'lift' })">
                   <!-- <p class="photo_title">{{image['name_en']}}</p><br> -->
                 <!-- </div> -->
               </div>  
@@ -251,27 +251,7 @@
         </ons-dialog>
     </ons-template> 
     
-    <ons-template id="fullscreen.html">
-      <ons-toolbar>
-        <div class="center">Carousel</div>
-      </ons-toolbar>
-      <ons-carousel swipeable overscrollable auto-scroll fullscreen var="carousel" ng-controller="FullscreenCtrl">
-        <ons-carousel-item style="background-color: gray;">
-          <div class="item-label">GRAY</div>
-        </ons-carousel-item>
-        <ons-carousel-item style="background-color: #085078;">
-          <div class="item-label">BLUE</div>
-        </ons-carousel-item>
-        <ons-carousel-item style="background-color: #373B44;">
-          <div class="item-label">DARK</div>
-        </ons-carousel-item>
-        <ons-carousel-item style="background-color: #D38312;">
-          <div class="item-label">ORANGE</div>
-        </ons-carousel-item>
-        <ons-carousel-cover>
-          <div class="cover-label">Swipe left or right</div>
-        </ons-carousel-cover>
-      </ons-carousel>
+    
     </ons-page>
 </ons-page>
 
