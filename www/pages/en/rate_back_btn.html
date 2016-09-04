@@ -1,7 +1,10 @@
 <ons-page ng-controller="RateCtrl" ng-init="ShowRate=1">
-<ons-navigator var="myNavigator" animation="slide">
+    <ons-toolbar>
+        <div class="left"><ons-back-button>{{ "Back" | translate }}</ons-back-button></div>
+        <div class="center"><span>Vcess</span></div>
+    </ons-toolbar>
     
-  	<div class="tab-bar tab-bar--top tab-bar--top-border">
+      <div class="tab-bar tab-bar--top tab-bar--top-border">
         <label class="tab-bar__item tab-bar--top-border__item">
             <input type="radio" name="top-tab-bar-b" checked="checked" ng-click="ShowRate = !ShowRate; RateList();">
             <button class="tab-bar__button tab-bar--top-border__button">
@@ -78,5 +81,4 @@
             </ons-list>
         </div>
     </div>
-</ons-navigator>
 </ons-page>

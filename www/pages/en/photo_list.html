@@ -1,7 +1,7 @@
 <ons-page ng-controller="PhotoListCtrl" ng-init="search_result = 0; disabled=1; limit = 20"; ShowMore = 0>
 
     <ons-toolbar>
-        <div class="left"><ons-back-button></ons-back-button></div>
+        <div class="left"><ons-back-button>{{ "Back" | translate }}</ons-back-button></div>
         <div class="center"><span>{{selected_city | translate }}</span></div>
     </ons-toolbar>
 

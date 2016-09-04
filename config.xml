@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" id="com.vcess.app" version="2.0.4">
+<widget xmlns="http://www.w3.org/ns/widgets" id="com.vcess.app" version="2.0.5">
   <name>Vcess</name>
   <description>Made with Monaca (http://monaca.mobi)</description>
   <author/>
@@ -79,20 +79,20 @@
     <icon src="/res/winrt/icon/app_tile_wide_logo_winrt.png" target="Wide315x150Logo"/>
     <splash src="/res/winrt/screen/app_splash_screen_winrt.png" width="620" height="300"/>
   </platform>
+  <preference name="WindowsStorePublisherName" value="My Name"/>
+  <preference name="BackgroundColor" value="#FFFFFF"/>
+  <preference name="WindowsStoreIdentityName" value="e24d9426-eeef-49a3-b6af-9d389728c5b6"/>
+  <preference name="KeepRunning" value="true"/>
+  <preference name="monaca:AndroidIsPackageNameSeparate" value="false"/>
+  <preference name="Orientation" value="default"/>
+  <preference name="SplashScreenDelay" value="1000"/>
+  <preference name="Fullscreen" value="false"/>
   <preference name="monaca:targetFamilyiPhone" value="1"/>
   <preference name="monaca:targetFamilyiPad" value="1"/>
   <preference name="AutoHideSplashScreen" value="true"/>
   <preference name="FadeSplashScreen" value="true"/>
   <preference name="ShowSplashScreenSpinner" value="false"/>
-  <preference name="EnableViewportScale" value="false"/>
-  <preference name="WindowsStorePublisherName" value="My Name"/>
-  <preference name="BackgroundColor" value="#FFFFFF"/>
-  <preference name="WindowsStoreIdentityName" value="e24d9426-eeef-49a3-b6af-9d389728c5b6"/>
   <access origin="*"/>
-  <preference name="KeepRunning" value="true"/>
-  <preference name="monaca:AndroidIsPackageNameSeparate" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
-  <preference name="Orientation" value="default"/>
-  <preference name="SplashScreenDelay" value="1000"/>
-  <preference name="Fullscreen" value="false"/>
+  <preference name="EnableViewportScale" value="false"/>
 </widget>

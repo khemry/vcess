@@ -1,45 +1,69 @@
-<ons-page ng-controller="CategoryListCtrl" ng-init="load_complete=0; search_result = 0; disabled=1; limit = 20"; ShowMore = 0>
-
+<ons-page ng-controller="SearchCtrl" ng-init="things=1; load_complete=0; search_result = 0;disabled=1; limit=20">
     <ons-toolbar>
         <div class="left"><ons-back-button>{{ "Back" | translate }}</ons-back-button></div>
-        <div class="center"><span>{{selected_category | translate}}</span></div>
+        <div class="center"><span>{{"Search" | translate}}</span></div>
     </ons-toolbar>
 
+    <div class="tab-bar tab-bar--top tab-bar--top-border">
+        <label class="tab-bar__item tab-bar--top-border__item">
+            <input type="radio" name="top-tab-bar-b" checked="checked" ng-click="things = !things; Clear()">
+            <button class="tab-bar__button tab-bar--top-border__button">
+                <span>{{ "Food/Drinks" | translate }}</span>
+            </button>
+        </label>
 
-    <div class="margin10" ng-init="checked=1">
+        <label class="tab-bar__item tab-bar--top-border__item">
+            <input type="radio" name="top-tab-bar-b" ng-click="things = !things; Clear()">
+            <button class="tab-bar__button tab-bar--top-border__button">
+                <span>{{ "Restaurant's Name" | translate }}</span>
+            </button>
+        </label>
+    </div>
 
-        <ons-list modifier="inset" class="margin-10-0-10-0 font-size-14" ng-init="show_current_location=0">
-            <ons-list-item ng-click="show_current_location=!show_current_location">
-                <input type="search" class="location-input-no-border" ng-model="location_text" placeholder="Input search location">
-                <span ng-click="clearInput()" class="displayClear">
-                    <ons-icon icon="fa-times " style="opacity: 0.5"></ons-icon>
-                </span>
-            </ons-list-item>
+    <div class="margin10 text-center">
+        <!--  <div>
+            <input type="text" ng-model="userModal" ng-keyup="clearIcon(true)" ng-blur="clearIcon(false)"/>
+        </div> -->
 
-            <div ng-show="show_current_location">
-                    <ons-list-item modifier="tappable" ng-click="CurrentLocation(); show_current_location=0;">
+        <!-- <div ng-show="things"> -->
+            <ons-list modifier="inset" class="margin-10-0-10-0 font-size-14" ng-init="show_current_location=0">
+                <ons-list-item>
+                    <input ng-show="things" type="search" class="search-input-no-border" placeholder="Ex: wifi, stationary, coffee, ..." ng-model="search_text  | translate">
+
+                    <input ng-show="!things" type="search" class="search-input-no-border" placeholder="Ex: Royal Host, Starbucks, ..." ng-model="search_text  | translate">
+
+                    <span ng-click="clearInputSearch()" class="displayClear">
+                        <ons-icon icon="fa-times " style="opacity: 0.5"></ons-icon>
+                    </span>
+                </ons-list-item>
+                <ons-list-item ng-click="show_current_location=!show_current_location">
+                    <input type="search" class="location-input-no-border" ng-model="myForm.location_text" placeholder="Input search location">
+                    <span ng-click="clearInput()" class="displayClear">
+                        <ons-icon icon="fa-times " style="opacity: 0.5"></ons-icon>
+                    </span>
+                </ons-list-item>
+                <div ng-show="show_current_location">
+                    <ons-list-item modifier="tappable" ng-click="myForm.location_text ='';CurrentLocation(); show_current_location=0;">
                         <ons-icon icon="fa-location-arrow" style="opacity: 0.8"></ons-icon>
                         {{ "Current Location" | translate }}
                     </ons-list-item>
 
-                    <ons-list-item modifier="tappable" ng-click="location_text = 'Psar Thmey'; show_current_location=0;search(selected_category_key, location_text);">
+                    <ons-list-item modifier="tappable" ng-click="myForm.location_text = 'Psar Thmey'; show_current_location=0;search(search_text, myForm.location_text, things);">
                         {{ "Psar Thmey" | translate }}
                     </ons-list-item>
-                    <ons-list-item modifier="tappable" ng-click="location_text = 'Independence Monument'; show_current_location=0;search(selected_category_key, location_text);" >
+                    <ons-list-item modifier="tappable" ng-click="myForm.location_text = 'Independence Monument'; show_current_location=0;search(search_text, myForm.location_text, things);" >
                         {{ "Independence Monument" | translate }}
                     </ons-list-item> 
-                    <ons-list-item modifier="tappable" ng-click="location_text = 'Olympic Stadium'; show_current_location=0;search(selected_category_key, location_text);">
+                    <ons-list-item modifier="tappable" ng-click="myForm.location_text = 'Olympic Stadium'; show_current_location=0;search(search_text, myForm.location_text, things);">
                         {{ "Olympic Stadium" | translate }}
                     </ons-list-item>    
-                    
-                </div>
-        </ons-list>
+                </div>    
+            </ons-list>
 
             <div ng-show="sort_by_rate">
                 <ons-row class="margin-10-0-10-0">
                     <ons-col>
-                        <ons-button modifier="large" ng-click="search(selected_category_key, location_text)">
-                        <span>{{ "Search" | translate }}</span></ons-button>
+                        <ons-button modifier="large" ng-click="search(search_text, myForm.location_text, things)"><span>{{ "Search" | translate }}</span></ons-button>
                     </ons-col>
                     <ons-col width="10px">
                     </ons-col>
@@ -52,8 +76,7 @@
             <div ng-show="!sort_by_rate">
                 <ons-row class="margin-10-0-10-0">
                     <ons-col>
-                        <ons-button modifier="large" ng-click="search(selected_category_key, location_text)">
-                        <span>{{ "Search" | translate }}</span></ons-button>
+                        <ons-button modifier="large" ng-click="search(search_text, myForm.location_text, things)"><span>{{ "Search" | translate }}</span></ons-button>
                     </ons-col>
                     <ons-col width="10px">
                     </ons-col>
@@ -84,7 +107,8 @@
                             <p class="margin-0 line-height-150 font-size-12 margin-right-20">{{business['category']}}</p>
                         </ons-row>
                         <ons-row>
-                            <p class="margin-0 line-height-150 font-size-12">{{ "Photos: " | translate }}{{business['photos']}}</p>
+                            <p class="margin-0 line-height-150 font-size-12">{{ "Photos: " | translate }} {{business['photos']}}</p>
+                            <!-- <p>favorite: {{business.favorite}}</p> -->
                         </ons-row>
                         <ons-row>
                             <div class="rating margin-0 line-height-150 font-size-12">
@@ -97,7 +121,7 @@
                         </ons-row>
                     </ons-col>
                     <ons-col width="40px">
-                        <p class="margin-0 line-height-150 font-size-12">{{business['distance']}} km</p>
+                        <p class="margin-0 line-height-150 font-size-12">{{business['distance']}} {{"km" | translate }}</p>
                     </ons-col>
                 </ons-row>
             </ons-list-item>
@@ -109,6 +133,4 @@
             </span>
         </ons-button>
     </div>
-  
-
 </ons-page>

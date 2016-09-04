@@ -1,7 +1,7 @@
 // Including ngTranslate
 angular.module("ngTranslate",["ng"]).config(["$provide",function(t){$TranslateProvider=function(){var t,n={};this.translations=function(t,r){if(!t&&!r)return n;if(t&&!r){if(angular.isString(t))return n[t];n=t}else n[t]=r},this.uses=function(r){if(!r)return t;if(!n[r])throw Error("$translateProvider couldn't find translationTable for langKey: '"+r+"'");t=r},this.$get=["$interpolate","$log",function(r,a){return $translate=function(e,i){var l=t?n[t][e]:n[e];return l?r(l)(i):(a.warn("Translation for "+e+" doesn't exist"),e)},$translate.uses=function(n){return n?(t=n,void 0):t},$translate}]},t.provider("$translate",$TranslateProvider)}]),angular.module("ngTranslate").directive("translate",["$filter","$interpolate",function(t,n){var r=t("translate");return{restrict:"A",scope:!0,link:function(t,a,e){e.$observe("translate",function(r){t.translationId=angular.equals(r,"")?n(a.text())(t.$parent):r}),e.$observe("values",function(n){t.interpolateParams=n}),t.$watch("translationId + interpolateParams",function(){a.html(r(t.translationId,t.interpolateParams))})}}}]),angular.module("ngTranslate").filter("translate",["$parse","$translate",function(t,n){return function(r,a){return angular.isObject(a)||(a=t(a)()),n(r,a)}}]);
 
-var app = ons.bootstrap('myApp', ['LocalStorageModule', 'ngTranslate']);
+var app = ons.bootstrap('myApp', ['ngTouch','LocalStorageModule', 'ngTranslate']);
 
 app.config(['$translateProvider', function ($translateProvider) {
     
@@ -10,6 +10,7 @@ app.config(['$translateProvider', function ($translateProvider) {
     });   
 
     $translateProvider.translations('Khmer', {
+        'Back': 'បកក្រោយ',
         'Profile': 'ទំព័រផ្ទាល់ខ្លួន',
         'Favorites/Wish List': 'បញ្ជីចូលចិត្ត/កន្លែងចង់ទៅ',
         'Rate/Review' : 'រង្វាយតម្លៃ/ការបញ្ចេញយោបល់',
@@ -35,8 +36,8 @@ app.config(['$translateProvider', function ($translateProvider) {
         "Currently, you don't have any meetup yet." : "អ្នកមិនទាន់មានការជួបជុំនៅឡើយទេ",
         'Business List' : 'បញ្ជីមុខជំនួញ',
         'My Businesses' : 'មុខជំនួញផ្ទាល់ខ្លួន',
-        "Others' Businesses" : "មុខជំនួយរបស់អ្នកដទៃ",
-        "Currently, you don't have any businesses yet." : "អ្នកមិនទាន់មានមុខជំនួយណាមួយនៅឡើយទេ",
+        "Others' Businesses" : "មុខជំនួញរបស់អ្នកដទៃ",
+        "Currently, you don't have any businesses yet." : "អ្នកមិនទាន់មានមុខជំនួញណាមួយនៅឡើយទេ",
         'Check-in List' : 'បញ្ជីកន្លែងដែលបានទៅ',
         'List' : 'បញ្ជី',
         'Map' : 'ផែនទី',
@@ -45,8 +46,8 @@ app.config(['$translateProvider', function ($translateProvider) {
         'Friend List' : 'បញ្ជីមិត្តភ័ក្ត',
         "Currently, you don't have any friends yet." : "អ្នកមិនទាន់មានមិត្តភ័ក្តនៅទីនេះទេ",
         "Search" : "ស្វែងរក",
-        "Foods/Drinks" : "ម្ហូប/ភេសជ្ជៈ",
-        "Places" : "ទីកន្លែង",
+        "Food/Drinks" : "ម្ហូប/ភេសជ្ជៈ",
+        "Restaurant's Name" : "ឈ្មោះហាង",
         "Sort by Rate" : "តម្រៀបតាមរង្វាយតម្លៃ",
         "Sort by Distance" : "តម្រៀបតាមចម្ងាយ",
         "Current Location" : "ទីកន្លែងបច្ចុប្បន្ន",
@@ -68,14 +69,14 @@ app.config(['$translateProvider', function ($translateProvider) {
         "Japanese Food" : "ម្ហូបជប៉ុន",
         "Chinese Food" : "ម្ហូបចិន",
         "Coffee" : "កាហ្វេ",
-        "Bubble Tea" : "តែគុច",
+        "Bubble Tea" : "តែគុជ",
         "Soup" : "ស៊ុប",
         "Khmer Restaurants": "ហាងម្ហូបខ្មែរ",
         "Coffee Shops" : "ហាងកាហ្វេ",
         "Chinese Restaurants" : "ហាងម្ហូបចិន",
-        "Green & Bubble Tea" : "តែបៃតង & តែគុច",
+        "Green & Bubble Tea" : "តែបៃតង & តែគុជ",
         "BBQ Restaurants" : "ហាងសាច់អាំង",
-        "Bars & Pubs" : "បារ & ហាងស្រា",
+        "Bars & Pubs" : "បារ & ផាប់",
         "Fast Food" : "អាហារទាន់ចិត្ត",
         "from here" : "ពីទីនេះ",
         "Owner: " : "ម្ចាស់ហាង: ",
@@ -87,12 +88,12 @@ app.config(['$translateProvider', function ($translateProvider) {
         "Rate & Review" : "រង្វាយតម្លៃ & មតិអតិថិជន",
         "Menu Photos" : "រូបថតបញ្ជីមុខម្ហូប",
         "Food Photos" : "រូបថតម្ហូប",
-        "Store Photos" : "រូបតងហាង",
+        "Store Photos" : "រូបថតហាង",
         "Show All" : "បង្ហាញទាំងអស់",
         "Show Less" : "បង្ហាញតិច",
         " (No photos)" : " (គ្មានរូបថត)",
         "Wish List: " : "ចង់ទៅ: ",
-        "views" : "បើកមើល",
+        "Views" : "បើកមើល",
         "You are required to login in order to view this page." : "អ្នកត្រូវចូលគណនីដើម្បីមើលទំព័រនេះ",
         "Log In" : "ចូលគណនី",
         "Sign Up" : "ចុះឈ្មោះ",
@@ -426,77 +427,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 	      title: 'Vcess'
 	    });
 	}
-    
-  //   var MAX_POSITION_ERRORS_BEFORE_RESET = 3;
-  //   var MIN_ACCURACY_IN_METRES = 20;
-  //   var positionWatchId = null;
-  //   var watchpositionErrorCount = 0;
-  //   options = {
-  //       maximumAge: 60000, 
-  //       timeout: 15000, 
-  //       enableHighAccuracy: true
-  //   };
-  //   
-  //   function addWatch(){
-  //       alert('add watch');
-  //       positionWatchId = navigator.geolocation.watchPosition(onWatchPositionSuccess, onWatchPositionError, options);
-  //   }
-  //   
-  //   function clearWatch(){
-  //       alert('clear watch');
-  //       navigator.geolocation.clearWatch(positionWatchId);
-  //   }
-  //   
-  //   function onWatchPositionSuccess(position) {
-  //       alert('on watch success');
-  //       watchpositionErrorCount = 0;
-  //   
-  //       // Reject if accuracy is not sufficient
-  //       if(position.coords.accuracy > MIN_ACCURACY_IN_METRES){
-  //         return;        
-  //       }
-  //   
-  //       // If only single position is required, clear watcher
-  //       clearWatch();
-  //   
-  //       // Do something with position
-  //       //var lat = position.coords.latitude,lon = position.coords.longitude;
-  //       var latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
-  //       var geocoder = new google.maps.Geocoder();
-		// geocoder.geocode({'location': latlng}, function(results, status) {
-	 //          if (status === google.maps.GeocoderStatus.OK) {
-	 //            if (results[1]) {
-	 //            	current_location['coordinate'] = latlng;
-	 //            	current_location['addr'] = results[1].formatted_address;
-  //                   
-  //                   $scope.myForm.location_text = current_location['addr'];
-  //                   $scope.search($scope.search_text, $scope.myForm.location_text, $scope.things);
-	 //            	//deferred.resolve(current_location);
-	 //            } else {
-	 //              	alert('No address found');
-  //                   $scope.load_complete = 1;
-	 //              	//deferred.reject('No results found');
-	 //            }
-	 //          } else {
-	 //            //deferred.reject('Geocoder failed due to: ' + status);
-  //               alert('Geocoder failed due to: ' + status);
-  //               $scope.load_complete = 1;
-	 //          }
-	 //        });
-  //   }
-  //   
-  //   
-  //   function onWatchPositionError(err) {
-  //       alert('watch error');
-  //       watchpositionErrorCount++;
-  //       if (err.code == 3 // TIMEOUT
-  //           && watchpositionErrorCount >= MAX_POSITION_ERRORS_BEFORE_RESET) {        
-  //           clearWatch();
-  //           addWatch();
-  //           watchpositionErrorCount = 0;
-  //       }
-  //   
-  //   }
+   
 
 	$scope.CurrentLocation = function(){
         $scope.Clear();
@@ -511,22 +442,22 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
     }
 
 	getCurrentLocation = function(){	
-        alert('getCurrentLocation');
+        //alert('getCurrentLocation');
         var deferred = $q.defer();
 		
-		$timeout(function(){
-            alert('inside time out!');
-            alert(navigator);
-            alert(navigator.geolocation);
+		// $timeout(function(){
+            //alert('inside time out!');
+            //alert(navigator);
+            //alert(navigator.geolocation);
 	    	navigator.geolocation.getCurrentPosition(function(position) {
             //navigator.geolocation.getCurrentPosition
             //navigator.geolocation.watchPosition(function(position) {
-                alert(position);
+                //alert(position);
 	    		var latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
 	    		//var latlng = {lat: 11.5545345, lng: 104.8992934};
 	    		var geocoder = new google.maps.Geocoder();
 	    		geocoder.geocode({'location': latlng}, function(results, status) {
-                    alert(results);
+                    //alert(results);
 			          if (status === google.maps.GeocoderStatus.OK) {
 			            if (results[1]) {
 			            	current_location['coordinate'] = latlng;
@@ -547,8 +478,8 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 					deferred.reject('code: '    + error.code + ' ' + 'message: ' + error.message + '\n');
 					$scope.myForm.location_text ="Input search location";
 					
-				});
-    		},100);
+				}, { enableHighAccuracy: true, timeout: 15000, maximumAge: 15000 });
+    		// },100);
 		return deferred.promise;
 	}
 
@@ -621,7 +552,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
     }
     
     function requestLocation(){
-        alert('requestLocation');
+        //alert('requestLocation');
         getCurrentLocation().then(function(result) {
             $scope.myForm.location_text = result['addr'];
             $scope.load_complete = 1;
@@ -631,7 +562,7 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
         	//$scope.search($scope.search_text, $scope.myForm.location_text, $scope.things);
     		
     	}, function(error){
-    		alert(error);
+    		console.log(error);
     		$scope.load_complete = 1;
     	});
        // $scope.load_complete = 1;
@@ -641,49 +572,21 @@ app.controller("SearchCtrl", function($scope, $timeout, $http, $q){
 		$scope.myForm = {};
 		var page = myNavigator.getCurrentPage();
 		var selected_keyword = page.options.keyword;
-
 		$scope.businesses = {};
         $scope.load_complete = 1;
-        requestLocation();
+
         
-        
-        // cordova.plugins.diagnostic.requestLocationAuthorization(function(status){
-        //     switch(status){
-        //         case cordova.plugins.diagnostic.permissionStatus.NOT_REQUESTED:
-        //             alert("Permission not requested");
-        //             break;
-        //         case cordova.plugins.diagnostic.permissionStatus.GRANTED:
-        //             alert("Permission granted");
-        //             requestLocation();
-        //             break;
-        //         case cordova.plugins.diagnostic.permissionStatus.DENIED:
-        //             alert("Permission denied");
-        //             break;
-        //         case cordova.plugins.diagnostic.permissionStatus.DENIED_ALWAYS:
-        //             alert("Permission permanently denied");
-        //             break;
-        //     }
-        //     $scope.load_complete = 1;
-        // }, function(error){
-        //     alert(error);
-        // });
-        
-        
-        
- // 		getCurrentLocation().then(function(result) {
- //     		$scope.myForm.location_text = result['addr'];
- //     		if (selected_keyword != undefined){
- // 				//console.log(selected_keyword);
- // 				$scope.search_text = selected_keyword;
- // 				$scope.search($scope.search_text, $scope.myForm.location_text, 1);
- // 
- // 			} else {
- // 				$scope.load_complete = 1;	
- // 			}
- //     	}, function(error){
- //     		console.log(error);
- //     		$scope.load_complete = 1;
- //     	});
+		getCurrentLocation().then(function(result) {
+    		$scope.myForm.location_text = result['addr'];
+    		if (selected_keyword != undefined){
+				//console.log(selected_keyword);
+				$scope.search_text = selected_keyword;
+				$scope.search($scope.search_text, $scope.myForm.location_text, 1);
+			}
+    	}, function(error){
+    		console.log(error);
+    		//$scope.load_complete = 1;
+    	});
 	}
 
 	var selected_keyword = myNavigator.getCurrentPage().options.keyword;	
@@ -873,11 +776,18 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
     }
 
 	getCurrentLocation = function(){
+        console.log('getCurrentLocation');
 		var deferred = $q.defer();
 		
-		$timeout(function(){
-	    	navigator.geolocation.getCurrentPosition(function(position) {
-	    		var latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
+		// $timeout(function(){
+            console.log('timeout');
+            cordova.plugins.diagnostic.isLocationAvailable(function(available){
+            console.log("Location is " + (available ? "available" : "not available"));
+            
+            navigator.geolocation.getCurrentPosition(function(position) {
+                console.log('navigator');
+                console.log('position');
+        		var latlng = {lat: position.coords.latitude, lng: position.coords.longitude};
 	    		//var latlng = {lat: 11.5545345, lng: 104.8992934};
 	    		var geocoder = new google.maps.Geocoder();
 	    		geocoder.geocode({'location': latlng}, function(results, status) {
@@ -900,8 +810,12 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 					deferred.reject('code: '    + error.code + ' ' + 'message: ' + error.message + '\n');
 					$scope.location_text ="Input search location";
 					
-				});
-    		},100);
+				}, { enableHighAccuracy: true, timeout: 15000, maximumAge: 15000 });
+        }, function(error){
+            console.error("The following error occurred: "+error);
+        });
+	    	
+//    		},100);
 		return deferred.promise;
 	}
 
@@ -935,15 +849,16 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 
 	OnLoad = function(){
 		$scope.businesses = {};
+        $scope.load_complete = 1;
 		getCurrentLocation().then(function(result) {
-
+            console.log('then');
     		$scope.location_text = result['addr'];
-
+            
     		$scope.search($scope.selected_category_key, $scope.location_text);
 
     	}, function(error){
     		console.log(error);
-    		$scope.load_complete = 1;
+    		//$scope.load_complete = 1;
     	});
 	}
 
@@ -1184,6 +1099,15 @@ app.controller('BusinessHomeCtrl', function($scope, $timeout, $window, $q, $http
   }
 
 	$scope.dialogs = {};
+    
+    $scope.showProfile = function(dlg, pic_url) {
+    	$scope.profile_url = pic_url;
+        alert(dlg)
+		  	// ons.createDialog(dlg, {parentScope: $scope}).then(function(dialog1) {
+		   //  	$scope.dialogs[dlg] = dialog1;
+		   //  	dialog1.show();
+		  	// });
+	}
     
 	$scope.show = function(dlg, photos, index) {
 		$scope.selected_photos = photos;
@@ -1740,6 +1664,20 @@ app.controller('LangCtrl', function($scope, GlobalParameters, localStorageServic
         localStorageService.set('lang', selected_lang);
         $translate.uses(selected_lang);
         $scope.myNavigator.resetToPage('pages/en/profile.html');
+    }
+});
+
+
+app.controller('ShowPhotoCtrl', function($scope){
+    var all_photos = $scope.selected_photos.length;
+    $scope.Next = function(current_ind){
+        if (current_ind<all_photos)
+            $scope.ind = current_ind+1;
+    }
+    
+    $scope.Prev = function(current_ind){
+        if (current_ind>0)
+            $scope.ind = current_ind-1;
     }
 });
 

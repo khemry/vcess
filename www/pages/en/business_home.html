@@ -1,7 +1,7 @@
 <ons-page ng-controller="BusinessHomeCtrl" ng-init="ShowRate=0;ShowReview=0;ShowFood=1;ShowMenu=0;ShowStore=0;BigPhoto=0">
 
 	<ons-toolbar>
-	    <div class="left"><ons-back-button></ons-back-button></div>
+	    <div class="left"><ons-back-button>{{ "Back" | translate }}</ons-back-button></div>
 	    <div class="center"><span>Vcess</span></div>
 	</ons-toolbar>
 
@@ -171,7 +171,8 @@
               </div>
               
               <div ng-show="menu_images.length">
-                  <img src="{{image['path']}}" class="show_photos" ng-repeat="image in menu_images | limitTo:menu_limit track by $index" ng-click="show('show_photo.html', menu_images, $index)">
+                  <!--<img src="{{image['path']}}" class="show_photos" ng-repeat="image in menu_images | limitTo:menu_limit track by $index" ng-click="show('show_photo.html', menu_images, $index)">-->
+                  <img src="{{image['path']}}" class="show_photos" ng-repeat="image in menu_images | limitTo:menu_limit track by $index" ng-click="myNavigator.pushPage('fullscreen.html')">
                   <!-- <p class="photo_title">{{image['name_en']}}</p><br> -->
                 <!-- </div> -->
               </div>  
@@ -234,16 +235,44 @@
 	</div>
     
     <ons-template id="show_photo.html">
-        <ons-dialog var="dialog" cancelable> 
-            <ons-icon icon="fa-times-circle" fixed-width="false" class="close" ng-click="dialog.hide()"></ons-icon>
-            <div class="pic_viewer" ng-style="{backgroundImage: 'url(' + selected_photos[ind]['path'] + ')'}">
-                <span class="pic">
-                    <ons-icon icon="fa-chevron-circle-right" fixed-width="false" class="next" ng-click="ind=ind+1" ng-hide="ind==selected_photos.length-1"></ons-icon>
-                    <ons-icon icon="fa-chevron-circle-left" fixed-width="false" class="prev" ng-click="ind=ind-1" ng-hide="ind==0"></ons-icon>
-                </span>
+        <ons-dialog var="dialog" cancelable mask-color="rgba(0, 0, 0, 1)" ng-controller="ShowPhotoCtrl"> 
+            <div class="fullscreen">
+                <img src="{{selected_photos[ind]['path']}}" class="viewer" ng-swipe-left="Next(ind)" ng-swipe-right="Prev(ind)">
             </div>
+            
+            <!--<ons-carousel swipeable overscrollable auto-scroll fullscreen var="carousel">
+                <ons-carousel-item ng-repeat="photo in selected_photos">
+                    <img ng-src="{{photo['path']}}">
+                </ons-carousel-item>
+                <ons-carousel-cover>
+                    <div class="cover-label">Swipe left or right</div>
+                </ons-carousel-cover>
+            </ons-carousel>            -->
         </ons-dialog>
     </ons-template> 
+    
+    <ons-template id="fullscreen.html">
+      <ons-toolbar>
+        <div class="center">Carousel</div>
+      </ons-toolbar>
+      <ons-carousel swipeable overscrollable auto-scroll fullscreen var="carousel" ng-controller="FullscreenCtrl">
+        <ons-carousel-item style="background-color: gray;">
+          <div class="item-label">GRAY</div>
+        </ons-carousel-item>
+        <ons-carousel-item style="background-color: #085078;">
+          <div class="item-label">BLUE</div>
+        </ons-carousel-item>
+        <ons-carousel-item style="background-color: #373B44;">
+          <div class="item-label">DARK</div>
+        </ons-carousel-item>
+        <ons-carousel-item style="background-color: #D38312;">
+          <div class="item-label">ORANGE</div>
+        </ons-carousel-item>
+        <ons-carousel-cover>
+          <div class="cover-label">Swipe left or right</div>
+        </ons-carousel-cover>
+      </ons-carousel>
+    </ons-page>
 </ons-page>
 
    	

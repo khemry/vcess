@@ -14,7 +14,7 @@
 	<div ng-show="search_home" style="width: 100%; height: 100%" class="text-center font-size-14">
 		<div>
 			<p class="top-keyword">{{ "Most Popular Keywords" | translate }}</p>
-				<ons-button ng-repeat="keyword in top_keywords" class="tag" ng-click="myNavigator.pushPage('pages/en/search.html', {keyword: keyword})";><span>{{keyword | translate}}</span></ons-button>      
+				<ons-button ng-repeat="keyword in top_keywords" class="tag" ng-click="myNavigator.pushPage('pages/en/search_back_btn.html', {keyword: keyword})";><span>{{keyword | translate}}</span></ons-button>      
 		</div>
 		<div>
 			<hr>
