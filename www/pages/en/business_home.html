@@ -1,259 +1,267 @@
-<ons-page ng-controller="BusinessHomeCtrl" ng-init="ShowRate=0;ShowReview=0;ShowFood=1;ShowMenu=0;ShowStore=0;BigPhoto=0">
+<ons-page ng-controller="BusinessHomeCtrl" ng-init="ShowRate=0;ShowReview=0;ShowFood=1;ShowMenu=0;ShowStore=0;BigPhoto=0;photo_limit=2">
+    <!--<ons-navigator var="myNavigator" animation="slide">-->
+        <ons-toolbar>
+            <div class="left"><ons-back-button>{{ "Back" | translate }}</ons-back-button></div>
+            <div class="center"><span>Vcess</span></div>
+        </ons-toolbar>
 
-	<ons-toolbar>
-	    <div class="left"><ons-back-button>{{ "Back" | translate }}</ons-back-button></div>
-	    <div class="center"><span>Vcess</span></div>
-	</ons-toolbar>
+        <div class="margin10 text-center">
+          <p class="title">{{business['name_en']}}</p>
+            <ons-list style="border-top: none" class="text-left">
+                <ons-list-item style="line-height: 1; padding: 0;">
+                    <ons-row class="action">
+                        <ons-col width="130px">
+                          <img src="{{business['profile']}}" class="logo-homepage">
+                        </ons-col>
+                        <ons-col class="font-size-12">
+                            <ons-row>
+                                <p>{{business['distance']}} km {{ "from here" | translate }}</p>
+                            </ons-row>
+                            <ons-row>
+                                {{ "Views" | translate }}: {{business['views']}} | {{ "Favorite" | translate }}: {{business['favorite_num']}} | {{ "Wish List: " | translate }}{{business['wish_list_num']}}
+                            </ons-row>
+                            <ons-row>
+                                <p>{{ "Owner: " | translate }}{{business['owner']}}</p>
+                            </ons-row>
+                            <ons-row>
+                                <div class="rating">
+                                    <div class="rating-num">
+                                        <ons-icon icon="fa-star" fixed-width="false" ng-repeat="n in getRate(business['rate']) track by $index"></ons-icon>
+                                        <ons-icon icon="fa-star-half" fixed-width="false" ng-show={{show_half_star}}></ons-icon>
+                                        {{business['rate']}}
+                                    </div>
+                                </div>
+                            </ons-row>              
+                        </ons-col>
+                    </ons-row>
+                </ons-list-item>
+            
+                <ons-list-item style="border-top: none"><ons-list-item style="line-height: 1; padding: 0;">
+                    <ons-row class="action">
+                        <ons-col class="action-col" ng-click="ShowRateSection()">
+                            <div class="action-icon"><ons-icon icon="ion-ios-star-half" ng-style="rate_color"></ons-icon></div>
+                            <div class="action-label">{{ "Rate" | translate }}</div>
+                        </ons-col>
 
-	<div class="margin10 text-center">
+                        <ons-col class="action-col" ng-click="ShowReviewSection()">
+                            <div class="action-icon"><ons-icon icon="ion-compose" ng-style="review_color"></ons-icon></div>
+                            <div class="action-label">{{ "Review" | translate }}</div>
+                        </ons-col>
 
-		<p class="title">{{business['name_en']}}</p>
+                        <ons-col class="action-col" ng-click="Favorite(business['id'], business['favorite'])">
+                            <div class="action-icon"><ons-icon icon="ion-heart" ng-style="fav_color"></ons-icon></div>
+                            <div class="action-label">{{ "Favorite" | translate }}</div>
+                        </ons-col>
 
-    <ons-list style="border-top: none" class="text-left">
-      <ons-list-item style="line-height: 1; padding: 0;">
-          <ons-row class="action">
+                  <!-- <ons-col class="action-col">
+                    <div class="action-icon"><ons-icon icon="ion-share"></ons-icon></div>
+                    <div class="action-label">Share</div>
+                  </ons-col> 
+                  
+                  <ons-col class="action-col">
+                    <div class="action-icon"><ons-icon icon="ion-ios-location"></ons-icon></div>
+                    <div class="action-label">Check In</div>
+                  </ons-col> -->
 
-            <ons-col width="130px">
-              <img src="{{business['profile']}}" class="logo-homepage">
-            </ons-col>
+                  
 
-            <ons-col class="font-size-12">
-              <ons-row>
-                <p>{{business['distance']}} km {{ "from here" | translate }}</p>
-              </ons-row>
-              <ons-row>
-                {{ "Views" | translate }}: {{business['views']}} | {{ "Favorite" | translate }}: {{business['favorite_num']}} | {{ "Wish List: " | translate }}{{business['wish_list_num']}}
-              </ons-row>
-              <ons-row>
-                <p>{{ "Owner: " | translate }}{{business['owner']}}</p>
-              </ons-row>
-              <ons-row>
-                <div class="rating">
-                  <div class="rating-num">
-                      <ons-icon icon="fa-star" fixed-width="false" ng-repeat="n in getRate(business['rate']) track by $index"></ons-icon>
-                      <ons-icon icon="fa-star-half" fixed-width="false" ng-show={{show_half_star}}></ons-icon>
-                      {{business['rate']}}
+                        <ons-col class="action-col" ng-click="WishList(business['id'], business['wish_list'])">
+                            <div class="action-icon"><ons-icon icon="ion-bookmark" ng-style="wish_color"></ons-icon></div>
+                            <div class="action-label">{{ "Wish List" | translate }}</div>
+                        </ons-col>
+
+                    </ons-row>
+                </ons-list-item>
+            </ons-list>
+
+            <div style="padding-top: 10px; padding-bottom: 10px" ng-show="ShowRate" class="color-vcess">
+                <ons-icon icon="{{RateIcon['1']}}" fixed-width="false" ng-click="RateStar(1)"></ons-icon>
+                <ons-icon icon="{{RateIcon['2']}}" fixed-width="false" ng-click="RateStar(2)"></ons-icon>
+                <ons-icon icon="{{RateIcon['3']}}" fixed-width="false" ng-click="RateStar(3)"></ons-icon>
+                <ons-icon icon="{{RateIcon['4']}}" fixed-width="false" ng-click="RateStar(4)"></ons-icon>
+                <ons-icon icon="{{RateIcon['5']}}" fixed-width="false" ng-click="RateStar(5)"></ons-icon>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <ons-button ng-click="Rate(business['id'], current_star)" class="font-size-14"><span>{{ "Rate" | translate }}</span></ons-button>
+            </div>
+
+            <div style="padding-top: 10px; padding-bottom: 10px" ng-show="ShowReview" class="color-vcess font-size-14">
+                <ons-row>
+                    <ons-col width="70%">
+                        <textarea class="textarea" style="width: 100%" rows="3" placeholder="Type here..." ng-model="review_text"></textarea>
+                    </ons-col>
+                    <ons-col style="float: right">
+                        <br>
+                        <ons-button ng-click="Review(business['id'], review_text)"><span>{{ "Submit" | translate }}</span></ons-button>
+                    </ons-col>
+                </ons-row>
+            </div>
+
+            <div id="map_biz"></div>
+            
+            <ons-list style="margin-top: 100px;" class="font-size-12 margin-10-0-10-0 line-height-150">
+                <ons-list-item modifier="chevron" ng-click="GetDirection(business['coordinate'])">
+                    <div>
+                        <ons-icon class="color-vcess" icon="fa-map-marker"></ons-icon>
+                        <a>{{ "Open Map" | translate }}</a>
+                    </div>
+                </ons-list-item>
+                <ons-list-item>
+                    <div class="line-height-150 margin-top-10">
+                        <ons-icon icon="fa-home" class="color-vcess"></ons-icon>
+                        {{business['addr_en']}}
+                    </div>
+                </ons-list-item>
+
+                <ons-list-item modifier="chevron" ng-click="Call(business['tel-phone'])">
+                    <div>
+                        <ons-icon icon="fa-mobile" class="color-vcess"></ons-icon>
+                        <a ng-href="{{business['tel-phone']}}"></a>
+                        {{business['phone']}}
+                    </div>
+                </ons-list-item>
+
+                <ons-list-item modifier="chevron" ng-click="OpenLink(business['website'])">
+                    <div>
+                        <ons-icon icon="fa-globe" class="color-vcess"></ons-icon>
+                        <a>{{business['website']}}</a>
+                    </div>
+                </ons-list-item>
+
+                <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/reviews.html', {reviews: all_reviews});">
+                    <div>
+                        <ons-icon icon="ion-chatboxes" class="color-vcess"></ons-icon>
+                        {{ "Rate & Review" | translate }} ({{all_reviews.length}})
+                    </div>
+                </ons-list-item>
+
+                <!-- <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/item_sets.html', {biz_category: business['category']});">
+                  <div>
+                    <ons-icon icon="ion-briefcase" class="color-vcess"></ons-icon>
+                    Products
                   </div>
-                </div>
-              </ons-row>              
-            </ons-col>
+                </ons-list-item> -->
+                <!-- <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('features.html', {biz_id: business['business_id']});">
+                  <div>
+                    <ons-icon icon="fa-book" class="color-vcess"></ons-icon>
+                    Features
+                  </div>
+                </ons-list-item> -->
 
-          </ons-row>
-        </ons-list-item></ons-list>
+                <!-- <ons-list-item modifier="chevron" ng-click="alert('Reservation is not available now.')">
+                  <div>
+                    <ons-icon icon="fa-clock-o" class="color-vcess"></ons-icon>
+                    Make a Reservation
+                  </div>
+                </ons-list-item> -->
 
-        <ons-list style="border-top: none"><ons-list-item style="line-height: 1; padding: 0;">
-          <ons-row class="action">
-
-            <ons-col class="action-col" ng-click="ShowRateSection()">
-              <div class="action-icon"><ons-icon icon="ion-ios-star-half" ng-style="rate_color"></ons-icon></div>
-              <div class="action-label">{{ "Rate" | translate }}</div>
-            </ons-col>
-
-            <ons-col class="action-col" ng-click="ShowReviewSection()">
-              <div class="action-icon"><ons-icon icon="ion-compose" ng-style="review_color"></ons-icon></div>
-              <div class="action-label">{{ "Review" | translate }}</div>
-            </ons-col>
-
-            <ons-col class="action-col" ng-click="Favorite(business['id'], business['favorite'])">
-              <div class="action-icon"><ons-icon icon="ion-heart" ng-style="fav_color"></ons-icon></div>
-              <div class="action-label">{{ "Favorite" | translate }}</div>
-            </ons-col>
-
-            <!-- <ons-col class="action-col">
-              <div class="action-icon"><ons-icon icon="ion-share"></ons-icon></div>
-              <div class="action-label">Share</div>
-            </ons-col> 
-            
-            <ons-col class="action-col">
-              <div class="action-icon"><ons-icon icon="ion-ios-location"></ons-icon></div>
-              <div class="action-label">Check In</div>
-            </ons-col> -->
-
-            
-
-            <ons-col class="action-col" ng-click="WishList(business['id'], business['wish_list'])">
-              <div class="action-icon"><ons-icon icon="ion-bookmark" ng-style="wish_color"></ons-icon></div>
-              <div class="action-label">{{ "Wish List" | translate }}</div>
-            </ons-col>
-
-          </ons-row>
-        </ons-list-item></ons-list>
-
-        <div style="padding-top: 10px; padding-bottom: 10px" ng-show="ShowRate" class="color-vcess">
-            <ons-icon icon="{{RateIcon['1']}}" fixed-width="false" ng-click="RateStar(1)"></ons-icon>
-            <ons-icon icon="{{RateIcon['2']}}" fixed-width="false" ng-click="RateStar(2)"></ons-icon>
-            <ons-icon icon="{{RateIcon['3']}}" fixed-width="false" ng-click="RateStar(3)"></ons-icon>
-            <ons-icon icon="{{RateIcon['4']}}" fixed-width="false" ng-click="RateStar(4)"></ons-icon>
-            <ons-icon icon="{{RateIcon['5']}}" fixed-width="false" ng-click="RateStar(5)"></ons-icon>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <ons-button ng-click="Rate(business['id'], current_star)" class="font-size-14"><span>{{ "Rate" | translate }}</span></ons-button>
-        </div>
-
-        <div style="padding-top: 10px; padding-bottom: 10px" ng-show="ShowReview" class="color-vcess font-size-14">
-            <ons-row>
-              <ons-col width="70%">
-                <textarea class="textarea" style="width: 100%" rows="3" placeholder="Type here..." ng-model="review_text"></textarea>
-              </ons-col>
-              <ons-col style="float: right">
-                <br>
-                <ons-button ng-click="Review(business['id'], review_text)"><span>{{ "Submit" | translate }}</span></ons-button>
-              </ons-col>
-            </ons-row>
-            
-            
-        </div>
-
-       	<div id="map_biz"></div>
-	    
-        <ons-list style="margin-top: 100px;" class="font-size-12 margin-10-0-10-0 line-height-150">
-          <ons-list-item modifier="chevron" ng-click="GetDirection(business['coordinate'])">
-          <div>
-              <ons-icon class="color-vcess" icon="fa-map-marker"></ons-icon>
-              <a>{{ "Open Map" | translate }}</a>
-            </div>
-          </ons-list-item>
-          <ons-list-item>
-            <div class="line-height-150 margin-top-10">
-              <ons-icon icon="fa-home" class="color-vcess"></ons-icon>
-              {{business['addr_en']}}
-            </div>
-          </ons-list-item>
-
-          <ons-list-item modifier="chevron" ng-click="Call(business['tel-phone'])">
-            <div>
-              <ons-icon icon="fa-mobile" class="color-vcess"></ons-icon>
-              <a ng-href="{{business['tel-phone']}}"></a>
-              {{business['phone']}}
-            </div>
-          </ons-list-item>
-
-          <ons-list-item modifier="chevron" ng-click="OpenLink(business['website'])">
-            <div>
-              <ons-icon icon="fa-globe" class="color-vcess"></ons-icon>
-              <a>{{business['website']}}</a>
-            </div>
-          </ons-list-item>
-
-          <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/reviews.html', {reviews: all_reviews});">
-            <div>
-              <ons-icon icon="ion-chatboxes" class="color-vcess"></ons-icon>
-              {{ "Rate & Review" | translate }} ({{all_reviews.length}})
-            </div>
-          </ons-list-item>
-
-          <!-- <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/item_sets.html', {biz_category: business['category']});">
-            <div>
-              <ons-icon icon="ion-briefcase" class="color-vcess"></ons-icon>
-              Products
-            </div>
-          </ons-list-item> -->
-          <!-- <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('features.html', {biz_id: business['business_id']});">
-            <div>
-              <ons-icon icon="fa-book" class="color-vcess"></ons-icon>
-              Features
-            </div>
-          </ons-list-item> -->
-
-          <!-- <ons-list-item modifier="chevron" ng-click="alert('Reservation is not available now.')">
-            <div>
-              <ons-icon icon="fa-clock-o" class="color-vcess"></ons-icon>
-              Make a Reservation
-            </div>
-          </ons-list-item> -->
-
-          
-          <ons-list-item ng-init="menu_limit=6" id="menu" class="text-center" style="line-height: 0px;">
-              <div class="text-left" style="line-height: 44px;">
-                <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
-                {{ "Menu Photos" | translate }}
-                <span ng-hide="menu_images.length">{{ " (No photos)" | translate }}</span>
-                <span ng-show="menu_images.length"> ({{menu_images.length}} {{ " photos)" | translate }}</span>  
-              </div>
-              
-              <div ng-show="menu_images.length">
-                  <!--<img src="{{image['path']}}" class="show_photos" ng-repeat="image in menu_images | limitTo:menu_limit track by $index" ng-click="show('show_photo.html', menu_images, $index)">-->
-                  <img src="{{image['path']}}" class="show_photos" ng-repeat="image in menu_images | limitTo:menu_limit track by $index" ng-click="myNavigator.pushPage('pages/en/fullscreen.html', { animation : 'lift' })">
-                  <!-- <p class="photo_title">{{image['name_en']}}</p><br> -->
-                <!-- </div> -->
-              </div>  
-              <ons-button modifier="quiet" class="font-size-12" ng-show="menu_images.length>6">
-                  <span ng-show="menu_limit==6" ng-click="menu_limit = menu_images">
-                    {{ "Show All" | translate }}
-                  </span>
-                  <span ng-show="menu_limit == menu_images" ng-click="menu_limit=6"><a href="#menu" class="hidden_link">
-                    {{ "Show Less" | translate }}</a>
-                  </span>
-              </ons-button>
                 
-              
-          </ons-list-item>
-          
-          <ons-list-item ng-init="store_limit=6" id="store" class="text-center" style="line-height: 0px;">
-              <div class="text-left" style="line-height: 44px;">
-                <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
-                {{ "Store Photos" | translate }}
-                <span ng-hide="store_images.length">{{ " (No photos)" | translate }}</span>
-                <span ng-show="store_images.length"> ({{store_images.length}} {{ " photos)" | translate }}</span>
-              </div>
-              <div ng-show="store_images.length">
-                  <img src="{{image['path']}}" class="show_photos" ng-repeat="image in store_images | limitTo:store_limit track by $index" ng-click="show('show_photo.html', store_images, $index)">
-                  <!-- <p class="photo_title">{{image['name_en']}}</p><br> -->
-              </div>
-
-              <ons-button modifier="quiet" class="font-size-12" ng-show="store_images.length>6">
-                  <span ng-show="store_limit==6" ng-click="store_limit = store_images">
-                    {{ "Show All" | translate }}
-                  </span>
-                  <span ng-show="store_limit == store_images" ng-click="store_limit=6"><a href="#store" class="hidden_link">
-                    {{ "Show Less" | translate }}</a>
-                  </span>
-              </ons-button>
-            </ons-list-item>
-      
-            <ons-list-item ng-init="food_limit=6" id="food" class="text-center" style="line-height: 0px;">
-                <div class="text-left" style="line-height: 44px;">
-                  <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
-                  {{ "Food Photos" | translate }}
-                  <span ng-hide="food_images.length">{{ " (No photos)" | translate }}</span>
-                  <span ng-show="food_images.length"> ({{food_images.length}} {{ " photos)" | translate }}</span>
-                </div>
-                <div ng-show="food_images.length">
-                    <img src="{{image['path']}}" class="show_photos" ng-repeat="image in food_images | limitTo:food_limit track by $index" ng-click="show('show_photo.html', food_images, $index)">
-                    <!-- <p class="photo_title">{{image['name_en']}}</p> -->
-                </div>  
-                <ons-button modifier="quiet" class="font-size-12" ng-show="food_images.length>6">
-                    <span ng-show="food_limit==6" ng-click="food_limit = food_images">
-                      {{ "Show All" | translate }}
-                    </span>
-                    <span ng-show="food_limit == food_images" ng-click="food_limit=6"><a href="#food" class="hidden_link">
-                      {{ "Show Less" | translate }}</a>
-                    </span>
-                </ons-button>
+                <ons-list-item ng-init="menu_limit=photo_limit" id="menu" class="text-center" style="line-height: 0px;">
+                    <div class="text-left" style="line-height: 44px;">
+                        <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
+                        {{ "Menu Photos" | translate }}
+                        <span ng-hide="menu_images.length">{{ " (No photos)" | translate }}</span>
+                        <span ng-show="menu_images.length"> ({{menu_images.length}} {{ " photos)" | translate }}</span>  
+                    </div>
+                    
+                    <div>
+                        <ons-row ng-repeat="rows in chunk_menu_images | limitTo:menu_limit track by $index">
+                            <ons-col width="50%" ng-repeat="image in rows">
+                                <div class="image_row">
+                                    <img src="{{image['path']}}" class="show_photos" ng-click="show('show_photo.html', menu_images, $index)">
+                                </div>
+                                <p ng-show="image['name'] == 'NaN'">{{image['name']}}</p>
+                            </ons-col>
+                        </ons-row>
+                    </div>
+                    
+                    <ons-button modifier="quiet" class="font-size-12" ng-show="menu_images.length>4">
+                        <span ng-show="menu_limit==photo_limit" ng-click="menu_limit = chunk_menu_images">
+                          {{ "Show All" | translate }}
+                        </span>
+                        <span ng-show="menu_limit == chunk_menu_images" ng-click="menu_limit=photo_limit"><a href="#menu" class="hidden_link">
+                          {{ "Show Less" | translate }}</a>
+                        </span>
+                    </ons-button>
+                </ons-list-item>
                 
-            </ons-list-item>
-        </ons-list>
-	</div>
-    
-    <ons-template id="show_photo.html">
-        <ons-dialog var="dialog" cancelable mask-color="rgba(0, 0, 0, 1)" ng-controller="ShowPhotoCtrl"> 
-            <div class="fullscreen">
-                <img src="{{selected_photos[ind]['path']}}" class="viewer" ng-swipe-left="Next(ind)" ng-swipe-right="Prev(ind)">
-            </div>
+                <ons-list-item ng-init="store_limit=photo_limit" id="store" class="text-center" style="line-height: 0px;">
+                    <div class="text-left" style="line-height: 44px;">
+                        <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
+                        {{ "Store Photos" | translate }}
+                        <span ng-hide="store_images.length">{{ " (No photos)" | translate }}</span>
+                        <span ng-show="store_images.length"> ({{store_images.length}} {{ " photos)" | translate }}</span>
+                    </div>
+                    
+                    <div>
+                        <ons-row ng-repeat="rows in chunk_store_images | limitTo:store_limit track by $index">
+                            <ons-col width="50%" ng-repeat="image in rows">
+                                <div class="image_row">
+                                    <!--<img src="{{image['path']}}" class="show_photos" ng-click="show('show_photo.html', store_images, $index)">-->
+                                    <img src="{{image['path']}}" class="show_photos" ng-click="myNavigator.pushPage('pages/en/test.html', {city: 'Phnom Penh'})">
+                                    
+                                    
+                                </div>
+                                <p ng-show="image['name']">{{image['name']}}</p>
+                            </ons-col>
+                        </ons-row>
+                    </div>
+
+                    <ons-button modifier="quiet" class="font-size-12" ng-show="store_images.length>4">
+                        <span ng-show="store_limit==photo_limit" ng-click="store_limit = chunk_store_images">
+                          {{ "Show All" | translate }}
+                        </span>
+                        <span ng-show="store_limit == chunk_store_images" ng-click="store_limit=photo_limit"><a href="#store" class="hidden_link">
+                          {{ "Show Less" | translate }}</a>
+                        </span>
+                    </ons-button>
+                </ons-list-item>
             
-            <!--<ons-carousel swipeable overscrollable auto-scroll fullscreen var="carousel">
-                <ons-carousel-item ng-repeat="photo in selected_photos">
-                    <img ng-src="{{photo['path']}}">
-                </ons-carousel-item>
-                <ons-carousel-cover>
-                    <div class="cover-label">Swipe left or right</div>
-                </ons-carousel-cover>
-            </ons-carousel>            -->
-        </ons-dialog>
-    </ons-template> 
+                <ons-list-item ng-init="food_limit=photo_limit" id="food" class="text-center" style="line-height: 0px;">
+                    <div class="text-left" style="line-height: 44px;">
+                        <ons-icon icon="ion-images" class="color-vcess"></ons-icon>
+                        {{ "Food Photos" | translate }}
+                        <span ng-hide="food_images.length">{{ " (No photos)" | translate }}</span>
+                        <span ng-show="food_images.length"> ({{food_images.length}} {{ " photos)" | translate }}</span>
+                    </div>
+                    <div>
+                        <ons-row ng-repeat="rows in chunk_food_images | limitTo:food_limit track by $index">
+                            <ons-col width="50%" ng-repeat="image in rows track by $index">
+                                <div class="image_row" outer-height>
+                                    <!--<img src="{{image['path']}}" class="show_photos" ng-click="show('show_photo.html', food_images,$parent.$index, $index)">-->
+                                    <img src="{{image['path']}}" class="show_photos" ng-click="myNavigator.pushPage('pages/en/test.html', {images: food_images, ind: $index})">
+                                </div>
+                                <p ng-show="image['name']" class="photo_title">{{image['name']}}</p>
+                            </ons-col>
+                        </ons-row>
+                    </div>
+                    <ons-button modifier="quiet" class="font-size-12" ng-show="food_images.length>4">
+                        <span ng-show="food_limit==photo_limit" ng-click="food_limit = chunk_food_images">
+                            {{ "Show All" | translate }}
+                        </span>
+                        <span ng-show="food_limit == chunk_food_images" ng-click="food_limit=photo_limit"><a href="#food" class="hidden_link">
+                            {{ "Show Less" | translate }}</a>
+                        </span>
+                    </ons-button>  
+                </ons-list-item>
+            </ons-list>
+        </div>
     
-    
-    </ons-page>
+        <ons-template id="show_photo.html">
+            <ons-dialog style="width: 100%; height: 100%" var="dialog" cancelable mask-color="rgba(0, 0, 0, 1)" ng-controller="ShowPhotoCtrl">
+                <div class="image">
+                    <ons-carousel var="carousel" swipeable overscrollable auto-scroll auto-scroll-ratio="0.5" initial-index="1" fullscreen>
+                    <ons-carousel-item ng-repeat="photo in selected_photos track by $index">
+                        <span style="position:fixed; top:5px; padding-left: 5px;" ng-show="photo['name']">{{photo['name']}}{{ind}}</span>
+                        <img class="viewer" ng-src="{{photo['path']}}" ng-click="dialog.hide();">
+                        
+                    </ons-carousel-item>
+                    <ons-carousel-cover>
+                        <div class="cover-label">
+                        </div>
+                    </ons-carousel-cover>
+                </ons-carousel>
+                </div>
+            </ons-dialog>
+        </ons-template> 
+    <!--</ons-navigator>-->
 </ons-page>
-
-   	
-

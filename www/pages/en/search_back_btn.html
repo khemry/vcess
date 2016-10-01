@@ -28,9 +28,9 @@
         <!-- <div ng-show="things"> -->
             <ons-list modifier="inset" class="margin-10-0-10-0 font-size-14" ng-init="show_current_location=0">
                 <ons-list-item>
-                    <input ng-show="things" type="search" class="search-input-no-border" placeholder="Ex: wifi, stationary, coffee, ..." ng-model="search_text  | translate">
+                    <input ng-show="things" type="search" class="search-input-no-border" placeholder="Ex: wifi, stationary, coffee, ..." ng-model="search_text">
 
-                    <input ng-show="!things" type="search" class="search-input-no-border" placeholder="Ex: Royal Host, Starbucks, ..." ng-model="search_text  | translate">
+                    <input ng-show="!things" type="search" class="search-input-no-border" placeholder="Ex: Royal Host, Starbucks, ..." ng-model="search_text">
 
                     <span ng-click="clearInputSearch()" class="displayClear">
                         <ons-icon icon="fa-times " style="opacity: 0.5"></ons-icon>
@@ -56,7 +56,10 @@
                     </ons-list-item> 
                     <ons-list-item modifier="tappable" ng-click="myForm.location_text = 'Olympic Stadium'; show_current_location=0;search(search_text, myForm.location_text, things);">
                         {{ "Olympic Stadium" | translate }}
-                    </ons-list-item>    
+                    </ons-list-item>  
+                    <ons-list-item modifier="tappable" ng-click="myForm.location_text = 'Phnom Penh'; show_current_location=0;search(search_text, myForm.location_text, things);">
+                        {{ "Phnom Penh" | translate }}
+                    </ons-list-item>
                 </div>    
             </ons-list>
 
