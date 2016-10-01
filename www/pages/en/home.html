@@ -16,6 +16,11 @@
 			<p class="top-keyword">{{ "Most Popular Keywords" | translate }}</p>
 				<ons-button ng-repeat="keyword in top_keywords" class="tag" ng-click="myNavigator.pushPage('pages/en/search_back_btn.html', {keyword: keyword})";><span>{{keyword | translate}}</span></ons-button>      
 		</div>
+        <hr>
+        <ons-button class="tag" ng-click="myNavigator.pushPage('pages/en/search_back_btn.html', {keyword: 'Breakfast'})";><span>{{"Breakfast" | translate}}</span></ons-button>
+        <ons-button class="tag" ng-click="myNavigator.pushPage('pages/en/search_back_btn.html', {keyword: 'Lunch'})";><span>{{"Lunch" | translate}}</span></ons-button>
+        <ons-button class="tag" ng-click="myNavigator.pushPage('pages/en/search_back_btn.html', {keyword: 'Dinner'})";><span>{{"Dinner" | translate}}</span></ons-button>
+        <ons-button class="tag" ng-click="myNavigator.pushPage('pages/en/search_back_btn.html', {keyword: 'Nightlife'})";><span>{{"Nightlife" | translate}}</span></ons-button>
 		<div>
 			<hr>
 			<p class="top-keyword">{{ "Main Cities" | translate }}</p>

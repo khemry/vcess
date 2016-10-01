@@ -78,12 +78,19 @@ app.config(['$translateProvider', function ($translateProvider) {
         "Khmer Food" : "ម្ហូបខ្មែរ",
         "Japanese Food" : "ម្ហូបជប៉ុន",
         "Chinese Food" : "ម្ហូបចិន",
+        "Western Food" : "ម្ហូបអឺរ៉ុប",
+        "Street Food" : "ម្ហូបតាមផ្លូវ",
+        "Sushi" : "ស៊ូសុី",
+        "Sky Bar" : "ស្កាយបារ",
         "Coffee" : "កាហ្វេ",
         "Bubble Tea" : "តែគុជ",
         "Soup" : "ស៊ុប",
         "Khmer Restaurants": "ហាងម្ហូបខ្មែរ",
         "Coffee Shops" : "ហាងកាហ្វេ",
+        "Western Restaurants" : "ហាងម្ហូបអឺរ៉ុប",
+        "Korean Restaurants" : "ហាងម្ហូបកូរ៉េ",
         "Chinese Restaurants" : "ហាងម្ហូបចិន",
+        "Japanese Restaurants" : "ហាងម្ហូបជប៉ុន",
         "Green & Bubble Tea" : "តែបៃតង & តែគុជ",
         "BBQ Restaurants" : "ហាងសាច់អាំង",
         "Bars & Pubs" : "បារ & ផាប់",
@@ -112,7 +119,11 @@ app.config(['$translateProvider', function ($translateProvider) {
         "Forgot password?" : "ភ្លេចពាក្យសម្ងាត់?",
         "Input your registered email:" : "បញ្ចូលអុីម៉េល:",
         "Recover Password" : "សង្គ្រោះពាក្យសម្ងាត់",
-        "Sign up with:" : "ចុះឈ្មោះដោយប្រើ:"
+        "Sign up with:" : "ចុះឈ្មោះដោយប្រើ:",
+        "Breakfast": "អាហារព្រឹក",
+        "Lunch": "អាហារថ្ងៃ",
+        "Dinner": "អាហារល្ងាច",
+        "Nightlife": "ដើរលេងយប់"
     });   
     
     $translateProvider.uses('Khmer');
@@ -984,12 +995,16 @@ app.controller('CategoryListCtrl', function($scope, $http, $timeout, $q){
 app.controller('HomeCtrl', function($scope, $http, GlobalParameters){
     console.log('Home Ctrl');
     
-    $scope.top_keywords = ['Khmer Food', 'Japanese Food', 'Chinese Food', 'Coffee', 'Bubble Tea', 'Soup'];
+    $scope.top_keywords = ['Khmer Food', 'Japanese Food', 'Chinese Food', 'Sushi', 'Western Food', 'Sky Bar', 'Coffee', 'Bubble Tea', 'Soup'];
 
-    $scope.top_categories = [
+    $scope.top_categories = [        
         {name: 'Khmer Restaurants', key: 'khmer'},
-        {name: 'Coffee Shops', key: 'coffee'},
+        {name: 'Street Food', key: 'street-food'},
+        {name: 'Japanese Restaurants', key: 'japanese'},
         {name: 'Chinese Restaurants', key: 'chinese'},
+        {name: 'Korean Restaurants', key: 'korean'},
+        {name: 'Western Restaurants', key: 'western'},
+        {name: 'Coffee Shops', key: 'coffee'},
         {name: 'Green & Bubble Tea', key: ' tea'},
         {name: 'BBQ Restaurants', key: 'bbq'},
         {name: 'Bars & Pubs', key: 'bars'},

@@ -5,16 +5,21 @@
     "framework_version": "3.5",
     "xcode_version": "7",
     "cordova_version": "6.2",
-    "plugin_settings": [],
+    "plugin_settings": {
+        "cordova-plugin-crosswalk-webview": {
+            "variables": [
+                "XWALK_VERSION=18.48.477.13"
+            ]
+        }
+    },
     "external_plugins": [
         "cordova-plugin-whitelist@1.2.2",
         "cordova-plugin-camera@2.2.0",
         "cordova-plugin-network-information@1.2.1",
         "cordova-plugin-splashscreen@3.2.2",
         "cordova-plugin-inappbrowser@1.4.0",
-        "cordova-custom-config",
+        "cordova-custom-config@2.0.3",
         "cordova-plugin-device@1.1.2",
-        "cordova-plugin-geolocation@2.2.0",
-        "cordova-custom-config@2.0.3"
+        "cordova-plugin-geolocation@2.2.0"
     ]
 }

@@ -436,10 +436,37 @@ input[type=email], input[type=password], input[type=text] {
 	height:130px;
 }
 
-.japanese, .convenience_store {
+.japanese {
 	margin: -20px auto 30px auto;
 	width: 94%;
-	background-image: url(../images/test/background_mart.jpg);
+	background-image: url(../images/test/bg_japanese.png);
+	background-position: center center;
+    background-repeat: no-repeat;
+	height:130px;
+}
+
+.korean {
+    margin: -20px auto 30px auto;
+	width: 94%;
+	background-image: url(../images/test/bg_korean.png);
+	background-position: center center;
+    background-repeat: no-repeat;
+	height:130px;
+}
+
+.street-food {
+    margin: -20px auto 30px auto;
+    width: 94%;
+	background-image: url(../images/test/bg_street_food.png);
+	background-position: center center;
+    background-repeat: no-repeat;
+	height:130px;
+}
+
+.western {
+    margin: -20px auto 30px auto;
+    width: 94%;
+	background-image: url(../images/test/bg_western.png);
 	background-position: center center;
     background-repeat: no-repeat;
 	height:130px;
