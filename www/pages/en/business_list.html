@@ -1,0 +1,39 @@
+
+<ons-page>
+  <ons-toolbar>
+      <div class="left"><ons-back-button>{{ "Back" | translate }}</ons-back-button></div>
+      <div class="center"><span>{{ 'Business List' | translate }}</span></div>
+      <!-- <div class="right">
+        <ons-toolbar-button ng-click="alert('Coming soon in our next update!')">
+          <ons-icon icon="fa-plus" fixed-width="false" style="vertical-align: -4px;"></ons-icon>
+        </ons-toolbar-button>
+      </div> -->
+  </ons-toolbar>
+
+
+  <div style="text-align: center" ng-init="checked=1">
+    <div class="tab-bar tab-bar--top tab-bar--top-border">
+      <label class="tab-bar__item tab-bar--top-border__item" ng-click="checked=1">
+        <input type="radio" name="top-tab-bar-b" checked="checked">
+        <button class="tab-bar__button tab-bar--top-border__button">
+          <span>{{ 'My Businesses' | translate }}</span>
+        </button>
+        
+      </label>
+
+      <label class="tab-bar__item tab-bar--top-border__item" ng-click="checked=0">
+        <input type="radio" name="top-tab-bar-b">
+        <button class="tab-bar__button tab-bar--top-border__button">
+          <span>{{ "Others' Businesses" | translate }}</span>
+        </button>
+      </label>
+    </div>
+
+    <div class="margin10 text-center">
+      <br/>
+      <p class="opacity05">{{ "Currently, you don't have any businesses yet." | translate }}</p>
+      <!-- Start creating one now and grow your business. -->
+    </div>
+
+  </div>
+</ons-page>

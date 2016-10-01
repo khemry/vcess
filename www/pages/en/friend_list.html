@@ -1,0 +1,251 @@
+<ons-page ng-controller="FriendListCtrl">
+    <ons-toolbar>
+        <div class="left"><ons-back-button>{{ "Back" | translate }}</ons-back-button></div>
+        <div class="center"><span>{{ "Friend List" | translate }}</span></div>
+        <!-- <div class="right">
+            <ons-toolbar-button ng-click="alert('Coming soon in our next update!')">
+                <ons-icon icon="fa-user-plus" style="opacity: 0.8"></ons-icon>
+            </ons-toolbar-button>
+        </div> -->
+    </ons-toolbar>
+
+    <div>
+
+            <!-- <div class="navigation-bar">
+              <div class="navigation-bar__center" style="background-color: #fff">
+
+                <input type="search" class="search-input" style="width: 96%; margin: 6px auto 6px auto;" placeholder="Search">
+
+              </div>
+            </div> -->
+
+            <div class="margin10 text-center opacity05">
+              <br/>
+              <p>{{ "Currently, you don't have any friends yet." | translate }}</p>
+              <!-- Start creating one now and grow your business. -->
+            </div>
+                
+        <!-- <ons-list modifier="inset" style="margin-top: 10px">
+
+            <ons-list-item>
+                <ons-row>
+                    <ons-col width="70px">
+                        <div style="padding: 16px 0 0 5px;">
+                            <img src="images/test/user.jpg" class="profile-image">
+                        </div>
+                    </ons-col>
+
+                    <ons-col>
+                        <div style="font-size: 12px; line-height: 20px; padding-top:20px; color: black">
+                            KHOURN Khemry<br/>
+                            khourn.khemry@gmail.com
+                        </div>
+                    </ons-col>
+                    <ons-col>
+                        <div style="position: absolute; right: 5px; top: 15px;">
+                            <ons-toolbar-button>
+                                <ons-icon icon="ion-android-settings" style="opacity: 0.8"></ons-icon>
+                            </ons-toolbar-button>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-list-item>
+
+            <ons-list-item>
+                <ons-row>
+                    <ons-col width="70px">
+                        <div style="padding: 16px 0 0 5px;">
+                            <img src="images/test/user.jpg" class="profile-image">
+                        </div>
+                    </ons-col>
+
+                    <ons-col>
+                        <div style="font-size: 12px; line-height: 20px; padding-top:20px; color: black">
+                            KHOURN Khemry<br/>
+                            khourn.khemry@gmail.com
+                        </div>
+                    </ons-col>
+                    <ons-col>
+                        <div style="position: absolute; right: 5px; top: 15px;">
+                            <ons-toolbar-button>
+                                <ons-icon icon="ion-android-settings" style="opacity: 0.8"></ons-icon>
+                            </ons-toolbar-button>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-list-item>
+
+            <ons-list-item>
+                <ons-row>
+                    <ons-col width="70px">
+                        <div style="padding: 16px 0 0 5px;">
+                            <img src="images/test/user.jpg" class="profile-image">
+                        </div>
+                    </ons-col>
+
+                    <ons-col>
+                        <div style="font-size: 12px; line-height: 20px; padding-top:20px; color: black">
+                            KHOURN Khemry<br/>
+                            khourn.khemry@gmail.com
+                        </div>
+                    </ons-col>
+                    <ons-col>
+                        <div style="position: absolute; right: 5px; top: 15px;">
+                            <ons-toolbar-button>
+                                <ons-icon icon="ion-android-settings" style="opacity: 0.8"></ons-icon>
+                            </ons-toolbar-button>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-list-item>
+
+            <ons-list-item>
+                <ons-row>
+                    <ons-col width="70px">
+                        <div style="padding: 16px 0 0 5px;">
+                            <img src="images/test/user.jpg" class="profile-image">
+                        </div>
+                    </ons-col>
+
+                    <ons-col>
+                        <div style="font-size: 12px; line-height: 20px; padding-top:20px; color: black">
+                            KHOURN Khemry<br/>
+                            khourn.khemry@gmail.com
+                        </div>
+                    </ons-col>
+                    <ons-col>
+                        <div style="position: absolute; right: 5px; top: 15px;">
+                            <ons-toolbar-button>
+                                <ons-icon icon="ion-android-settings" style="opacity: 0.8"></ons-icon>
+                            </ons-toolbar-button>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-list-item>
+
+            <ons-list-item>
+                <ons-row>
+                    <ons-col width="70px">
+                        <div style="padding: 16px 0 0 5px;">
+                            <img src="images/test/user.jpg" class="profile-image">
+                        </div>
+                    </ons-col>
+
+                    <ons-col>
+                        <div style="font-size: 12px; line-height: 20px; padding-top:20px; color: black">
+                            KHOURN Khemry<br/>
+                            khourn.khemry@gmail.com
+                        </div>
+                    </ons-col>
+                    <ons-col>
+                        <div style="position: absolute; right: 5px; top: 15px;">
+                            <ons-toolbar-button>
+                                <ons-icon icon="ion-android-settings" style="opacity: 0.8"></ons-icon>
+                            </ons-toolbar-button>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-list-item>
+
+            <ons-list-item>
+                <ons-row>
+                    <ons-col width="70px">
+                        <div style="padding: 16px 0 0 5px;">
+                            <img src="images/test/user.jpg" class="profile-image">
+                        </div>
+                    </ons-col>
+
+                    <ons-col>
+                        <div style="font-size: 12px; line-height: 20px; padding-top:20px; color: black">
+                            KHOURN Khemry<br/>
+                            khourn.khemry@gmail.com
+                        </div>
+                    </ons-col>
+                    <ons-col>
+                        <div style="position: absolute; right: 5px; top: 15px;">
+                            <ons-toolbar-button>
+                                <ons-icon icon="ion-android-settings" style="opacity: 0.8"></ons-icon>
+                            </ons-toolbar-button>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-list-item>
+
+             <ons-list-item>
+                <ons-row>
+                    <ons-col width="70px">
+                        <div style="padding: 16px 0 0 5px;">
+                            <img src="images/test/user.jpg" class="profile-image">
+                        </div>
+                    </ons-col>
+
+                    <ons-col>
+                        <div style="font-size: 12px; line-height: 20px; padding-top:20px; color: black">
+                            KHOURN Khemry<br/>
+                            khourn.khemry@gmail.com
+                        </div>
+                    </ons-col>
+                    <ons-col>
+                        <div style="position: absolute; right: 5px; top: 15px;">
+                            <ons-toolbar-button>
+                                <ons-icon icon="ion-android-settings" style="opacity: 0.8"></ons-icon>
+                            </ons-toolbar-button>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-list-item>
+
+             <ons-list-item>
+                <ons-row>
+                    <ons-col width="70px">
+                        <div style="padding: 16px 0 0 5px;">
+                            <img src="images/test/user.jpg" class="profile-image">
+                        </div>
+                    </ons-col>
+
+                    <ons-col>
+                        <div style="font-size: 12px; line-height: 20px; padding-top:20px; color: black">
+                            KHOURN Khemry<br/>
+                            khourn.khemry@gmail.com
+                        </div>
+                    </ons-col>
+                    <ons-col>
+                        <div style="position: absolute; right: 5px; top: 15px;">
+                            <ons-toolbar-button>
+                                <ons-icon icon="ion-android-settings" style="opacity: 0.8"></ons-icon>
+                            </ons-toolbar-button>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-list-item>
+
+             <ons-list-item>
+                <ons-row>
+                    <ons-col width="70px">
+                        <div style="padding: 16px 0 0 5px;">
+                            <img src="images/test/user.jpg" class="profile-image">
+                        </div>
+                    </ons-col>
+
+                    <ons-col>
+                        <div style="font-size: 12px; line-height: 20px; padding-top:20px; color: black">
+                            KHOURN Khemry<br/>
+                            khourn.khemry@gmail.com
+                        </div>
+                    </ons-col>
+                    <ons-col>
+                        <div style="position: absolute; right: 5px; top: 15px;">
+                            <ons-toolbar-button>
+                                <ons-icon icon="ion-android-settings" style="opacity: 0.8"></ons-icon>
+                            </ons-toolbar-button>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </ons-list-item>
+
+
+        </ons-list> -->
+            
+
+    </div>
+</ons-page>

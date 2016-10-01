@@ -1,0 +1,58 @@
+<ons-page ng-controller="InboxCtrl">
+    <ons-toolbar>
+        <div class="left"><ons-back-button>{{ "Back" | translate }}</ons-back-button></div>
+        <div class="center"><span>{{ "Inbox" | translate }}</spand></div>
+        <!-- <div class="right">
+            <ons-toolbar-button>
+                <ons-icon icon="fa-pencil-square-o" fixed-width="false" style="vertical-align: -4px;"></ons-icon>
+            </ons-toolbar-button>
+        </div> -->
+    </ons-toolbar>
+
+    <div class="margin10 text-center opacity05" ng-show="login_status">
+      <br/>
+      {{ "Currently, you don't have any messages yet." | translate }}
+    </div>
+
+    <div ng-show="!login_status" class="margin10 text-center">
+        <img src="images/logos/Final_logo_green.png" class="logo-frame"/>
+        <h4>Welcome to Vcess App!</h3>
+        <p>You are required to login in order to view this page.</p>
+        <ons-button modifier="large" ng-click="myNavigator.pushPage('login.html');">Log In</ons-button>
+        <ons-button class="button--large--quiet" ng-click="myNavigator.pushPage('signup.html');">Sign Up</ons-button>
+    </div>
+
+
+    <!-- <div ng-show="login_status">
+        <ons-list modifier="inset" style="margin-top: 10px">
+
+        <ons-list-item ng-repeat="n in getRate(5) track by $index">
+            <ons-row>
+                <ons-col width="70px">
+                    <div style="padding: 16px 0 0 5px;">
+                        <img src="images/test/user.jpg" class="profile-image">
+                    </div>
+                </ons-col>
+
+                <ons-col>
+                    <div style="font-size: 12px; line-height: 20px; padding-top:20px; color: black">
+                        KHOURN Khemry<br/>
+                        khourn.khemry@gmail.com
+                    </div>
+                </ons-col>
+                <ons-col>
+                    <div style="position: absolute; right: 5px; top: 15px;">
+                        <ons-toolbar-button>
+                            <ons-icon icon="ion-android-settings" style="opacity: 0.8"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                </ons-col>
+            </ons-row>
+        </ons-list-item>
+    </ons-list>
+
+    </div> -->
+</ons-page>
+
+
+

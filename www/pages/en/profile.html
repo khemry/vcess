@@ -1,0 +1,109 @@
+
+<ons-page ng-controller="ProfileCtrl">
+	<ons-navigator var="myNavigator" animation="slide">
+		<ons-toolbar>
+		    <div class="center">
+                <span>{{ 'Profile' | translate }}</span>
+            </div>
+		</ons-toolbar>
+
+		<div class="margin10 text-center">
+			<div ng-show="!login_status">
+				<img src="images/logos/Final_logo_green.png" class="logo-frame"/>
+				<h4>{{ "Welcome to Vcess!" | translate }}</h3>
+	        	<p>{{ "You are required to login in order to view this page." | translate}}</p>
+				<ons-button modifier="large" ng-click="myNavigator.pushPage('pages/en/login.html', {origin: 'pages/en/profile.html'});">{{ "Log In" | translate }}</ons-button>
+			    <ons-button class="button--large--quiet" ng-click="myNavigator.pushPage('pages/en/signup.html', {origin: 'pages/en/profile.html'});">{{ "Sign Up" | translate }}</ons-button>
+			</div>
+		
+			<div ng-show="login_status">  
+				<ons-row>
+			        <ons-col width="70px">
+			          <img ng-src="{{login_user['profile']}}" class="profile-image">
+			        </ons-col>
+			        <ons-col>
+			          {{login_user['full_name']}}
+			          <div class="opacity05 font-size-12">{{login_user['email']}}</div>
+			        </ons-col>
+			    </ons-row>
+				
+				<!-- <ons-button ng-show="is_business" modifier="large" ng-click="myNavigator.resetToPage('normal_index.html', {is_business: 0});">Switch to User</ons-button> -->
+
+			    <ons-list modifier="inset" class="margin-10-0-10-0">
+
+			    	<ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/fav_back_button.html');">
+			    	  <ons-icon icon="ion-ios-heart" class="color-vcess"></ons-icon>
+			          {{ 'Favorites/Wish List' | translate }}
+			        </ons-list-item>
+			        <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/rate_back_btn.html');">
+			          <ons-icon icon="ion-ios-star-half" class="color-vcess"></ons-icon>	
+			          {{ 'Rate/Review' | translate }}
+			        </ons-list-item>
+			        <ons-list-item ng-click="show('languages.html')">
+			          <ons-icon icon="fa-language" class="color-vcess"></ons-icon>
+			          {{ 'Languages' | translate }} <span class="color-current float-right">{{current_lang}}</span>
+			        </ons-list-item>
+			        <ons-list-item modifier="tappable" ng-click="Logout()">
+			          <ons-icon icon="fa-sign-out" class="color-vcess"></ons-icon>
+			          {{ 'Logout' | translate }}
+			        </ons-list-item>
+
+			    </ons-list>
+
+			    <div class="color-vcess">{{ 'Upcoming Functions' | translate }}</div>
+
+				<ons-list modifier="inset" class="margin-10-0-10-0">
+					<ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/meetup.html');">
+			    	  	<ons-icon icon="fa-users" class="color-vcess"></ons-icon>
+			          	{{ 'Meetup' | translate }}
+			        </ons-list-item>
+					<ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/business_list.html');">
+			    	  <ons-icon icon="fa-btc" class="color-vcess"></ons-icon>
+			          {{ 'Businesses' | translate }}
+			        </ons-list-item>
+			        <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/checkin_list.html');">
+			          <ons-icon icon="ion-android-map" class="color-vcess"></ons-icon>
+			          {{ 'Check-in' | translate }}
+			        </ons-list-item>
+			        <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/friend_list.html');">
+			          <ons-icon icon="ion-android-contacts" class="color-vcess"></ons-icon>	
+			          {{ 'Friends' | translate }}
+			        </ons-list-item>
+			        <ons-list-item modifier="chevron" ng-click="myNavigator.pushPage('pages/en/inbox.html');">
+			          <ons-icon icon="fa-envelope" class="color-vcess"></ons-icon>	
+			          {{ 'Inbox' | translate }}
+			        </ons-list-item>
+				</ons-list>
+			     
+			</div>
+		</div>
+	
+	<ons-template id="languages.html">
+        <ons-dialog var="langDialog" cancelable mask-color="rgba(0, 0, 0, 0.7)" ng-controller="LangCtrl">
+        	<div class="margin10 text-center">
+    	    	<ons-toolbar inline>
+    	      		<div class="center">
+    	        		{{ 'Languages' | translate }}
+    	      		</div>
+    	    	</ons-toolbar>
+        		
+        		<ons-list style="margin-bottom: 10px">
+    			  	<ons-list-item modifier="tappable" ng-click="lang='Khmer'">
+    			    	{{ 'Khmer' | translate }}
+    			    	<span class="float-right" ng-show="lang=='Khmer'"><ons-icon icon="fa-check-square-o" class="color-vcess"></ons-icon></span>	
+    			  	</ons-list-item>
+    			  	<ons-list-item modifier="tappable" ng-click="lang='English'">
+    			    	{{ 'English' | translate }}
+    			    	<span class="float-right" ng-show="lang=='English'"><ons-icon icon="fa-check-square-o" class="color-vcess"></ons-icon></span>	
+    			  	</ons-list-item>
+    			</ons-list>
+    			<ons-button modifier="large" ng-click="Save(lang);langDialog.hide()">
+    				{{ 'Save' | translate }}
+    			</ons-button>
+        	</div>
+    	</ons-dialog>
+    </ons-template>	
+    
+    </ons-navigator>
+</ons-page>
+	

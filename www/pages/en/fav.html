@@ -1,0 +1,66 @@
+<ons-page ng-controller="FavCtrl" ng-init="ShowFav=1; LoadComplete=0">
+<ons-navigator var="myNavigator" animation="slide">
+
+    <div class="tab-bar tab-bar--top tab-bar--top-border">
+        <label class="tab-bar__item tab-bar--top-border__item">
+            <input type="radio" name="top-tab-bar-b" checked="checked" ng-click="ShowFav = !ShowFav; FavList();">
+            <button class="tab-bar__button tab-bar--top-border__button">
+                <span>{{ 'Favorites' | translate }}</span>
+            </button>
+        </label>
+
+        <label class="tab-bar__item tab-bar--top-border__item">
+            <input type="radio" name="top-tab-bar-b" ng-click="ShowFav = !ShowFav; WishList();">
+            <button class="tab-bar__button tab-bar--top-border__button">
+                <span>{{ 'Wish List' | translate }}</span>
+            </button>
+        </label>
+  </div>
+
+    <div ng-show="!login_status" class="margin10 text-center">
+        <img src="images/logos/Final_logo_green.png" class="logo-frame"/>
+        <h4>{{ "Welcome to Vcess!" | translate }}</h3>
+        <p>{{ "You are required to login in order to view this page." | translate}}</p>
+        <ons-button modifier="large" ng-click="myNavigator.pushPage('pages/en/login.html', {origin: 'pages/en/profile.html'});">{{ "Log In" | translate }}</ons-button>
+        <ons-button class="button--large--quiet" ng-click="myNavigator.pushPage('pages/en/signup.html', {origin: 'pages/en/profile.html'});">{{ "Sign Up" | translate }}</ons-button>
+    </div>
+
+    <div class="margin10 text-center" ng-show="login_status">
+        <p ng-show="EmptyList" class="opacity05">{{EmptyListText}}</p>
+
+        <div class="margin10" ng-show="!EmptyList">
+            <ons-list modifier="inset" class="margin-10-0-10-0" ng-show="LoadComplete">
+                <ons-list-item ng-repeat="business in businesses" modifier="chevron" ng-click="myNavigator.pushPage('pages/en/business_home.html', {selected_biz: business});">
+                    <ons-row class="margin-10-0-10-0">
+                        <ons-col width="80px">
+                            <img src="{{business.profile}}" class="biz-image margin-top-10">
+                        </ons-col>
+                        <ons-col style="padding-right:10px">
+                            <ons-row>
+                                <p class="margin-0 line-height-150">{{business.name_en}}</p>
+                            </ons-row>
+                            <ons-row>
+                                <p class="margin-0 line-height-150 font-size-12 margin-right-20">{{business.category}}</p>
+                            </ons-row>
+                            <ons-row>
+                                <p class="margin-0 line-height-150 font-size-12">
+                                    {{ "Photos: " | translate }}{{business.photos}}
+                                </p>
+                            </ons-row>
+                            <ons-row>
+                                <div class="rating margin-0 line-height-150 font-size-12">
+                                    <div class="rating-num">
+                                        <ons-icon icon="fa-star" fixed-width="false" ng-repeat="n in getRate(business.rate) track by $index"></ons-icon>
+                                        <ons-icon icon="fa-star-half" fixed-width="false" ng-show={{show_half_star}}></ons-icon>
+                                        {{business.rate}}
+                                    </div>
+                                </div>
+                            </ons-row>
+                        </ons-col>
+                    </ons-row>
+                </ons-list-item>
+            </ons-list>
+        </div>
+    </div>
+</ons-navigator>
+</ons-page>
