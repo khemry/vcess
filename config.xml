@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <widget xmlns="http://www.w3.org/ns/widgets" id="com.vcess.app" version="2.0.5">
   <name>Vcess</name>
   <description>Made with Monaca (http://monaca.mobi)</description>
-
   <author/>
   <content src="index.html"/>
   <allow-navigation href="*"/>
@@ -81,10 +79,7 @@
     <icon src="/res/winrt/icon/app_tile_wide_logo_winrt.png" target="Wide315x150Logo"/>
     <splash src="/res/winrt/screen/app_splash_screen_winrt.png" width="620" height="300"/>
   </platform>
-  <preference name="WindowsStorePublisherName" value="My Name"/>
   <preference name="BackgroundColor" value="#FFFFFF"/>
-  <preference name="WindowsStoreIdentityName" value="e24d9426-eeef-49a3-b6af-9d389728c5b6"/>
-
   <preference name="KeepRunning" value="true"/>
   <preference name="monaca:AndroidIsPackageNameSeparate" value="false"/>
   <preference name="Orientation" value="default"/>
@@ -98,4 +93,6 @@
   <access origin="*"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="EnableViewportScale" value="false"/>
+  <preference name="WindowsStorePublisherName" value="My Name"/>
+  <preference name="WindowsStoreIdentityName" value="c513efb4-0b88-be41-e7e1-56f0a0e2634b"/>
 </widget>
